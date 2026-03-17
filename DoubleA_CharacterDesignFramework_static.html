@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Double A — Character Design Framework</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#f4f4f0;
+  --bg2:#ebebe6;
+  --white:#ffffff;
+  --surface:#fafaf8;
+  --border:#d0cfc8;
+  --border-strong:#a0a09a;
+  --ink:#1a1a18;
+  --ink-m:#4a4a44;
+  --ink-f:#8a8a82;
+  --ink-g:#ccccc4;
+  --accent:#1a1a18;
+  --f-head:'Syne',sans-serif;
+  --f-body:'DM Sans',sans-serif;
+  --f-mono:'Space Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{
+  background-color:var(--bg);
+  background-image:radial-gradient(circle,#b0b0a8 1px,transparent 1px);
+  background-size:20px 20px;
+  color:var(--ink);font-family:var(--f-body);min-height:100vh;overflow-x:hidden;font-size:15px;
+}
+
+
+/* ── HEADER ─────────────────────────────────── */
+header{
+  position:relative;z-index:10;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.4rem 2.5rem;
+  background:var(--ink);
+  border-bottom:3px solid var(--ink);
+}
+.header-left{display:flex;flex-direction:column;gap:.2rem}
+.logo-aa{
+  font-family:var(--f-head);font-size:1.6rem;font-weight:800;
+  color:#fff;letter-spacing:.02em;line-height:1
+}
+.logo-sub{
+  font-family:var(--f-mono);font-size:.62rem;color:rgba(255,255,255,.45);
+  letter-spacing:.15em;text-transform:uppercase
+}
+.by-line{font-family:var(--f-mono);font-size:.62rem;color:rgba(255,255,255,.38);margin-top:.1rem}
+.header-badge{
+  font-family:var(--f-mono);font-size:.58rem;letter-spacing:.12em;
+  text-transform:uppercase;color:rgba(255,255,255,.4);
+  border:1px solid rgba(255,255,255,.2);
+  padding:.3rem .7rem;border-radius:2px;
+}
+
+
+/* ── PROGRESS ────────────────────────────────── */
+.progress-wrap{
+  position:sticky;top:0;z-index:20;
+  background:var(--white);
+  border-bottom:1px solid var(--border);
+  padding:.75rem 2rem;overflow-x:auto;
+  box-shadow:0 2px 12px rgba(0,0,0,.06);
+}
+.progress-inner{display:flex;align-items:center;gap:0;max-width:1100px;margin:0 auto}
+.prog-node{display:flex;flex-direction:column;align-items:center;gap:.2rem;
+  cursor:pointer;flex-shrink:0;min-width:62px;transition:opacity .2s}
+.prog-node:not(.active):not(.done):hover{opacity:.7}
+.prog-circle{
+  width:28px;height:28px;border-radius:3px;
+  border:1.5px solid var(--border-strong);
+  background:var(--white);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--f-mono);font-size:.68rem;font-weight:700;color:var(--ink-f);
+  transition:all .25s;
+}
+.prog-node.active .prog-circle{
+  border-color:var(--ink);background:var(--ink);
+  color:#fff;box-shadow:2px 2px 0 var(--ink-m);
+}
+.prog-node.done .prog-circle{
+  border-color:var(--ink-m);background:var(--ink-m);color:#fff;font-size:.7rem;
+}
+.prog-node.done .prog-circle::after{content:'✓'}
+.prog-label{
+  font-family:var(--f-mono);font-size:.52rem;font-weight:400;
+  color:var(--ink-g);text-align:center;max-width:60px;line-height:1.1;
+  text-transform:uppercase;letter-spacing:.06em;
+}
+.prog-node.active .prog-label{color:var(--ink-m)}
+.prog-node.done .prog-label{color:var(--ink-f)}
+.prog-line{flex:1;height:1.5px;background:var(--border);min-width:8px;
+  max-width:32px;margin-bottom:16px;transition:background .3s}
+.prog-line.done{background:var(--ink-m)}
+
+
+/* ── MAIN LAYOUT ─────────────────────────────── */
+main{position:relative;z-index:5;max-width:1120px;margin:0 auto;padding:2.5rem 2rem 5rem}
+.step-panel{display:none;animation:fadeUp .35s ease}
+.step-panel.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── STEP HEADER ─────────────────────────────── */
+.step-header{
+  display:grid;grid-template-columns:auto 1fr;
+  gap:0 2rem;align-items:start;
+  margin-bottom:2.5rem;
+  padding-bottom:2rem;
+  border-bottom:1px solid var(--border);
+}
+.step-number-col{
+  display:flex;flex-direction:column;align-items:center;gap:.3rem;
+  padding-top:.2rem;
+}
+.step-num-big{
+  font-family:var(--f-mono);font-size:3rem;font-weight:700;
+  color:var(--border);line-height:1;
+  letter-spacing:-.03em;
+}
+.step-num-of{
+  font-family:var(--f-mono);font-size:.55rem;color:var(--ink-g);
+  letter-spacing:.1em;text-transform:uppercase;
+}
+.step-text-col{}
+.step-eyebrow{
+  font-family:var(--f-mono);font-size:.62rem;font-weight:400;
+  color:var(--ink-f);letter-spacing:.2em;text-transform:uppercase;margin-bottom:.5rem;
+}
+.step-title{
+  font-family:var(--f-head);font-size:clamp(1.8rem,4vw,2.6rem);
+  font-weight:800;color:var(--ink);line-height:1.05;margin-bottom:.7rem;
+}
+.step-desc{color:var(--ink-m);font-size:.9rem;font-weight:300;max-width:520px;line-height:1.75}
+
+/* ── CARDS ───────────────────────────────────── */
+.card-controls{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;margin-bottom:1.4rem}
+.filter-btn{
+  padding:.28rem .8rem;
+  border:1px solid var(--border);background:var(--white);
+  color:var(--ink-f);font-family:var(--f-mono);font-size:.62rem;font-weight:400;
+  cursor:pointer;border-radius:2px;transition:all .15s;letter-spacing:.06em;text-transform:uppercase;
+}
+.filter-btn:hover{border-color:var(--ink-m);color:var(--ink-m);background:var(--bg);}
+.filter-btn.active{border-color:var(--ink);color:var(--ink);background:var(--ink);color:#fff}
+.sel-counter{margin-left:auto;font-family:var(--f-mono);font-size:.72rem;color:var(--ink-f)}
+.sel-counter strong{color:var(--ink)}
+
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem;align-items:start}
+
+/* ── CARD ────────────────────────────────────── */
+.card{
+  position:relative;padding:1.1rem 1rem 1rem;cursor:pointer;
+  background:var(--white);
+  border:1px solid var(--border);
+  border-left:3px solid var(--gi,var(--border-strong));
+  transition:transform .18s,box-shadow .18s,border-color .18s;
+  border-radius:0;
+}
+.card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 20px rgba(0,0,0,.09);
+  border-color:var(--gi,var(--ink-m));
+}
+.card.selected{
+  border-left-width:4px;
+  border-color:var(--gi,var(--ink));
+  background:var(--surface);
+  box-shadow:0 4px 14px rgba(0,0,0,.1);
+}
+.card.selected .card-name{font-weight:700}
+.card.disabled{opacity:.3;pointer-events:none}
+.card-group-tag{
+  font-family:var(--f-mono);font-size:.56rem;font-weight:400;
+  color:var(--gi,var(--ink-f));letter-spacing:.12em;text-transform:uppercase;
+  margin-bottom:.4rem;
+}
+.card-name{
+  font-family:var(--f-head);font-size:1rem;font-weight:700;
+  color:var(--ink);line-height:1.2;margin-bottom:.55rem;
+}
+.card-description{font-family:var(--f-body);font-size:.78rem;font-weight:300;
+  color:var(--ink-m);line-height:1.7}
+.card-examples{
+  margin-top:.55rem;padding-top:.45rem;
+  border-top:1px dashed var(--border);
+  font-size:.68rem;color:var(--ink-f);font-style:italic;
+  font-family:var(--f-body);line-height:1.5;
+}
+.card-check{
+  position:absolute;top:.55rem;right:.55rem;width:16px;height:16px;
+  border:1.5px solid var(--gi,var(--border));border-radius:2px;background:transparent;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.55rem;color:transparent;transition:all .15s;
+}
+.card.selected .card-check{background:var(--gi,var(--ink));border-color:var(--gi,var(--ink));color:#fff}
+
+/* ── CHIPS ───────────────────────────────────── */
+.chips-box{
+  background:var(--white);padding:.85rem 1.1rem;
+  margin-bottom:1.4rem;
+  border:1px solid var(--border);border-top:2px solid var(--ink);
+}
+.chips-label{
+  font-family:var(--f-mono);font-size:.6rem;font-weight:400;
+  color:var(--ink-f);text-transform:uppercase;letter-spacing:.15em;margin-bottom:.55rem;
+}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem}
+.chip{
+  display:flex;align-items:center;gap:.3rem;padding:.2rem .6rem;
+  border:1px solid var(--border-strong);
+  background:var(--bg);
+  font-family:var(--f-mono);font-size:.68rem;font-weight:400;color:var(--ink);
+  border-radius:2px;
+}
+.chip .rm{cursor:pointer;color:var(--ink-f);font-size:.65rem;transition:color .15s}
+.chip .rm:hover{color:var(--ink)}
+.chips-empty{color:var(--ink-g);font-size:.78rem;font-style:italic;font-family:var(--f-body)}
+
+/* ── FORMS ───────────────────────────────────── */
+.form-group{margin-bottom:1.5rem}
+.form-label{
+  display:block;font-family:var(--f-mono);font-size:.62rem;font-weight:400;
+  color:var(--ink-f);text-transform:uppercase;letter-spacing:.12em;margin-bottom:.45rem;
+}
+.form-input,.form-textarea{
+  width:100%;background:var(--white);
+  border:1px solid var(--border);
+  border-bottom:2px solid var(--ink-m);
+  color:var(--ink);padding:.55rem .65rem;
+  font-family:var(--f-body);font-size:.9rem;font-weight:400;
+  outline:none;transition:border-color .18s;border-radius:0;
+}
+.form-input:focus,.form-textarea:focus{border-bottom-color:var(--ink);background:var(--white)}
+.form-textarea{min-height:90px;resize:vertical;border:1px solid var(--border);
+  padding:.65rem;border-bottom:2px solid var(--ink-m)}
+.form-textarea:focus{border-color:var(--border);border-bottom-color:var(--ink)}
+.sketch-card{
+  background:var(--white);padding:1.5rem;
+  border:1px solid var(--border);
+  border-top:2px solid var(--ink);
+  margin-bottom:1rem;
+}
+.suggestions{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.8rem}
+.sug-tag{
+  padding:.28rem .75rem;
+  border:1px solid var(--border);background:var(--white);
+  color:var(--ink-f);font-family:var(--f-mono);font-size:.64rem;
+  cursor:pointer;letter-spacing:.04em;text-transform:uppercase;
+  transition:all .15s;border-radius:2px;
+}
+.sug-tag:hover{border-color:var(--ink);color:var(--ink);background:var(--bg)}
+.mechanic-wrap{max-width:600px;margin:0 auto}
+
+/* ── CONCEPT STEP ────────────────────────────── */
+.concept-cards-section{margin-bottom:2rem}
+.concept-section-label{
+  font-family:var(--f-mono);font-size:.68rem;font-weight:700;
+  color:var(--ink);letter-spacing:.15em;text-transform:uppercase;
+  margin-bottom:.9rem;padding-bottom:.4rem;
+  border-bottom:1px solid var(--border);display:block;
+}
+.concept-mini-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.8rem}
+.concept-info-card{
+  background:var(--white);padding:1rem;
+  border:1px solid var(--border);
+  border-left:3px solid var(--gi,var(--border-strong));
+}
+.ci-type{
+  font-family:var(--f-mono);font-size:.58rem;font-weight:400;
+  text-transform:uppercase;letter-spacing:.13em;
+  color:var(--gi,var(--ink-f));margin-bottom:.25rem;
+}
+.ci-name{font-family:var(--f-head);font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:.4rem}
+.ci-desc{font-size:.78rem;color:var(--ink-m);line-height:1.65;font-family:var(--f-body)}
+.ci-examples{
+  margin-top:.45rem;font-size:.67rem;color:var(--ink-f);font-style:italic;
+  border-top:1px dashed var(--border);padding-top:.35rem;font-family:var(--f-body);
+}
+
+/* ── GEN BUTTON ──────────────────────────────── */
+
+
+/* ── DETAILS / VISUAL ────────────────────────── */
+.details-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.1rem;margin-bottom:1.5rem}
+.detail-card{background:var(--white);padding:1.1rem;border:1px solid var(--border);border-top:2px solid var(--border-strong)}
+.visual-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.1rem}
+
+/* ── CONSOLIDATE ─────────────────────────────── */
+.consolidate-sheet{
+  background:var(--white);padding:2.5rem 2rem;
+  border:1px solid var(--border);
+  border-top:3px solid var(--ink);
+  margin-bottom:1.5rem;
+}
+.cs-header{
+  display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:start;
+  margin-bottom:2rem;padding-bottom:1.5rem;
+  border-bottom:1px solid var(--border);
+}
+.cs-char-name{font-family:var(--f-head);font-size:clamp(2rem,6vw,3.2rem);font-weight:800;color:var(--ink);line-height:1}
+.cs-char-title{font-family:var(--f-body);font-size:.95rem;color:var(--ink-m);font-style:italic;margin-top:.3rem}
+.cs-header-meta{text-align:right;font-family:var(--f-mono);font-size:.6rem;color:var(--ink-g);letter-spacing:.1em;text-transform:uppercase;line-height:1.8}
+.cs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem}
+.cs-field{padding:.7rem .8rem;background:var(--surface);border:1px solid var(--border)}
+.cs-field-wide{grid-column:1/-1}
+.cs-field-label{
+  font-family:var(--f-mono);font-size:.58rem;font-weight:400;
+  color:var(--ink-f);text-transform:uppercase;letter-spacing:.15em;margin-bottom:.35rem;
+}
+.cs-field-value{
+  font-family:var(--f-body);font-size:.86rem;color:var(--ink);line-height:1.65;
+  word-break:break-word;overflow-wrap:break-word;white-space:pre-wrap;
+}
+.cs-tags{display:flex;flex-wrap:wrap;gap:.3rem}
+.cs-tag{
+  padding:.18rem .5rem;border:1px solid var(--border-strong);border-radius:2px;
+  font-family:var(--f-mono);font-size:.65rem;font-weight:400;color:var(--ink-m);background:var(--bg);
+}
+
+/* ── EXPORT ──────────────────────────────────── */
+.export-row{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1.5rem;align-items:center}
+.btn-export{
+  flex:1;min-width:160px;padding:.8rem 1.5rem;
+  font-family:var(--f-head);font-size:.88rem;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;
+  cursor:pointer;border-radius:0;transition:all .18s;
+}
+.btn-pdf{background:var(--ink);color:#fff;border:none;box-shadow:3px 3px 0 var(--ink-m)}
+.btn-pdf:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
+.btn-copy{background:transparent;color:var(--ink);border:1.5px solid var(--ink);box-shadow:2px 2px 0 var(--border-strong)}
+.btn-copy:hover{background:var(--bg);transform:translate(-1px,-1px)}
+.copy-feedback{font-family:var(--f-mono);font-size:.75rem;color:#1f7a44;opacity:0;transition:opacity .3s}
+.copy-feedback.show{opacity:1}
+
+/* ── NAV BUTTONS ─────────────────────────────── */
+.nav-buttons{display:flex;justify-content:space-between;align-items:center;margin-top:2.5rem;gap:1rem}
+.nav-buttons-top{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:2.5rem;gap:1rem;
+  padding-bottom:1.4rem;border-bottom:1px solid var(--border);
+}
+.btn{
+  padding:.65rem 1.6rem;border-radius:0;
+  font-family:var(--f-head);font-size:.85rem;
+  font-weight:700;letter-spacing:.06em;cursor:pointer;text-transform:uppercase;transition:all .18s;
+}
+.btn-next{background:var(--ink);color:#fff;border:none;box-shadow:3px 3px 0 var(--ink-m)}
+.btn-next:hover:not(:disabled){transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
+.btn-next:disabled{opacity:.35;cursor:not-allowed}
+.btn-back{background:transparent;color:var(--ink-m);border:1.5px solid var(--border-strong)}
+.btn-back:hover{border-color:var(--ink-m);color:var(--ink);background:var(--bg)}
+
+/* ── MODAL ───────────────────────────────────── */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(10,10,8,.65);z-index:100;
+  display:none;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(4px);
+}
+.modal-overlay.open{display:flex;animation:fadeUp .22s}
+.modal-box{
+  background:var(--white);padding:2rem;max-width:480px;width:100%;
+  border:1px solid var(--border);border-top:3px solid var(--ink);
+  box-shadow:0 20px 60px rgba(0,0,0,.18);
+}
+.modal-close{
+  position:absolute;top:1rem;right:1rem;background:none;border:none;
+  font-size:1.1rem;cursor:pointer;color:var(--ink-f);z-index:2;
+  font-family:var(--f-mono);
+}
+.modal-close:hover{color:var(--ink)}
+.modal-group{font-size:.6rem;font-family:var(--f-mono);font-weight:400;letter-spacing:.15em;
+  color:var(--ink-f);text-transform:uppercase;margin-bottom:.4rem}
+.modal-name{font-family:var(--f-head);font-size:1.7rem;font-weight:800;color:var(--ink);margin-bottom:.9rem}
+.modal-desc{font-family:var(--f-body);font-size:.88rem;color:var(--ink-m);line-height:1.8;margin-bottom:.9rem}
+.modal-ex-label{font-size:.6rem;letter-spacing:.12em;color:var(--ink-f);
+  text-transform:uppercase;margin-bottom:.3rem;font-family:var(--f-mono)}
+.modal-examples{font-size:.82rem;color:var(--ink-f);font-style:italic;line-height:1.6;font-family:var(--f-body)}
+
+/* ── PRINT ───────────────────────────────────── */
+#print-area{display:none}
+@media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  body>*:not(#print-area){display:none!important}
+  #print-area{display:block!important;font-family:var(--f-body,'DM Sans'),sans-serif;color:#111;background:white;padding:2rem}
+  .pa-title{font-family:var(--f-head,'Syne'),sans-serif;font-size:2.2rem;font-weight:800;
+    margin-bottom:.3rem;border-bottom:2px solid #333;padding-bottom:.5rem}
+  .pa-sub{color:#666;font-style:italic;margin-bottom:1.5rem;font-size:.9rem}
+  .pa-section{margin-bottom:1.2rem}
+  .pa-section-title{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.15em;
+    border-bottom:1px solid #999;padding-bottom:.2rem;margin-bottom:.5rem;color:#333;
+    font-family:var(--f-mono,'Space Mono'),monospace}
+  .pa-row{display:flex;gap:2rem;flex-wrap:wrap;margin-bottom:.4rem}
+  .pa-field{flex:1;min-width:180px}
+  .pa-field-label{font-size:.62rem;text-transform:uppercase;letter-spacing:.1em;color:#777;font-family:monospace}
+  .pa-field-value{font-size:.88rem;color:#111}
+  .pa-concept{font-style:italic;line-height:1.8}
+  .pa-footer{text-align:center;margin-top:2rem;font-size:.65rem;color:#aaa;
+    border-top:1px dashed #ccc;padding-top:.8rem;font-family:monospace}
+}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:2px}
+::-webkit-scrollbar-thumb:hover{background:var(--ink-m)}
+@media(max-width:600px){.cards-grid{grid-template-columns:1fr 1fr} main{padding:1.5rem 1rem 5rem}}
+@media(max-width:480px){.step-header{grid-template-columns:1fr}.step-number-col{display:none}}
+</style>
+</head>
+<body>
+<div id="print-area"></div>
+<header>
+  <div class="header-left">
+    <div class="logo-aa">Double A</div>
+    <div class="logo-sub">Character Design Framework</div>
+    <div class="by-line">by <a href="https://www.linkedin.com/in/victor-hugo-costa/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:3px;opacity:.7">Victor Hugo Costa</a> — Game Designer</div>
+  </div>
+  <div class="header-badge">Attribute × Archetype</div>
+</header>
+<div class="progress-wrap"><div class="progress-inner" id="progressBar"></div></div>
+<main>
+<div class="nav-buttons nav-buttons-top" id="navButtonsTop">
+  <button class="btn btn-back" id="prevBtnTop" onclick="prevStep()">← Back</button>
+  <button class="btn btn-next" id="nextBtnTop" onclick="nextStep()">Next →</button>
+</div>
+
+<!-- STEP 1 -->
+<div class="step-panel active" id="step-1">
+  <div class="step-header">
+    <div class="step-number-col">
+      <div class="step-num-big">01</div>
+      <div class="step-num-of">/ 09</div>
+    </div>
+    <div class="step-text-col">
+      <div class="step-eyebrow">Step 01 · 09</div>
+      <h1 class="step-title">Define the Mechanic</h1>
+      <p class="step-desc">Everything starts with gameplay. Before story or visuals, define what this character <em>does</em> in the game.</p>
+    </div>
+  </div>
+  <div class="mechanic-wrap">
+    <div class="sketch-card">
+      <div class="form-group">
+        <label class="form-label">Gameplay Mechanic</label>
+        <input class="form-input" id="mechanicInput" type="text" placeholder="e.g. Mobility-based assassin, Support healer, Area control tank..." autocomplete="off">
+      </div>
+      <div>
+        <label class="form-label" style="font-size:.68rem">Quick suggestions</label>
+        <div class="suggestions">
+          <button class="sug-tag" onclick="setSug('Burst damage assassin')">Burst assassin</button>
+          <button class="sug-tag" onclick="setSug('Support / Healer')">Support healer</button>
+          <button class="sug-tag" onclick="setSug('Area control tank')">Area tank</button>
+          <button class="sug-tag" onclick="setSug('Mobile flanker')">Mobile flanker</button>
+          <button class="sug-tag" onclick="setSug('Stealth infiltrator')">Stealth</button>
+          <button class="sug-tag" onclick="setSug('Long-range sniper')">Sniper</button>
+          <button class="sug-tag" onclick="setSug('Battle mage')">Battle mage</button>
+          <button class="sug-tag" onclick="setSug('Trickster / Crowd control')">Trickster</button>
+          <button class="sug-tag" onclick="setSug('Summoner / Pet build')">Summoner</button>
+          <button class="sug-tag" onclick="setSug('Brawler / Berserker')">Brawler</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 2 -->
+<div class="step-panel" id="step-2">
+  <div class="step-header">
+    <div class="step-number-col">
+      <div class="step-num-big">02</div>
+      <div class="step-num-of">/ 09</div>
+    </div>
+    <div class="step-text-col">
+      <div class="step-eyebrow">Step 02 · 09</div>
+      <h1 class="step-title">Select Attributes</h1>
+      <p class="step-desc">Choose up to 3 attributes — they define <em>how</em> the character performs their role. Right-click any card to see full detail.</p>
+    </div>
+  </div>
+  <div class="chips-box"><div class="chips-label">Selected Attributes</div><div class="chips" id="attrChips"><span class="chips-empty">None selected yet</span></div></div>
+  <div class="card-controls">
+    <button class="filter-btn active" onclick="filterCards('attr','all',this)">All</button>
+    <button class="filter-btn" data-g="Social Dynamics &amp; Emotions" onclick="filterCards('attr','Social Dynamics & Emotions',this)">Social</button>
+    <button class="filter-btn" data-g="Performance, Strategy &amp; Achievement" onclick="filterCards('attr','Performance, Strategy & Achievement',this)">Performance</button>
+    <button class="filter-btn" data-g="Exploration, Values &amp; World" onclick="filterCards('attr','Exploration, Values & World',this)">Exploration</button>
+    <button class="filter-btn" data-g="Intellect, Knowledge &amp; Sensitivity" onclick="filterCards('attr','Intellect, Knowledge & Sensitivity',this)">Intellect</button>
+    <div class="sel-counter"><strong id="attrCount">0</strong> / 3</div>
+  </div>
+  <div class="cards-grid" id="attrGrid"></div>
+</div>
+
+<!-- STEP 3 -->
+<div class="step-panel" id="step-3">
+  <div class="step-header">
+    <div class="step-number-col">
+      <div class="step-num-big">03</div>
+      <div class="step-num-of">/ 09</div>
+    </div>
+    <div class="step-text-col">
+      <div class="step-eyebrow">Step 03 · 09</div>
+      <h1 class="step-title">Select Archetypes</h1>
+      <p class="step-desc">Choose up to 3 archetypes — they define <em>who</em> the character is and their narrative role.</p>
+    </div>
+  </div>
+  <div class="chips-box"><div class="chips-label">Selected Archetypes</div><div class="chips" id="archChips"><span class="chips-empty">None selected yet</span></div></div>
+  <div class="card-controls">
+    <button class="filter-btn active" onclick="filterCards('arch','all',this)">All</button>
+    <button class="filter-btn" data-g="Knowledge &amp; Transformation" onclick="filterCards('arch','Knowledge & Transformation',this)">Knowledge</button>
+    <button class="filter-btn" data-g="Journey &amp; Conquest" onclick="filterCards('arch','Journey & Conquest',this)">Journey</button>
+    <button class="filter-btn" data-g="Experience &amp; Lifestyle" onclick="filterCards('arch','Experience & Lifestyle',this)">Experience</button>
+    <button class="filter-btn" data-g="Ideology &amp; Purpose" onclick="filterCards('arch','Ideology & Purpose',this)">Ideology</button>
+    <div class="sel-counter"><strong id="archCount">0</strong> / 3</div>
+  </div>
+  <div class="cards-grid" id="archGrid"></div>
+</div>
+
+<!-- STEP 4 -->
+<div class="step-panel" id="step-4">
+  <div class="step-header">
+    <div class="step-number-col">
+      <div class="step-num-big">04</div>
+      <div class="step-num-of">/ 09</div>
+    </div>
+    <div class="step-text-col">
+      <div class="step-eyebrow">Step 04 · 09</div>
+      <h1 class="step-title">Generate the Concept</h1>
+      <p class="step-desc">Combine mechanics, attributes, and archetypes into the character's core identity. Generate with AI or write freely.</p>
+    </div>
+  </div>
+  <div id="conceptCardsArea"></div>
+  <div class="sketch-card" style="margin-bottom:1.5rem">
+    <div class="form-label" style="margin-bottom:.4rem">⚙ Mechanic</div>
+    <div id="conceptMechDisplay" style="font-family:var(--f-head);font-size:1rem;color:var(--ink);font-style:italic"></div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">Your Concept</label>
+    <textarea class="form-textarea" id="finalConceptText" style="min-height:140px" placeholder="Write your character&#39;s concept here — combine the mechanic, attributes, and archetypes into a core identity..."></textarea>
+  </div>
+</div>
+
+<!-- STEP 5 -->
+<div class="step-panel" id="step-5">
+  <div class="step-header">
+    <div class="step-number-col">
+      <div class="step-num-big">05</div>
+      <div class="step-num-of">/ 09</div>
+    </div>
+    <div class="step-text-col">
+      <div class="step-eyebrow">Step 05 · 09</div>
+      <h1 class="step-title">Naming</h1>
+      <p class="step-desc">With identity, tone, and world context in hand — the name becomes meaningful and coherent.</p>
+    </div>
+  </div>
+  <div class="mechanic-wrap">
+    <div class="sketch-card">
+      <div class="form-group">
+        <label class="form-label">Character Name</label>
+        <input class="form-input" id="naming_name" type="text" placeholder="Enter the character's name..." style="font-family:var(--f-head);font-size:1.3rem;font-weight:700">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Title / Epithet</label>
+        <input class="form-input" id="naming_title" type="text" placeholder="e.g. The Relentless, Kin of the Void, Ironborne...">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Name Origin / Meaning</label>
+        <input class="form-input" id="naming_origin" type="text" placeholder="Cultural root, symbolic meaning, or lore reference...">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 6 -->
+<div class="step-panel" id="step-6">
+  <div class="step-header">
+    <div class="step-number-col">
+      <div class="step-num-big">06</div>
+      <div class="step-num-of">/ 09</div>
+    </div>
+    <div class="step-text-col">
+      <div class="step-eyebrow">Step 06 · 09</div>
+      <h1 class="step-title">Reference Exploration</h1>
+      <p class="step-desc">Using your concept, search for similar characters and aesthetic references. Transform vague inspiration into targeted exploration.</p>
+    </div>
+  </div>
+  <div class="details-grid" style="grid-template-columns:1fr">
+    <div class="detail-card">
+      <div class="form-label">Similar Characters / Inspirations</div>
+      <textarea class="form-textarea" id="ref_characters" placeholder="Characters that inspired this concept — from games, films, books, mythology..."></textarea>
+    </div>
+    <div class="detail-card">
+      <div class="form-label">Visual Aesthetic / Moodboard Notes</div>
+      <textarea class="form-textarea" id="ref_visual" placeholder="Visual style, mood, color palette references, artists, games with similar aesthetics..."></textarea>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 7 -->
+<div class="step-panel" id="step-7">
+  <div class="step-header">
+    <div class="step-number-col">
+      <div class="step-num-big">07</div>
+      <div class="step-num-of">/ 09</div>
+    </div>
+    <div class="step-text-col">
+      <div class="step-eyebrow">Step 07 · 09</div>
+      <h1 class="step-title">Character Details</h1>
+      <p class="step-desc">With a strong concept, fill the details that make your character complete and believable.</p>
+    </div>
+  </div>
+  <div class="details-grid">
+    <div class="detail-card"><div class="form-label">Race / Species</div><input class="form-input" id="det_race" type="text" placeholder="Human, Elf, Android, Undead..."></div>
+    <div class="detail-card"><div class="form-label">Class / Role</div><input class="form-input" id="det_class" type="text" placeholder="Assassin, Paladin, Engineer, Shaman..."></div>
+    <div class="detail-card"><div class="form-label">Culture / Origin</div><input class="form-input" id="det_culture" type="text" placeholder="Nation, tribe, faction, region..."></div>
+    <div class="detail-card"><div class="form-label">Equipment / Weapons</div><input class="form-input" id="det_equipment" type="text" placeholder="Weapons, armor, tools, artifacts..."></div>
+    <div class="detail-card"><div class="form-label">Combat Style</div><input class="form-input" id="det_combat" type="text" placeholder="How do they fight? Tactics, approach..."></div>
+    <div class="detail-card" style="grid-column:1/-1"><div class="form-label">Background / Origin Story</div><textarea class="form-textarea" id="det_background" placeholder="Past events, origin, key moments..."></textarea></div>
+    <div class="detail-card" style="grid-column:1/-1"><div class="form-label">Personality Traits</div><textarea class="form-textarea" id="det_personality" placeholder="Distinctive traits, quirks, speech patterns, fears, motivations..."></textarea></div>
+    <div class="detail-card" style="grid-column:1/-1"><div class="form-label">Additional Notes</div><textarea class="form-textarea" id="det_notes" placeholder="Any other details..."></textarea></div>
+  </div>
+</div>
+
+<!-- STEP 8 -->
+<div class="step-panel" id="step-8">
+  <div class="step-header">
+    <div class="step-number-col">
+      <div class="step-num-big">08</div>
+      <div class="step-num-of">/ 09</div>
+    </div>
+    <div class="step-text-col">
+      <div class="step-eyebrow">Step 08 · 09</div>
+      <h1 class="step-title">Visual Concept</h1>
+      <p class="step-desc">Everything is defined — the visual process becomes faster, more consistent, and more intentional.</p>
+    </div>
+  </div>
+  <div class="visual-grid">
+    <div class="detail-card" style="grid-column:1/-1"><div class="form-label">Visual Description</div><textarea class="form-textarea" id="vis_description" placeholder="Physical appearance, silhouette, proportions, distinctive visual features..."></textarea></div>
+    <div class="detail-card"><div class="form-label">Color Palette</div><input class="form-input" id="vis_palette" type="text" placeholder="Primary, secondary, accent colors..."></div>
+    <div class="detail-card"><div class="form-label">Art Style</div><input class="form-input" id="vis_style" type="text" placeholder="Concept art, anime, realistic, painterly, pixel..."></div>
+    <div class="detail-card" style="grid-column:1/-1"><div class="form-label">Visual Notes</div><textarea class="form-textarea" id="vis_notes" placeholder="Key details about outfit, accessories, expressions, mood..."></textarea></div>
+  </div>
+</div>
+
+<!-- STEP 9 -->
+<div class="step-panel" id="step-9">
+  <div class="step-header">
+    <div class="step-number-col">
+      <div class="step-num-big">09</div>
+      <div class="step-num-of">/ 09</div>
+    </div>
+    <div class="step-text-col">
+      <div class="step-eyebrow">Step 09 · 09</div>
+      <h1 class="step-title">Final Concept</h1>
+      <p class="step-desc">The character stops being an idea and becomes a design asset. Review and export your complete character sheet.</p>
+    </div>
+  </div>
+  <div class="consolidate-sheet" id="consolidateSheet">
+    <div class="cs-header">
+      <div>
+        <div id="cs_name" class="cs-char-name">—</div>
+        <div id="cs_title" class="cs-char-title"></div>
+      </div>
+      <div class="cs-header-meta">Double A Framework<br>Character Sheet</div>
+    </div>
+    <div class="cs-grid" id="csGrid"></div>
+  </div>
+  <div class="export-row">
+    <button class="btn-export btn-pdf" onclick="exportPDF()">⬇ Download PDF</button>
+  </div>
+  <div class="nav-buttons">
+    <button class="btn btn-back" onclick="prevStep()">← Back</button>
+  </div>
+</div>
+
+<div class="nav-buttons" id="navButtons">
+  <button class="btn btn-back" id="prevBtn" onclick="prevStep()">← Back</button>
+  <button class="btn btn-next" id="nextBtn" onclick="nextStep()">Next →</button>
+</div>
+</main>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="cardModal" onclick="maybeClose(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-group" id="mGroup"></div>
+    <div class="modal-name" id="mName"></div>
+    <div class="modal-desc" id="mDesc"></div>
+    <div class="modal-ex-label">Key Characters</div>
+    <div class="modal-examples" id="mEx"></div>
+  </div>
+</div>
+
+<script>
+const CARDS = {"attributes": [{"group": "Social Dynamics & Emotions", "name": "Friendly", "description": "Demonstrates ease in establishing positive relationships with different characters in the game world. Acts cordially and openly when interacting with allies, strangers, or even potential adversaries. Seeks to maintain respect and balance in conversations and social situations. Their demeanor tends to generate trust and cooperation among the characters around them.", "examples": "Mario (Super Mario Bros.), Aloy (Horizon Zero Dawn), Tails (Sonic the Hedgehog)"}, {"group": "Performance, Strategy & Achievement", "name": "Aspirant", "description": "Expresses a strong desire to achieve high goals and gain recognition in the world around them. Maintains a constant focus on progress, success, or personal fulfillment. Demonstrates a willingness to face challenges that bring them closer to their goals. Their choices often reflect a pursuit of growth, power, or achievement.", "examples": "Ezio Auditore (Assassin’s Creed II), Jin Sakai (Ghost of Tsushima), Noctis (Final Fantasy XV)"}, {"group": "Social Dynamics & Emotions", "name": "Vibrant", "description": "Expresses constant energy and enthusiasm in the face of situations. Reacts to events with emotional intensity and a striking presence. Their attitude often inspires others, stimulating movement, action, or change around them. Demonstrates vitality even in the face of difficulties or tense moments.", "examples": "Tracer (Overwatch), Claptrap (Borderlands), Tiny Tina (Borderlands)"}, {"group": "Exploration, Values & World", "name": "Engaged", "description": "Demonstrates a deep commitment to values, causes, or ideals that they consider important. Acts with conviction when defending what they believe in. Shows a willingness to face obstacles when they perceive injustice or a threat to their principles. Their actions reveal a strong sense of purpose within the world of the story.", "examples": "Ellie (The Last of Us), Kara (Detroit: Become Human), Edelgard (Fire Emblem: Three Houses)"}, {"group": "Exploration, Values & World", "name": "Fearless", "description": "Reveals a willingness to face unknown, dangerous, or risky situations. Demonstrates curiosity and courage in exploring new places, challenges, or possibilities. Is not easily intimidated by obstacles or threats. Their attitude encourages movement and discovery within their work environment.", "examples": "Lara Croft (Tomb Raider), Samus Aran (Metroid), Link (The Legend of Zelda)"}, {"group": "Exploration, Values & World", "name": "Notifaga", "description": "Demonstrates a preference for intense, creative, or alternative social environments. Often values ​​cultural experiences, informal gatherings, and interactions outside conventional patterns. Reveals a free spirit and a taste for experiences involving expression, art, or spontaneous interaction. Their presence is frequently associated with vibrant or unconventional settings.", "examples": "Majima (Yakuza), Johnny Silverhand (Cyberpunk 2077), Bayonetta (Bayonetta)"}, {"group": "Social Dynamics & Emotions", "name": "Magnetic", "description": "Naturally attracts the attention and interest of other characters. Demonstrates a strong social presence and an ease in influencing those around them. Manages to generate empathy or fascination even without apparent effort. Their personality tends to occupy a central space in the social interactions of the narrative.", "examples": "Handsome Jack (Borderlands 2), Sephiroth (Final Fantasy VII), Lady Dimitrescu (Resident Evil Village)"}, {"group": "Social Dynamics & Emotions", "name": "Prudent", "description": "Demonstrates care in assessing risks and consequences before acting. Analyzes situations attentively and avoids impulsive decisions. Prefers strategies that reduce danger or uncertainty. Their attitude favors planning and safety when facing complex challenges.", "examples": "Garrus Vakarian (Mass Effect), Captain Price (Call of Duty), Solid Snake (Metal Gear Solid)"}, {"group": "Social Dynamics & Emotions", "name": "Cooperative", "description": "Demonstrates a willingness to collaborate with other characters in pursuit of common goals. Values ​​teamwork and the exchange of skills or knowledge. Shows ease in listening to ideas and adapting their actions for the benefit of the group. Their presence strengthens alliances and collective initiatives.", "examples": "Luigi (Super Mario Bros.), Tifa Lockhart (Final Fantasy VII), Elizabeth (BioShock Infinite)"}, {"group": "Performance, Strategy & Achievement", "name": "Combative", "description": "Demonstrates a strong competitive drive when facing challenges or opponents. Constantly seeks to prove their ability by overcoming obstacles and opponents. Sees disputes as opportunities to demonstrate skill and determination. Their attitude transforms conflicts into arenas where they can measure their strength and ability.", "examples": "Kratos (God of War), Doom Slayer (DOOM), Ryu (Street Fighter)"}, {"group": "Social Dynamics & Emotions", "name": "Self-confident", "description": "Expresses confidence in their own abilities and decisions. Demonstrates firmness in action even under pressure or uncertainty. Their attitude conveys stability to allies and commands respect in confrontational situations. Trusts their judgment and rarely hesitates to take responsibility.", "examples": "Dante (Devil May Cry), Bayonetta (Bayonetta), Jill Valentine (Resident Evil)"}, {"group": "Exploration, Values & World", "name": "Mundane", "description": "Reveals familiarity with different cultures, customs, or ways of thinking. Demonstrates openness to diverse experiences and ease in moving between different environments. Interacts naturally with people from varied backgrounds. Their broad vision allows them to understand different perspectives of the world around them.", "examples": "Geralt (The Witcher 3), Dante (Devil May Cry), V (Cyberpunk 2077)"}, {"group": "Performance, Strategy & Achievement", "name": "Inventiveness", "description": "Shows an aptitude for imagining new solutions to complex problems. Demonstrates original thinking and a willingness to experiment with unusual approaches. Often sees possibilities where others see limitations. Their creativity frequently leads to unexpected solutions or alternative paths.", "examples": "Ratchet (Ratchet & Clank), Tony Stark (Marvel’s Avengers), Mei (Overwatch)"}, {"group": "Exploration, Values & World", "name": "Analytics", "description": "Demonstrates a tendency to observe situations with a critical and rational eye. Carefully examines information before drawing conclusions or making decisions. Seeks to understand patterns, causes, and consequences behind events. Their approach favors strategies based on logic and careful evaluation.", "examples": "Batman (Batman: Arkham Series), Cortana (Halo), 9S (NieR: Automata)"}, {"group": "Intellect, Knowledge & Sensitivity", "name": "Erudite", "description": "He expresses a deep appreciation for knowledge, culture, and learning. He demonstrates familiarity with complex ideas, stories, or knowledge accumulated over time. He values ​​intellectual understanding and tends to interpret the world based on reflection and study. His perspective is often influenced by cultural or historical references.", "examples": "Mordin Solus (Mass Effect), Leliana (Dragon Age)"}, {"group": "Intellect, Knowledge & Sensitivity", "name": "Investigative", "description": "She demonstrates persistent curiosity about events, places, or people. She observes details and seeks to understand what is not immediately evident. She questions superficial versions of facts and looks for evidence that reveals the truth behind situations. Her attitude often leads her to uncover mysteries or secrets.", "examples": "Leon Kennedy (Resident Evil 4), Saga Anderson (Alan Wake 2), Connor (Detroit: Become Human)"}, {"group": "Performance, Strategy & Achievement", "name": "Committed", "description": "Reveals consistent dedication to the tasks, goals, or responsibilities undertaken. Demonstrates perseverance in working towards something considered important. Maintains focus even in the face of difficulties or distractions. Their attitude conveys reliability and consistency in their actions.", "examples": "Arthur Morgan (Red Dead Redemption 2), Commander Shepard (Mass Effect), Aloy (Horizon Zero Dawn)"}, {"group": "Intellect, Knowledge & Sensitivity", "name": "Kind", "description": "Expresses gentleness and care when dealing with others. Demonstrates sensitivity in perceiving the emotions, vulnerabilities, or needs of others. Usually acts with consideration and respect, avoiding causing unnecessary discomfort or suffering. Their presence tends to make environments and relationships more welcoming.", "examples": "Yuna (Final Fantasy X), Toriel (Undertale), Aerith (Final Fantasy VII)"}, {"group": "Performance, Strategy & Achievement", "name": "Provocative", "description": "Demonstrates a propensity to challenge established ideas or provoke reactions in others. Questions norms, positions, or attitudes that he or she considers weak or inconsistent. Uses verbal confrontation or bold attitudes to stimulate change or reflection. His or her presence frequently generates tension, debate, or transformation.", "examples": "Vaas Montenegro (Far Cry 3), Trevor Philips (GTA V), Kefka (Final Fantasy VI)"}, {"group": "Performance, Strategy & Achievement", "name": "Intrepid", "description": "Reveals intense courage in the face of danger or threatening situations. Demonstrates a willingness to act even when the risk is evident. Does not allow fear to determine their choices or limits. Their attitude inspires respect and can encourage other characters to face difficult challenges.", "examples": "Sam Bridges (Death Stranding), Faith (Mirror’s Edge), Aloy (Horizon Zero Dawn)"}, {"group": "Performance, Strategy & Achievement", "name": "Meticulous", "description": "Demonstrates meticulous attention to detail when observing situations, environments, or the behavior of other characters. Analyzes subtle variations and signs that often go unnoticed. This sensitivity to detail allows for a better understanding of complex circumstances or the identification of relevant information. Their actions reveal precision and diligence in everything they do.", "examples": "Sherlock Holmes (Sherlock Holmes: Crimes and Punishments), Phoenix Wright (Ace Attorney), Aloy (Horizon Zero Dawn)"}, {"group": "Performance, Strategy & Achievement", "name": "Resolved", "description": "Demonstrates firmness in making decisions and standing by choices even in the face of pressure or adversity. Acts with conviction and rarely abandons goals that are considered important. Maintains focus on their objectives and resists external doubts or unexpected obstacles. Their demeanor conveys determination and stability to those around them.", "examples": "Ellie (The Last of Us Part II), Claire Redfield (Resident Evil 2), Jill Valentine (Resident Evil 3)"}, {"group": "Intellect, Knowledge & Sensitivity", "name": "Methodical", "description": "Demonstrates organization and discipline when handling tasks, challenges, or responsibilities. Prefers to follow clear and structured processes rather than acting impulsively. Plans actions carefully and values ​​order, consistency, and preparation. This approach tends to make their actions predictable and efficient.", "examples": "Agent 47 (Hitman), Isaac Clarke (Dead Space), Garrus Vakarian (Mass Effect)"}, {"group": "Intellect, Knowledge & Sensitivity", "name": "Reserved", "description": "They demonstrate discretion when revealing their thoughts, emotions, or intentions. They prefer to observe before speaking and rarely expose their inner life immediately. They maintain a certain emotional distance until they feel confident in the people around them. This posture creates an aura of mystery and caution in their interactions.", "examples": "The Knight (Hollow Knight), Corvo Attano (Dishonored), Sam Fisher (Splinter Cell)"}, {"group": "Exploration, Values & World", "name": "Innovative", "description": "Demonstrates an inclination to break patterns and propose ideas that differ from conventional ones. Seeks original solutions to problems and does not easily adhere to traditions or established methods. Values ​​experimentation and change as forms of evolution. Their attitude often leads to unexpected transformations in their surrounding environment.", "examples": "Chell (Portal), Atlas (BioShock), Ratchet (Ratchet & Clank)"}, {"group": "Exploration, Values & World", "name": "Transitory", "description": "Demonstrates a fleeting relationship with places, people, or experiences. Tends to live intensely in the moment, but without forming lasting attachments. Moves easily between different contexts and situations. Their presence can mark important events even if they stay only a short time in each place.", "examples": "The Stranger (Journey), The Hunter (Bloodborne), The Tarnished (Elden Ring)"}, {"group": "Intellect, Knowledge & Sensitivity", "name": "Sophisticated", "description": "Demonstrates refinement in behavior, taste, and manner of expression. Values ​​elegance in attitudes and appreciates high-level cultural or social environments or experiences. Acts with composure and a keen aesthetic sense. Their presence conveys distinction and care for image and posture.", "examples": "Bayonetta (Bayonetta), Ada Wong (Resident Evil), Morrigan (Dragon Age)"}, {"group": "Intellect, Knowledge & Sensitivity", "name": "Diplomatic", "description": "Demonstrates the ability to balance conflicting interests between different individuals or groups. Seeks solutions that avoid direct confrontation whenever possible. Knows how to choose words and actions that reduce tension and promote understanding. Their performance favors negotiations and alliances.", "examples": "Leliana (Dragon Age), Tali’Zorah (Mass Effect), Princess Zelda (The Legend of Zelda)"}, {"group": "Exploration, Values & World", "name": "Impulsive", "description": "Demonstrates a tendency to act quickly, guided by emotions or intuition. Reacts to situations without long periods of reflection. This spontaneity can lead to bold or unexpected decisions. Their attitude often introduces movement and unpredictability into events.", "examples": "Sonic (Sonic the Hedgehog), V (Cyberpunk 2077), Travis Touchdown (No More Heroes)"}, {"group": "Intellect, Knowledge & Sensitivity", "name": "Veteran", "description": "Demonstrates maturity gained through accumulated experience over time. Recognizes patterns from past situations and uses this knowledge to guide their choices. Acts with confidence based on previous experiences. Their presence conveys authority and practical wisdom.", "examples": "Master Chief (Halo), Geralt (The Witcher 3), Snake (Metal Gear Solid)"}, {"group": "Social Dynamics & Emotions", "name": "Adaptable", "description": "Demonstrates the ability to adjust behavior in the face of changes or unexpected circumstances. Handles new environments or challenges with flexibility. Finds ways to reorganize when original plans cease to work. This skill allows for maintaining effectiveness even in unstable contexts.", "examples": "Link (The Legend of Zelda: Breath of the Wild), Lara Croft (Tomb Raider), Aloy (Horizon)"}, {"group": "Social Dynamics & Emotions", "name": "Pleasurable", "description": "Demonstrates an active search for intense sensory or emotional experiences. Values ​​moments of satisfaction, celebration, and enjoyment of life. Sees opportunities for pleasure even in difficult situations. Their attitude tends to transform experiences into memorable moments.", "examples": "Majima (Yakuza), Trevor Philips (GTA V), Wario (Wario Land)"}, {"group": "Intellect, Knowledge & Sensitivity", "name": "Full text", "description": "Demonstrates consistent commitment to ethical principles and honesty. Acts in accordance with values ​​he/she considers correct, even when this brings difficulties. Maintains consistency between words and actions. His/her demeanor inspires confidence in allies and respect from adversaries.", "examples": "Captain America (Marvel’s Avengers), Commander Shepard (Mass Effect), Kiryu (Yakuza)"}, {"group": "Social Dynamics & Emotions", "name": "Empathetic", "description": "Demonstrates sensitivity in perceiving the emotions, needs, or suffering of others. Is able to easily understand the feelings of others. This ability fosters caring, supportive, and compassionate attitudes. Their presence creates deep emotional connections between characters.", "examples": "Clementine (The Walking Dead), Ellie (The Last of Us), Yuna (Final Fantasy X)"}, {"group": "Social Dynamics & Emotions", "name": "Modest", "description": "Demonstrates humility when dealing with personal achievements or skills. Avoids seeking excessive recognition or ostentatious displays of attention. Prefers to let actions speak for themselves. This attitude conveys simplicity and authenticity.", "examples": "Link (The Legend of Zelda), Isaac (Golden Sun), Amicia (A Plague Tale)"}, {"group": "Intellect, Knowledge & Sensitivity", "name": "Utopian", "description": "He demonstrates a belief in the possibility of positively transforming the world. He believes in high ideals and fights to make them a reality. He maintains hope even in the face of difficult circumstances. His vision inspires other characters to imagine better futures.", "examples": "Optimus Prime (Transformers Devastation), Edelgard (Fire Emblem), Terra (Final Fantasy VI)"}, {"group": "Exploration, Values & World", "name": "Eccentric", "description": "They demonstrate unconventional behaviors, tastes, or ways of thinking. They act unpredictably or outside of common social expectations. This uniqueness makes their presence striking and often intriguing. Their attitude can surprise both allies and adversaries.", "examples": "Dr. Eggman (Sonic), Junkrat (Overwatch), Mettaton (Undertale)"}, {"group": "Exploration, Values & World", "name": "Self-employed", "description": "Demonstrates a strong sense of independence in their decisions and actions. Prefers to rely on their own abilities rather than depend on others. Values ​​freedom of choice and personal responsibility. Their attitude reveals self-sufficiency and initiative.", "examples": "Samus Aran (Metroid), Aloy (Horizon), 2B (NieR: Automata)"}, {"group": "Performance, Strategy & Achievement", "name": "Stimulant", "description": "Demonstrates the ability to inspire enthusiasm and motivation in others. Their words or actions encourage movement, courage, or hope. They are able to energize groups facing difficulties. Their presence often drives significant changes or advancements.", "examples": "Kirby (Kirby), Mario (Super Mario Bros.), Ichiban Kasuga (Yakuza: Like a Dragon)"}, {"group": "Exploration, Values & World", "name": "Happy", "description": "He demonstrates a lighthearted and positive attitude towards life's situations. He reacts with good humor even when facing challenges. This attitude creates more relaxed and pleasant environments. His emotional energy tends to ease tensions around him.", "examples": "Mario (Super Mario Bros.), Kirby (Kirby), Sackboy (LittleBigPlanet)"}, {"group": "Social Dynamics & Emotions", "name": "Fallen", "description": "Demonstrates a strong commitment to people, causes, or alliances that he/she considers important. Maintains support even in times of adversity. Does not easily abandon those in whom he/she places trust. His/her attitude reveals consistency and devotion in relationships.", "examples": "Garrus Vakarian (Mass Effect), Tails (Sonic), Dogmeat (Fallout)"}, {"group": "Exploration, Values & World", "name": "Progressive", "description": "Demonstrates openness to social, cultural, or ideological change. Questions traditional structures when perceived as having limitations or injustices. Seeks paths that expand freedom or collective evolution. Their vision frequently challenges established patterns.", "examples": "Connor (Detroit: Become Human), Adam Jensen (Deus Ex), Edelgard (Fire Emblem)"}, {"group": "Social Dynamics & Emotions", "name": "Conciliator", "description": "Demonstrates the ability to bring people in conflict closer together and restore balance in relationships. Listens to different perspectives before seeking solutions. Values ​​harmony and understanding among those involved. Their actions promote reconciliation and cooperation.", "examples": "Aloy (Horizon), Princess Zelda (Zelda), Alistair (Dragon Age)"}, {"group": "Performance, Strategy & Achievement", "name": "Remarkable", "description": "They demonstrate a memorable presence that leaves a lasting impression on those they meet. Their personality or attitudes create a significant impact on the situations in which they participate. Even brief appearances can be clearly remembered. Their influence tends to extend beyond the immediate moment.", "examples": "Kratos (God of War), Sephiroth (Final Fantasy VII), Handsome Jack (Borderlands)"}, {"group": "Intellect, Knowledge & Sensitivity", "name": "Enigmatic", "description": "He displays behavior that is difficult to fully interpret. He keeps some of his intentions or thoughts hidden. This aura of mystery sparks curiosity and speculation in the other characters. His presence often generates doubt and fascination.", "examples": "G-Man (Half-Life), The Outsider (Dishonored), Ranni (Elden Ring)"}, {"group": "Performance, Strategy & Achievement", "name": "Encouraging", "description": "Demonstrates the ability to strengthen the confidence and courage of others. Offers emotional support and motivation during difficult times. Their words and actions help allies face challenges. Their presence promotes resilience and collective determination.", "examples": "Ellie (The Last of Us), Yuna (Final Fantasy X), Tifa (Final Fantasy VII)"}, {"group": "Intellect, Knowledge & Sensitivity", "name": "Nostalgic", "description": "Demonstrates a strong emotional connection to memories, stories, or experiences from the past. Recalls past events with fondness or nostalgia. Values ​​traditions, memories, and significant moments lived in the past. This backward look influences their decisions and feelings in the present.", "examples": "Max Payne (Max Payne), Joel (The Last of Us), Arthur Morgan (Red Dead Redemption 2)"}, {"group": "Exploration, Values & World", "name": "Bold", "description": "Demonstrates courage to challenge limits, norms, or dangers. Acts boldly in the face of opportunities or risks that others would avoid. Prefers to confront the unknown rather than remain safe. Their attitude often triggers unexpected changes or achievements.", "examples": "Lara Croft (Tomb Raider), Dante (Devil May Cry), Bayonetta (Bayonetta)"}, {"group": "Social Dynamics & Emotions", "name": "Guardian", "description": "Demonstrates a strong instinct to protect people, places, or important values. Acts with vigilance and responsibility when caring for what they consider precious. Does not hesitate to put themselves at risk to preserve what they defend. Their attitude reveals a deep sense of duty and protectiveness.", "examples": "Zelda (The Legend of Zelda), Samus Aran (Metroid), Aloy (Horizon)"}, {"group": "Exploration, Values & World", "name": "Skeptical", "description": "Demonstrates a tendency to question statements, promises, or versions of events. Avoids accepting information without reflection or evidence. Analyzes situations critically before forming an opinion. This attitude reduces naiveté and encourages deeper investigation.", "examples": "Geralt (The Witcher 3), Adam Jensen (Deus Ex), Joel (The Last of Us)"}, {"group": "Exploration, Values & World", "name": "Untamed", "description": "Demonstrates a rebellious spirit that resists control or submission. Refuses to accept limitations imposed by authority or convention when considered unjust. Acts with a strong sense of personal freedom. Their attitude frequently challenges established power structures.", "examples": "Kratos (God of War), Trevor (GTA V), V (Cyberpunk 2077)"}, {"group": "Intellect, Knowledge & Sensitivity", "name": "Trusting", "description": "She demonstrates emotional security and conviction in her own abilities. She acts calmly even under pressure or uncertainty. Her demeanor conveys stability and natural leadership. This confidence positively influences how others perceive her.", "examples": "Bayonetta (Bayonetta), Dante (Devil May Cry), Ryu (Street Fighter)"}, {"group": "Social Dynamics & Emotions", "name": "Seductive", "description": "Demonstrates an ability to evoke attraction, fascination, or emotional interest in others. Uses charm, presence, and language to influence relationships. Their demeanor can provoke desire, admiration, or curiosity. This characteristic strongly impacts social interactions and dynamics between characters.", "examples": "Ada Wong (Resident Evil), Morrigan (Dragon Age), Bayonetta (Bayonetta)"}, {"group": "Social Dynamics & Emotions", "name": "Extroverted", "description": "Demonstrates ease in socializing and interacting with different people. Feels comfortable in busy or interactive environments. Expresses thoughts and emotions openly. Their presence often energizes or enlivens groups.", "examples": "Sonic (Sonic), Ichiban Kasuga (Yakuza: Like a Dragon), Tracer (Overwatch)"}, {"group": "Intellect, Knowledge & Sensitivity", "name": "Creator", "description": "Demonstrates imagination focused on future possibilities and desired scenarios. Dreams of realities different from the present and envisions paths to achieve them. Maintains hope even when facing difficult obstacles. Their vision inspires others to believe in positive change.", "examples": "Zelda (Zelda), Terra (Final Fantasy VI), Sora (Kingdom Hearts)"}, {"group": "Performance, Strategy & Achievement", "name": "Diligent", "description": "Demonstrates consistent dedication to work and the responsibilities undertaken. Tackles tasks with commitment and persistence. Prefers continuous effort to easy solutions or shortcuts. Their attitude reveals a commitment to results and progress.", "examples": "Amicia (A Plague Tale), Aloy (Horizon), Isaac Clarke (Dead Space)"}, {"group": "Performance, Strategy & Achievement", "name": "Reformer", "description": "Demonstrates a willingness to transform structures, systems, or situations that they consider inadequate. Questions existing models and seeks to create better alternatives. Acts with the intention of promoting significant change. Their attitude often leads to processes of renewal or disruption.", "examples": "Connor (Detroit: Become Human), Edelgard (Fire Emblem), Adam Jensen (Deus Ex)"}, {"group": "Intellect, Knowledge & Sensitivity", "name": "Clara", "description": "Demonstrates frankness and transparency when communicating thoughts, intentions, or feelings. Prefers to express themselves directly rather than withhold information. This attitude fosters trust and understanding in relationships. Their communication tends to reduce misunderstandings.", "examples": "Lara Croft (Tomb Raider), Shepard (Mass Effect), Kiryu (Yakuza)"}, {"group": "Performance, Strategy & Achievement", "name": "Multifaceted", "description": "Demonstrates a variety of interests, skills, or ways of acting. Is able to adapt their posture according to the context or situation. Reveals different aspects of their personality depending on the circumstances. This diversity makes their behavior complex and difficult to predict.", "examples": "Geralt (The Witcher 3), V (Cyberpunk 2077), Shepard (Mass Effect)"}, {"group": "Performance, Strategy & Achievement", "name": "Strategic", "description": "Demonstrates the ability to view situations with a broad perspective and long-term planning. Analyzes future possibilities before acting. Connects events and decisions within a larger logic of objectives. Their approach favors calculated actions and lasting results.", "examples": "Solid Snake (Metal Gear Solid), Garrus Vakarian (Mass Effect), Thrawn (Star Wars: Empire at War)"}], "archetypes": [{"group": "Knowledge & Transformation", "name": "Transmuter", "description": "It seeks to transform the world around it through knowledge, experimentation, and discovery. It is always trying to combine different ideas, technologies, or forces to generate something new. Its presence in a story is usually linked to inventions, radical changes, or unexpected discoveries.", "examples": "Dr. Nefarious (Ratchet & Clank)"}, {"group": "Knowledge & Transformation", "name": "Researcher", "description": "This character is dedicated to understanding how the world works through observation, study, and analysis. They value knowledge and evidence above opinions or beliefs. In game stories, they are usually the character who investigates phenomena, develops theories, or finds explanations for complex events.", "examples": "Mordin Solus (Mass Effect)"}, {"group": "Knowledge & Transformation", "name": "Visionary", "description": "They envision future possibilities before others. They often imagine scenarios, technologies, or changes that don't yet exist but could transform the world. Their motivation is usually linked to building something new or preparing for what's to come.", "examples": "Elizabeth (BioShock Infinite)"}, {"group": "Knowledge & Transformation", "name": "Manipulator", "description": "Uses tricks, illusions, or psychological strategies to influence what others perceive as reality. Prefers to deceive or confuse opponents rather than confront them directly. In game narratives, often controls situations behind the scenes or creates clever traps.", "examples": "Loki (Smite)"}, {"group": "Knowledge & Transformation", "name": "Champion", "description": "It lives to test its physical limits and prove its superiority in challenges or competitions. It demonstrates discipline, endurance, and a constant desire for self-improvement. In stories, it often represents strength, perseverance, and dedication to training.", "examples": "Ryu (Street Fighter)"}, {"group": "Knowledge & Transformation", "name": "Warrior", "description": "He confronts conflicts directly and decisively. He possesses courage, combat skills, and a strong sense of duty when faced with threats. His presence is usually linked to battles, protecting allies, or confronting dangers.", "examples": "Kratos (God of War)"}, {"group": "Knowledge & Transformation", "name": "Sacrificial", "description": "You are willing to give up comfort, security, or even your own life for a greater cause. You act guided by deep convictions and a sense of responsibility. In narratives, it often symbolizes devotion, moral courage, and extreme altruism.", "examples": "Joel (The Last of Us)"}, {"group": "Knowledge & Transformation", "name": "Hero", "description": "They take center stage in the journey of overcoming challenges and threats. They often act to protect others, restore balance, or ward off destructive forces. Their path typically involves personal growth, courage, and responsibility.", "examples": "Link (The Legend of Zelda)"}, {"group": "Knowledge & Transformation", "name": "Expert", "description": "He has a deep understanding of a specific skill or area of ​​expertise. Other characters often turn to him when they need precision or technical expertise. His contribution is often essential in solving complex problems.", "examples": "Gordon Freeman (Half-Life)"}, {"group": "Knowledge & Transformation", "name": "Speaker", "description": "Communicates ideas clearly and persuasively, influencing the thoughts or decisions of others. Has an aptitude for representing groups or causes. Their strength lies in their words and ability to mobilize people.", "examples": "Johnny Silverhand (Cyberpunk 2077)"}, {"group": "Knowledge & Transformation", "name": "Spiritualist", "description": "Maintains a deep connection with spiritual, natural, or mystical forces. Acts as an intermediary between the material world and invisible dimensions. In game narratives, often guides other characters or interprets supernatural signs.", "examples": "Thrall (Warcraft)"}, {"group": "Knowledge & Transformation", "name": "Fearless", "description": "He faces dangers without hesitation. He demonstrates courage even in situations that would frighten most people. His attitude inspires allies and challenges adversaries.", "examples": "Lara Croft (Tomb Raider)"}, {"group": "Knowledge & Transformation", "name": "Pioneer", "description": "It ventures into uncharted territory in search of new possibilities. It is not afraid to break with traditions or explore paths never before attempted. In stories, it represents discovery, innovation, and an adventurous spirit.", "examples": "Samus Aran (Metroid)"}, {"group": "Knowledge & Transformation", "name": "Creator", "description": "Expresses ideas and emotions through artistic or creative forms. Seeks to produce something that inspires, moves, or represents their worldview. In games, they may appear as an artist, inventor, or builder of new realities.", "examples": "Ellie (The Last of Us Part II)"}, {"group": "Knowledge & Transformation", "name": "Conceptor", "description": "He dedicates himself to imagining and structuring new ideas, projects, or systems. He prefers to think about solutions and plan structures before they exist. His mind functions like a laboratory of possibilities.", "examples": "Tony Stark (Marvel’s Avengers)"}, {"group": "Journey & Conquest", "name": "Pilgrim", "description": "It lives in constant motion, seeking purpose or meaning along its journey. The path traveled is as important as the final destination. In narratives, it symbolizes personal growth and inner discovery.", "examples": "The Wanderer (Shadow of the Colossus)"}, {"group": "Journey & Conquest", "name": "Globalist", "description": "Feels part of a vast and diverse world. Moves easily between different cultures, environments, or groups. Tends to value diversity, connection, and the exchange of experiences.", "examples": "Geralt (The Witcher 3)"}, {"group": "Journey & Conquest", "name": "Answering machine", "description": "Questions established norms and challenges systems that are considered unfair or limiting. Does not accept rules simply because of tradition. Their attitude often provokes significant changes or conflicts.", "examples": "Connor (Detroit: Become Human)"}, {"group": "Journey & Conquest", "name": "Wandering", "description": "He lives without fixed roots, moving between places and situations. He sees the world as an open space of possibilities. His journey often involves unexpected encounters and constant discoveries.", "examples": "Mad Max (Mad Max)"}, {"group": "Journey & Conquest", "name": "Explorer", "description": "Driven by curiosity and a desire to discover the unknown. Seeks new places, secrets, or experiences. In games, it represents the spirit of adventure and discovery.", "examples": "Aloy (Horizon Zero Dawn)"}, {"group": "Journey & Conquest", "name": "Insurgent", "description": "Refuses to submit to authorities or systems that they consider oppressive. Prefers to fight for freedom rather than obey blindly. In narratives, they often lead revolts or resistance movements.", "examples": "V (Cyberpunk 2077)"}, {"group": "Journey & Conquest", "name": "Subversive", "description": "It challenges social or political structures through radical or provocative attitudes. It seeks to dismantle existing systems to create something different. Its presence often generates instability and transformation.", "examples": "Trevor Philips (GTA V)"}, {"group": "Journey & Conquest", "name": "Militant", "description": "They dedicate their energy to defending a cause or movement. They actively work to promote social or political change. Their motivation comes from strong convictions and a sense of mission.", "examples": "Abby (The Last of Us Part II)"}, {"group": "Journey & Conquest", "name": "Humorist", "description": "Uses humor to interpret the world and provoke reactions in people. Can relieve tension or reveal truths through comedy. Its presence brings lightness, critique, or irony to the narrative.", "examples": "Claptrap (Borderlands)"}, {"group": "Journey & Conquest", "name": "Naive", "description": "Observe the world with curiosity and simplicity. Often, perceive situations without malice or prejudice. This innocent perspective can reveal truths that others ignore.", "examples": "Chibi-Robo (Chibi-Robo!)"}, {"group": "Journey & Conquest", "name": "Festive", "description": "Seeks fun, celebration, and moments of shared joy. Values ​​social gatherings and intense experiences. Their energy tends to be contagious.", "examples": "Majima (Yakuza)"}, {"group": "Journey & Conquest", "name": "Metamorfo", "description": "It possesses a fluid identity or a capacity for constant adaptation. It assumes different roles depending on the situation. Its changeable nature creates unpredictability in the stories.", "examples": "V (Cyberpunk 2077)"}, {"group": "Journey & Conquest", "name": "From Satire", "description": "He uses critical humor to expose contradictions or flaws in society. He prefers to provoke reflection through irony or exaggeration. His vision reveals hidden aspects of reality.", "examples": "Deadpool (Marvel vs Capcom)"}, {"group": "Journey & Conquest", "name": "Profaner", "description": "It challenges symbols, beliefs, or traditions considered untouchable. It provocatively questions established values. Its attitude often generates shock or debate.", "examples": "Kefka (Final Fantasy VI)"}, {"group": "Journey & Conquest", "name": "Looter", "description": "They live outside the rules of convention, seeking wealth or freedom through adventure and risk. They tend to act boldly and opportunistically. In narratives, they represent a free and unpredictable spirit.", "examples": "Edward Kenway (Assassin’s Creed IV)"}, {"group": "Experience & Lifestyle", "name": "Excited", "description": "He demonstrates intense enthusiasm for ideas, experiences, or projects. His energy motivates others to get involved as well. He tends to see positive possibilities in situations.", "examples": "Kirby (Kirby)"}, {"group": "Experience & Lifestyle", "name": "Epicurean", "description": "They seek pleasure, comfort, and intense sensory experiences. They value living in the present and enjoying what life has to offer. Their philosophy revolves around personal satisfaction.", "examples": "Dante (Devil May Cry)"}, {"group": "Experience & Lifestyle", "name": "Primalist", "description": "It values ​​a direct connection with nature and simpler ways of life. It prefers natural balance over artificial or technological structures. It represents a return to origins.", "examples": "Amicia (A Plague Tale)"}, {"group": "Experience & Lifestyle", "name": "Nationalist", "description": "Demonstrates a strong emotional connection to their land, culture, or people. Defends values ​​and traditions that they consider fundamental to their community. Their motivation often involves collective identity.", "examples": "Jin Sakai (Ghost of Tsushima)"}, {"group": "Experience & Lifestyle", "name": "Seductive", "description": "Uses charm, presence, and language to attract or influence others. Has an ease in creating emotional bonds or arousing interest. In narratives, frequently manipulates social relationships.", "examples": "Bayonetta (Bayonetta)"}, {"group": "Experience & Lifestyle", "name": "Benefactor", "description": "They dedicate themselves to helping others without expecting anything in return. They demonstrate generosity and a deep sense of social responsibility. Their presence fosters solidarity and cooperation.", "examples": "Princess Zelda (Zelda)"}, {"group": "Experience & Lifestyle", "name": "Sensible", "description": "Perceives emotions and inner states of others with great intensity. Can understand feelings even without them being directly expressed. Their sensitivity influences relationships and decisions.", "examples": "Clementine (The Walking Dead)"}, {"group": "Experience & Lifestyle", "name": "Mediator", "description": "Acts as a bridge between different people or points of view. Seeks to resolve conflicts through dialogue and understanding. Their social skills promote balance in relationships.", "examples": "Garrus Vakarian (Mass Effect)"}, {"group": "Experience & Lifestyle", "name": "Citizen", "description": "It represents ordinary life within a society or community. Its concerns reflect everyday needs. It often symbolizes the point of view of ordinary people.", "examples": "Arthur Morgan (Red Dead Redemption 2)"}, {"group": "Experience & Lifestyle", "name": "Representative", "description": "Defends collective interests and seeks to give voice to groups or communities. Assumes political or social responsibilities on behalf of others. Their work involves leadership and negotiation.", "examples": "Commander Shepard (Mass Effect)"}, {"group": "Experience & Lifestyle", "name": "Pragmatist", "description": "Prefers practical solutions over theories or idealizations. Evaluates situations focusing on concrete results. Decisions are usually guided by efficiency.", "examples": "Adam Jensen (Deus Ex)"}, {"group": "Experience & Lifestyle", "name": "Devotee", "description": "They dedicate themselves with loyalty and discipline to serving a cause, person, or institution. They place duty and commitment above personal interests. Their motivation stems from loyalty.", "examples": "Templar Knight (Assassin’s Creed)"}, {"group": "Experience & Lifestyle", "name": "Connector", "description": "It values ​​social interaction and the building of relationship networks. It facilitates meetings, partnerships, and exchanges between different people. Its presence strengthens communities.", "examples": "Ichiban Kasuga (Yakuza Like a Dragon)"}, {"group": "Experience & Lifestyle", "name": "Healer", "description": "Dedicated to caring for the physical or emotional health of others. Seeks to restore balance and well-being. Represents support, care, and recovery.", "examples": "Mercy (Overwatch)"}, {"group": "Experience & Lifestyle", "name": "Sentinel", "description": "Maintains constant vigilance to protect something or someone. Observes dangers and acts quickly in the face of threats. Represents protection and responsibility.", "examples": "Batman (Arkham Series)"}, {"group": "Ideology & Purpose", "name": "Dreamer", "description": "Imagine a better future and believe in possibilities yet to be realized. Nurture hope even in difficult times. Your vision inspires change and progress.", "examples": "Sora (Kingdom Hearts)"}, {"group": "Ideology & Purpose", "name": "Devotee", "description": "He lives guided by faith or a deep belief in something greater. His decisions reflect spiritual or religious commitment. It represents conviction and surrender.", "examples": "Joshua Graham (Fallout New Vegas)"}, {"group": "Ideology & Purpose", "name": "Novato", "description": "You are beginning your journey in a particular world or field of knowledge. You learn from experiences and mistakes along the way. It represents discovery and growth.", "examples": "The Kid (Bastion)"}, {"group": "Ideology & Purpose", "name": "Hopeful", "description": "Maintains a positive attitude even in the face of difficulties. Believes that situations can improve and works to make that happen. Their demeanor conveys optimism to others.", "examples": "Mario (Super Mario Bros.)"}, {"group": "Ideology & Purpose", "name": "Meticulous", "description": "He strives for perfection and precision in everything he does. He analyzes details and constantly seeks excellence. His discipline ensures quality and rigor.", "examples": "Agent 47 (Hitman)"}, {"group": "Ideology & Purpose", "name": "Sovereign", "description": "Exercises authority and responsibility over a territory or group. Makes decisions that impact many people. Represents power, leadership, and responsibility.", "examples": "Emperor Emhyr (The Witcher 3)"}, {"group": "Ideology & Purpose", "name": "Noble", "description": "Belongs to a high social class or holds values ​​associated with honor and tradition. Demonstrates dignity and a sense of duty. Their posture reflects status and responsibility.", "examples": "Prince of Persia (Prince of Persia)"}, {"group": "Ideology & Purpose", "name": "Negotiator", "description": "Resolves conflicts and agreements through diplomacy and dialogue. Seeks balance between opposing interests. Their skill avoids direct confrontation.", "examples": "Leliana (Dragon Age)"}, {"group": "Ideology & Purpose", "name": "Prisoner", "description": "They prefer isolation and distance from social life. They find meaning in reflection, solitude, or contemplation. Their wisdom often arises from being away from the world.", "examples": "Yoda (Star Wars Series)"}, {"group": "Ideology & Purpose", "name": "Mentor", "description": "Shares knowledge and guides other characters on their journeys. Acts as a guide or advisor. Their presence helps others grow and evolve.", "examples": "Master Oogway (Kung Fu Panda game)"}, {"group": "Ideology & Purpose", "name": "Thinker", "description": "They are dedicated to deep reflection on complex ideas, concepts, or problems. They seek to understand the world through reasoning and analysis. Their mind functions as their primary tool.", "examples": "Socrates-like NPC (Assassin’s Creed Odyssey)"}, {"group": "Ideology & Purpose", "name": "Commander", "description": "Leads people in conflict situations or strategic organization. Takes responsibility for important decisions. Inspires order, discipline, and direction.", "examples": "Captain Price (Call of Duty)"}, {"group": "Ideology & Purpose", "name": "Wise", "description": "He possesses a great deal of knowledge accumulated over time. He offers advice based on experience and reflection. His presence brings guidance and understanding.", "examples": "Paarthurnax (Skyrim)"}, {"group": "Ideology & Purpose", "name": "Tactical", "description": "Plans actions considering positioning, resources, and opportunities. Analyzes scenarios before acting. A strategic mind anticipates movements and consequences.", "examples": "Solid Snake (Metal Gear Solid)"}, {"group": "Ideology & Purpose", "name": "Researcher", "description": "They are dedicated to uncovering hidden truths and solving mysteries. They observe clues, analyze information, and connect the dots. Their role is to reveal what is hidden.", "examples": "Leon Kennedy (Resident Evil 4)"}]};
+
+const GC = {
+  'Social Dynamics & Emotions':         {ink:'#a83232',bg:'#fdf2f2'},
+  'Performance, Strategy & Achievement':{ink:'#1e5799',bg:'#f1f5fc'},
+  'Exploration, Values & World':        {ink:'#1f7a44',bg:'#f1faf4'},
+  'Intellect, Knowledge & Sensitivity': {ink:'#9a6c00',bg:'#fdf8ec'},
+  'Knowledge & Transformation':         {ink:'#6b28a0',bg:'#f7f1fd'},
+  'Journey & Conquest':                 {ink:'#0d7070',bg:'#f0faf9'},
+  'Experience & Lifestyle':             {ink:'#b84d10',bg:'#fdf5ef'},
+  'Ideology & Purpose':                 {ink:'#1c3a5c',bg:'#edf3fa'},
+};
+function gc(group){
+  const k=Object.keys(GC).find(k=>group.includes(k));
+  return k?GC[k]:{ink:'#4a4030',bg:'#fffef8'};
+}
+
+let ST={
+  currentStep:1,mechanic:'',
+  selectedAttrs:[],selectedArchs:[],chosenConcept:'',
+  naming:{name:'',title:'',origin:''},
+  references:{characters:'',visual:''},
+  details:{race:'',class:'',culture:'',equipment:'',combat:'',background:'',personality:'',notes:''},
+  visual:{description:'',palette:'',style:'',notes:''},
+};
+const STEPS=['Mechanic','Attributes','Archetypes','Concept','Name','References','Details','Visual','Final'];
+
+function init(){renderProgress();renderGrid('attr',CARDS.attributes,'attrGrid');renderGrid('arch',CARDS.archetypes,'archGrid');updateNav();}
+
+function renderProgress(){
+  const bar=document.getElementById('progressBar');bar.innerHTML='';
+  STEPS.forEach((label,i)=>{
+    const n=i+1,isA=n===ST.currentStep,isDone=n<ST.currentStep;
+    const node=document.createElement('div');
+    node.className='prog-node'+(isA?' active':'')+(isDone?' done':'');
+    if(isDone)node.onclick=()=>goToStep(n);
+    node.innerHTML=`<div class="prog-circle">${isDone?'':n}</div><div class="prog-label">${label}</div>`;
+    bar.appendChild(node);
+    if(i<STEPS.length-1){const l=document.createElement('div');l.className='prog-line'+(isDone?' done':'');bar.appendChild(l);}
+  });
+}
+
+function renderGrid(type,data,cid){
+  const c=document.getElementById(cid);c.innerHTML='';
+  const sel=type==='attr'?ST.selectedAttrs:ST.selectedArchs;
+  data.forEach(card=>{
+    const isS=sel.some(s=>s.name===card.name);
+    const isD=!isS&&sel.length>=3;
+    const col=gc(card.group);
+    const el=document.createElement('div');
+    el.className='card'+(isS?' selected':'')+(isD?' disabled':'');
+    el.style.cssText=`--gi:${col.ink};background:${col.bg}`;
+    el.dataset.group=card.group;
+    el.innerHTML=`<div class="card-check">✓</div>
+      <div class="card-group-tag">${card.group}</div>
+      <div class="card-name">${card.name}</div>
+      <div class="card-description">${card.description}</div>
+      <div class="card-examples">${card.examples}</div>`;
+    el.addEventListener('click',()=>{if(!isD)toggleCard(type,card);});
+    el.addEventListener('contextmenu',e=>{e.preventDefault();openModal(card);});
+    let pt;el.addEventListener('touchstart',()=>{pt=setTimeout(()=>openModal(card),500);});
+    el.addEventListener('touchend',()=>clearTimeout(pt));
+    c.appendChild(el);
+  });
+}
+
+function filterCards(type,group,btn){
+  const gid=type==='attr'?'attrGrid':'archGrid';
+  btn.closest('.card-controls').querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#'+gid+' .card').forEach(card=>{
+    const cg=card.dataset.group||'';
+    card.style.display=(group==='all'||cg===group)?'':'none';
+  });
+}
+
+function toggleCard(type,card){
+  const arr=type==='attr'?ST.selectedAttrs:ST.selectedArchs;
+  const idx=arr.findIndex(s=>s.name===card.name);
+  idx>-1?arr.splice(idx,1):(arr.length<3&&arr.push(card));
+  renderGrid(type,type==='attr'?CARDS.attributes:CARDS.archetypes,type==='attr'?'attrGrid':'archGrid');
+  const ab=document.querySelector('#step-'+(type==='attr'?2:3)+' .filter-btn.active');
+  if(ab){const g=ab.dataset.g||'all';filterCards(type,g==='all'?'all':g,ab);}
+  updateChips(type);
+  document.getElementById(type==='attr'?'attrCount':'archCount').textContent=arr.length;
+}
+
+function updateChips(type){
+  const arr=type==='attr'?ST.selectedAttrs:ST.selectedArchs;
+  const c=document.getElementById(type==='attr'?'attrChips':'archChips');
+  if(!arr.length){c.innerHTML='<span class="chips-empty">None selected yet</span>';return;}
+  c.innerHTML=arr.map(a=>{const col=gc(a.group);return `<div class="chip" style="border-color:${col.ink};background:${col.bg}"><span style="color:${col.ink}">${a.name}</span><span class="rm" style="color:${col.ink}" data-type="${type}" data-name="${a.name.replace(/"/g,'&quot;')}">✕</span></div>`;}).join('');
+  c.querySelectorAll('.rm').forEach(el=>el.addEventListener('click',()=>removeCard(el.dataset.type,el.dataset.name)));
+}
+
+function removeCard(type,name){
+  const arr=type==='attr'?ST.selectedAttrs:ST.selectedArchs;
+  const idx=arr.findIndex(s=>s.name===name);if(idx>-1)arr.splice(idx,1);
+  renderGrid(type,type==='attr'?CARDS.attributes:CARDS.archetypes,type==='attr'?'attrGrid':'archGrid');
+  updateChips(type);
+  document.getElementById(type==='attr'?'attrCount':'archCount').textContent=arr.length;
+}
+
+function openModal(card){
+  const c=gc(card.group);
+  document.getElementById('mGroup').textContent=card.group;
+  document.getElementById('mName').textContent=card.name;
+  document.getElementById('mName').style.color=c.ink;
+  document.getElementById('mDesc').textContent=card.description;
+  document.getElementById('mEx').textContent=card.examples;
+  document.getElementById('cardModal').classList.add('open');
+}
+function closeModal(){document.getElementById('cardModal').classList.remove('open');}
+function maybeClose(e){if(e.target===document.getElementById('cardModal'))closeModal();}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+
+function buildConceptStep(){
+  document.getElementById('conceptMechDisplay').textContent=ST.mechanic||'—';
+  const area=document.getElementById('conceptCardsArea');area.innerHTML='';
+  [{label:'Attributes',items:ST.selectedAttrs,type:'ATTRIBUTE'},
+   {label:'Archetypes',items:ST.selectedArchs,type:'ARCHETYPE'}].forEach(sec=>{
+    if(!sec.items.length)return;
+    const wrap=document.createElement('div');wrap.className='concept-cards-section';
+    wrap.innerHTML=`<div class="concept-section-label">◆ ${sec.label}</div>`;
+    const grid=document.createElement('div');grid.className='concept-mini-grid';
+    sec.items.forEach(item=>{
+      const c=gc(item.group);const card=document.createElement('div');
+      card.className='concept-info-card';card.style.cssText=`--gi:${c.ink};background:${c.bg}`;
+      card.innerHTML=`<div class="ci-type">${sec.type} · ${item.group}</div>
+        <div class="ci-name">${item.name}</div>
+        <div class="ci-desc">${item.description}</div>
+        <div class="ci-examples">Key references: ${item.examples}</div>`;
+      grid.appendChild(card);
+    });
+    wrap.appendChild(grid);area.appendChild(wrap);
+  });
+}
+
+function goToStep(n){
+  if(n<1||n>9)return;
+  saveStep();
+  document.querySelectorAll('.step-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('step-'+n).classList.add('active');
+  ST.currentStep=n;renderProgress();updateNav();
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(n===4)buildConceptStep();
+  if(n===9)buildConsolidate();
+}
+
+function saveStep(){
+  const s=ST.currentStep;
+  if(s===1)ST.mechanic=document.getElementById('mechanicInput').value.trim();
+  if(s===4)ST.chosenConcept=document.getElementById('finalConceptText').value.trim();
+  if(s===5){ST.naming.name=document.getElementById('naming_name').value.trim();ST.naming.title=document.getElementById('naming_title').value.trim();ST.naming.origin=document.getElementById('naming_origin').value.trim();}
+  if(s===6){ST.references.characters=document.getElementById('ref_characters').value.trim();ST.references.visual=document.getElementById('ref_visual').value.trim();}
+  if(s===7){['race','class','culture','equipment','combat','background','personality','notes'].forEach(k=>{ST.details[k]=document.getElementById('det_'+k).value.trim();});}
+  if(s===8){['description','palette','style','notes'].forEach(k=>{ST.visual[k]=document.getElementById('vis_'+k).value.trim();});}
+}
+
+function nextStep(){
+  if(ST.currentStep===1&&!document.getElementById('mechanicInput').value.trim()){document.getElementById('mechanicInput').focus();return;}
+  goToStep(ST.currentStep+1);
+}
+function prevStep(){goToStep(ST.currentStep-1);}
+
+function updateNav(){
+  const nav=document.getElementById('navButtons');
+  const navTop=document.getElementById('navButtonsTop');
+  const isLast=ST.currentStep===9;
+  const isFirst=ST.currentStep===1;
+  nav.style.display=isLast?'none':'flex';
+  navTop.style.display=isLast?'none':'flex';
+  ['prevBtn','prevBtnTop'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.style.display=isFirst?'none':'';
+  });
+  const nextLabel=ST.currentStep===8?'Finalize →':'Next →';
+  ['nextBtn','nextBtnTop'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.textContent=nextLabel;
+  });
+}
+function setSug(val){document.getElementById('mechanicInput').value=val;}
+
+function buildConsolidate(){
+  const s=ST;
+  document.getElementById('cs_name').textContent=s.naming.name||'—';
+  document.getElementById('cs_title').textContent=s.naming.title||'';
+  const fields=[];
+  if(s.mechanic)fields.push({l:'Mechanic',v:s.mechanic});
+  if(s.selectedAttrs.length)fields.push({l:'Attributes',tags:s.selectedAttrs.map(a=>a.name)});
+  if(s.selectedArchs.length)fields.push({l:'Archetypes',tags:s.selectedArchs.map(a=>a.name)});
+  if(s.naming.origin)fields.push({l:'Name Origin',v:s.naming.origin});
+  if(s.details.race)fields.push({l:'Race / Species',v:s.details.race});
+  if(s.details.class)fields.push({l:'Class / Role',v:s.details.class});
+  if(s.details.culture)fields.push({l:'Culture / Origin',v:s.details.culture});
+  if(s.details.equipment)fields.push({l:'Equipment',v:s.details.equipment});
+  if(s.details.combat)fields.push({l:'Combat Style',v:s.details.combat});
+  if(s.visual.style)fields.push({l:'Art Style',v:s.visual.style});
+  if(s.visual.palette)fields.push({l:'Color Palette',v:s.visual.palette});
+  if(s.references.characters)fields.push({l:'Inspirations',v:s.references.characters,wide:true});
+  if(s.references.visual)fields.push({l:'Visual References',v:s.references.visual,wide:true});
+  if(s.details.personality)fields.push({l:'Personality',v:s.details.personality,wide:true});
+  if(s.visual.description)fields.push({l:'Visual Description',v:s.visual.description,wide:true});
+  if(s.details.background)fields.push({l:'Background',v:s.details.background,wide:true});
+  if(s.chosenConcept)fields.push({l:'Concept',v:s.chosenConcept,wide:true,italic:true});
+  if(s.details.notes)fields.push({l:'Notes',v:s.details.notes,wide:true});
+  document.getElementById('csGrid').innerHTML=fields.map(f=>`
+    <div class="cs-field${f.wide?' cs-field-wide':''}">
+      <div class="cs-field-label">${f.l}</div>
+      <div class="cs-field-value">
+        ${f.tags?`<div class="cs-tags">${f.tags.map(t=>`<span class="cs-tag">${t}</span>`).join('')}</div>`
+                :`<span${f.italic?' style="font-style:italic"':''}>${f.v}</span>`}
+      </div>
+    </div>`).join('');
+}
+
+function exportPDF(){
+  const s=ST;
+  const pa=document.getElementById('print-area');
+  pa.innerHTML=`
+    <div class="pa-title">${s.naming.name||'— Unnamed Character —'}</div>
+    <div class="pa-sub">${s.naming.title||''}${s.naming.origin?' · '+s.naming.origin:''}</div>
+    <div class="pa-section"><div class="pa-section-title">Core Identity</div>
+    <div class="pa-row">
+      <div class="pa-field"><div class="pa-field-label">Mechanic</div><div class="pa-field-value">${s.mechanic||'—'}</div></div>
+      <div class="pa-field"><div class="pa-field-label">Attributes</div><div class="pa-field-value">${s.selectedAttrs.map(a=>a.name).join(', ')||'—'}</div></div>
+      <div class="pa-field"><div class="pa-field-label">Archetypes</div><div class="pa-field-value">${s.selectedArchs.map(a=>a.name).join(', ')||'—'}</div></div>
+    </div>
+    ${s.chosenConcept?`<div class="pa-field"><div class="pa-field-label">Concept</div><div class="pa-field-value pa-concept">${s.chosenConcept}</div></div>`:''}
+    </div>
+    <div class="pa-section"><div class="pa-section-title">Character Details</div>
+    <div class="pa-row">
+      ${s.details.race?`<div class="pa-field"><div class="pa-field-label">Race</div><div class="pa-field-value">${s.details.race}</div></div>`:''}
+      ${s.details.class?`<div class="pa-field"><div class="pa-field-label">Class</div><div class="pa-field-value">${s.details.class}</div></div>`:''}
+      ${s.details.culture?`<div class="pa-field"><div class="pa-field-label">Culture</div><div class="pa-field-value">${s.details.culture}</div></div>`:''}
+      ${s.details.equipment?`<div class="pa-field"><div class="pa-field-label">Equipment</div><div class="pa-field-value">${s.details.equipment}</div></div>`:''}
+      ${s.details.combat?`<div class="pa-field"><div class="pa-field-label">Combat Style</div><div class="pa-field-value">${s.details.combat}</div></div>`:''}
+    </div>
+    ${s.details.background?`<div class="pa-field"><div class="pa-field-label">Background</div><div class="pa-field-value">${s.details.background}</div></div>`:''}
+    ${s.details.personality?`<div class="pa-field"><div class="pa-field-label">Personality</div><div class="pa-field-value">${s.details.personality}</div></div>`:''}
+    </div>
+    ${(s.visual.description||s.visual.palette||s.visual.style)?`<div class="pa-section"><div class="pa-section-title">Visual Concept</div>
+    <div class="pa-row">
+      ${s.visual.style?`<div class="pa-field"><div class="pa-field-label">Art Style</div><div class="pa-field-value">${s.visual.style}</div></div>`:''}
+      ${s.visual.palette?`<div class="pa-field"><div class="pa-field-label">Color Palette</div><div class="pa-field-value">${s.visual.palette}</div></div>`:''}
+    </div>
+    ${s.visual.description?`<div class="pa-field"><div class="pa-field-label">Visual Description</div><div class="pa-field-value">${s.visual.description}</div></div>`:''}
+    </div>`:''}
+    ${(s.references.characters||s.references.visual)?`<div class="pa-section"><div class="pa-section-title">References</div>
+    ${s.references.characters?`<div class="pa-field"><div class="pa-field-label">Similar Characters</div><div class="pa-field-value">${s.references.characters}</div></div>`:''}
+    ${s.references.visual?`<div class="pa-field"><div class="pa-field-label">Visual References</div><div class="pa-field-value">${s.references.visual}</div></div>`:''}
+    </div>`:''}
+    <div class="pa-footer">Created with Double A Framework · by Victor Hugo Costa — Game Designer</div>`;
+  window.print();
+}
+
+function copyClipboard(){
+  const s=ST;
+  const lines=[
+    'CHARACTER SHEET — DOUBLE A FRAMEWORK','=====================================','',
+    'NAME: '+(s.naming.name||'—'),
+    s.naming.title?'TITLE: '+s.naming.title:null,
+    s.naming.origin?'ORIGIN: '+s.naming.origin:null,'',
+    'MECHANIC: '+(s.mechanic||'—'),
+    'ATTRIBUTES: '+(s.selectedAttrs.map(a=>a.name).join(', ')||'—'),
+    'ARCHETYPES: '+(s.selectedArchs.map(a=>a.name).join(', ')||'—'),'',
+    s.chosenConcept?'CONCEPT:\n'+s.chosenConcept:null,'',
+    '--- DETAILS ---',
+    s.details.race?'Race: '+s.details.race:null,
+    s.details.class?'Class: '+s.details.class:null,
+    s.details.culture?'Culture: '+s.details.culture:null,
+    s.details.equipment?'Equipment: '+s.details.equipment:null,
+    s.details.combat?'Combat Style: '+s.details.combat:null,
+    s.details.background?'\nBackground:\n'+s.details.background:null,
+    s.details.personality?'\nPersonality:\n'+s.details.personality:null,'',
+    '--- VISUAL ---',
+    s.visual.style?'Art Style: '+s.visual.style:null,
+    s.visual.palette?'Color Palette: '+s.visual.palette:null,
+    s.visual.description?'\nVisual Description:\n'+s.visual.description:null,'',
+    (s.references.characters||s.references.visual)?'--- REFERENCES ---':null,
+    s.references.characters?'Similar Characters: '+s.references.characters:null,
+    s.references.visual?'Visual References: '+s.references.visual:null,'',
+    '— Double A Framework by Victor Hugo Costa —'
+  ].filter(l=>l!==null).join('\n');
+  navigator.clipboard.writeText(lines).then(()=>{
+    const fb=document.getElementById('copyFeedback');fb.classList.add('show');
+    setTimeout(()=>fb.classList.remove('show'),2500);
+  });
+}
+
+function restartAll(){
+  if(!confirm('Restart and clear all character data?'))return;
+  ST={currentStep:1,mechanic:'',selectedAttrs:[],selectedArchs:[],chosenConcept:'',
+    naming:{name:'',title:'',origin:''},references:{characters:'',visual:''},
+    details:{race:'',class:'',culture:'',equipment:'',combat:'',background:'',personality:'',notes:''},
+    visual:{description:'',palette:'',style:'',notes:''}};
+  ['mechanicInput','naming_name','naming_title','naming_origin','ref_characters','ref_visual',
+   'det_race','det_class','det_culture','det_equipment','det_combat','det_background',
+   'det_personality','det_notes','vis_description','vis_palette','vis_style','vis_notes','finalConceptText'
+  ].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  ['attrChips','archChips'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML='<span class="chips-empty">None selected yet</span>';});
+  ['attrCount','archCount'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent='0';});
+  const ca=document.getElementById('conceptCardsArea');if(ca)ca.innerHTML='';
+  renderGrid('attr',CARDS.attributes,'attrGrid');
+  renderGrid('arch',CARDS.archetypes,'archGrid');
+  goToStep(1);
+}
+
+init();
+
+</script>
+</body>
+</html>
