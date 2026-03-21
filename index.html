@@ -400,6 +400,19 @@ main{position:relative;z-index:5;max-width:1120px;margin:0 auto;padding:2.5rem 2
   .pa-footer{text-align:center;margin-top:2rem;font-size:.65rem;color:#aaa;
     border-top:1px dashed #ccc;padding-top:.8rem;font-family:monospace}
 }
+
+/* ── LANG TOGGLE ─────────────────────────────── */
+.lang-toggle{display:flex;gap:2px;align-items:center}
+.lang-btn{
+  padding:.28rem .6rem;background:transparent;
+  border:1px solid rgba(255,255,255,.2);
+  color:rgba(255,255,255,.45);
+  font-family:var(--f-mono);font-size:.62rem;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;
+  cursor:pointer;transition:all .15s;border-radius:2px;
+}
+.lang-btn.active{background:rgba(255,255,255,.15);color:#fff;border-color:rgba(255,255,255,.4)}
+.lang-btn:hover:not(.active){color:rgba(255,255,255,.75)}
 ::-webkit-scrollbar{width:5px}
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:2px}
@@ -413,16 +426,22 @@ main{position:relative;z-index:5;max-width:1120px;margin:0 auto;padding:2.5rem 2
 <header>
   <div class="header-left">
     <div class="logo-aa">Double A</div>
-    <div class="logo-sub">Character Design Framework</div>
+    <div class="logo-sub" data-i18n="header_sub">Character Design Framework</div>
     <div class="by-line">by <a href="https://www.linkedin.com/in/victor-hugo-costa/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:3px;opacity:.7">Victor Hugo Costa</a> — Game Designer</div>
   </div>
-  <div class="header-badge">Attribute × Archetype</div>
+  <div style="display:flex;align-items:center;gap:1rem">
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" id="btnPT" onclick="setLang('pt')">PT</button>
+    </div>
+    <div class="header-badge" data-i18n="header_badge">Attribute × Archetype</div>
+  </div>
 </header>
 <div class="progress-wrap"><div class="progress-inner" id="progressBar"></div></div>
 <main>
 <div class="nav-buttons nav-buttons-top" id="navButtonsTop">
-  <button class="btn btn-back" id="prevBtnTop" onclick="prevStep()">← Back</button>
-  <button class="btn btn-next" id="nextBtnTop" onclick="nextStep()">Next →</button>
+  <button class="btn btn-back" id="prevBtnTop" onclick="prevStep()" data-i18n="nav_back">← Back</button>
+  <button class="btn btn-next" id="nextBtnTop" onclick="nextStep()" data-i18n="nav_next">Next →</button>
 </div>
 
 <!-- STEP 1 -->
@@ -434,18 +453,18 @@ main{position:relative;z-index:5;max-width:1120px;margin:0 auto;padding:2.5rem 2
     </div>
     <div class="step-text-col">
       <div class="step-eyebrow">Step 01 · 09</div>
-      <h1 class="step-title">Define the Mechanic</h1>
-      <p class="step-desc">Everything starts with gameplay. Before story or visuals, define what this character <em>does</em> in the game.</p>
+      <h1 class="step-title" data-i18n="s1_title">Define the Mechanic</h1>
+      <p class="step-desc" data-i18n="s1_desc">Everything starts with gameplay. Before story or visuals, define what this character <em>does</em> in the game.</p>
     </div>
   </div>
   <div class="mechanic-wrap">
     <div class="sketch-card">
       <div class="form-group">
-        <label class="form-label">Gameplay Mechanic</label>
-        <input class="form-input" id="mechanicInput" type="text" placeholder="e.g. Mobility-based assassin, Support healer, Area control tank..." autocomplete="off">
+        <label class="form-label" data-i18n="s1_label">Gameplay Mechanic</label>
+        <input class="form-input" id="mechanicInput" type="text" placeholder="e.g. Mobility-based assassin, Support healer, Area control tank..." data-i18n-placeholder="ph_mechanic" autocomplete="off">
       </div>
       <div>
-        <label class="form-label" style="font-size:.68rem">Quick suggestions</label>
+        <label class="form-label" style="font-size:.68rem" data-i18n="s1_suggestions">Quick suggestions</label>
         <div class="suggestions">
           <button class="sug-tag" onclick="setSug('Burst damage assassin')">Burst assassin</button>
           <button class="sug-tag" onclick="setSug('Support / Healer')">Support healer</button>
@@ -472,11 +491,11 @@ main{position:relative;z-index:5;max-width:1120px;margin:0 auto;padding:2.5rem 2
     </div>
     <div class="step-text-col">
       <div class="step-eyebrow">Step 02 · 09</div>
-      <h1 class="step-title">Select Attributes</h1>
-      <p class="step-desc">Choose up to 3 attributes — they define <em>how</em> the character performs their role. Right-click any card to see full detail.</p>
+      <h1 class="step-title" data-i18n="s2_title">Select Attributes</h1>
+      <p class="step-desc" data-i18n="s2_desc">Choose up to 3 attributes — they define <em>how</em> the character performs their role. Right-click any card to see full detail.</p>
     </div>
   </div>
-  <div class="chips-box"><div class="chips-label">Selected Attributes</div><div class="chips" id="attrChips"><span class="chips-empty">None selected yet</span></div></div>
+  <div class="chips-box"><div class="chips-label" data-i18n="s2_selected">Selected Attributes</div><div class="chips" id="attrChips"><span class="chips-empty">None selected yet</span></div></div>
   <div class="card-controls">
     <button class="filter-btn active" onclick="filterCards('attr','all',this)">All</button>
     <button class="filter-btn" data-g="Social Dynamics &amp; Emotions" onclick="filterCards('attr','Social Dynamics & Emotions',this)">Social</button>
@@ -497,11 +516,11 @@ main{position:relative;z-index:5;max-width:1120px;margin:0 auto;padding:2.5rem 2
     </div>
     <div class="step-text-col">
       <div class="step-eyebrow">Step 03 · 09</div>
-      <h1 class="step-title">Select Archetypes</h1>
-      <p class="step-desc">Choose up to 3 archetypes — they define <em>who</em> the character is and their narrative role.</p>
+      <h1 class="step-title" data-i18n="s3_title">Select Archetypes</h1>
+      <p class="step-desc" data-i18n="s3_desc">Choose up to 3 archetypes — they define <em>who</em> the character is and their narrative role.</p>
     </div>
   </div>
-  <div class="chips-box"><div class="chips-label">Selected Archetypes</div><div class="chips" id="archChips"><span class="chips-empty">None selected yet</span></div></div>
+  <div class="chips-box"><div class="chips-label" data-i18n="s3_selected">Selected Archetypes</div><div class="chips" id="archChips"><span class="chips-empty">None selected yet</span></div></div>
   <div class="card-controls">
     <button class="filter-btn active" onclick="filterCards('arch','all',this)">All</button>
     <button class="filter-btn" data-g="Knowledge &amp; Transformation" onclick="filterCards('arch','Knowledge & Transformation',this)">Knowledge</button>
@@ -522,18 +541,18 @@ main{position:relative;z-index:5;max-width:1120px;margin:0 auto;padding:2.5rem 2
     </div>
     <div class="step-text-col">
       <div class="step-eyebrow">Step 04 · 09</div>
-      <h1 class="step-title">Generate the Concept</h1>
-      <p class="step-desc">Combine mechanics, attributes, and archetypes into the character's core identity. Generate with AI or write freely.</p>
+      <h1 class="step-title" data-i18n="s4_title">Generate the Concept</h1>
+      <p class="step-desc" data-i18n="s4_desc">Combine mechanics, attributes, and archetypes into the character's core identity. Generate with AI or write freely.</p>
     </div>
   </div>
   <div id="conceptCardsArea"></div>
   <div class="sketch-card" style="margin-bottom:1.5rem">
-    <div class="form-label" style="margin-bottom:.4rem">⚙ Mechanic</div>
+    <div class="form-label" style="margin-bottom:.4rem" data-i18n="s4_mechanic">⚙ Mechanic</div>
     <div id="conceptMechDisplay" style="font-family:var(--f-head);font-size:1rem;color:var(--ink);font-style:italic"></div>
   </div>
   <div class="form-group">
-    <label class="form-label">Your Concept</label>
-    <textarea class="form-textarea" id="finalConceptText" style="min-height:140px" placeholder="Write your character&#39;s concept here — combine the mechanic, attributes, and archetypes into a core identity..."></textarea>
+    <label class="form-label" data-i18n="s4_concept_label">Your Concept</label>
+    <textarea class="form-textarea" id="finalConceptText" style="min-height:140px" placeholder="Write your character&#39;s concept here — combine the mechanic, attributes, and archetypes into a core identity..." data-i18n-placeholder="ph_concept"></textarea>
   </div>
 </div>
 
@@ -546,23 +565,23 @@ main{position:relative;z-index:5;max-width:1120px;margin:0 auto;padding:2.5rem 2
     </div>
     <div class="step-text-col">
       <div class="step-eyebrow">Step 05 · 09</div>
-      <h1 class="step-title">Naming</h1>
-      <p class="step-desc">With identity, tone, and world context in hand — the name becomes meaningful and coherent.</p>
+      <h1 class="step-title" data-i18n="s5_title">Naming</h1>
+      <p class="step-desc" data-i18n="s5_desc">With identity, tone, and world context in hand — the name becomes meaningful and coherent.</p>
     </div>
   </div>
   <div class="mechanic-wrap">
     <div class="sketch-card">
       <div class="form-group">
-        <label class="form-label">Character Name</label>
-        <input class="form-input" id="naming_name" type="text" placeholder="Enter the character's name..." style="font-family:var(--f-head);font-size:1.3rem;font-weight:700">
+        <label class="form-label" data-i18n="s5_name">Character Name</label>
+        <input class="form-input" id="naming_name" type="text" placeholder="Enter the character's name..." data-i18n-placeholder="ph_char_name" style="font-family:var(--f-head);font-size:1.3rem;font-weight:700">
       </div>
       <div class="form-group">
-        <label class="form-label">Title / Epithet</label>
-        <input class="form-input" id="naming_title" type="text" placeholder="e.g. The Relentless, Kin of the Void, Ironborne...">
+        <label class="form-label" data-i18n="s5_title_field">Title / Epithet</label>
+        <input class="form-input" id="naming_title" type="text" placeholder="e.g. The Relentless, Kin of the Void, Ironborne..." data-i18n-placeholder="ph_title">
       </div>
       <div class="form-group">
-        <label class="form-label">Name Origin / Meaning</label>
-        <input class="form-input" id="naming_origin" type="text" placeholder="Cultural root, symbolic meaning, or lore reference...">
+        <label class="form-label" data-i18n="s5_origin">Name Origin / Meaning</label>
+        <input class="form-input" id="naming_origin" type="text" placeholder="Cultural root, symbolic meaning, or lore reference..." data-i18n-placeholder="ph_origin">
       </div>
     </div>
   </div>
@@ -577,18 +596,18 @@ main{position:relative;z-index:5;max-width:1120px;margin:0 auto;padding:2.5rem 2
     </div>
     <div class="step-text-col">
       <div class="step-eyebrow">Step 06 · 09</div>
-      <h1 class="step-title">Reference Exploration</h1>
-      <p class="step-desc">Using your concept, search for similar characters and aesthetic references. Transform vague inspiration into targeted exploration.</p>
+      <h1 class="step-title" data-i18n="s6_title">Reference Exploration</h1>
+      <p class="step-desc" data-i18n="s6_desc">Using your concept, search for similar characters and aesthetic references. Transform vague inspiration into targeted exploration.</p>
     </div>
   </div>
   <div class="details-grid" style="grid-template-columns:1fr">
     <div class="detail-card">
-      <div class="form-label">Similar Characters / Inspirations</div>
-      <textarea class="form-textarea" id="ref_characters" placeholder="Characters that inspired this concept — from games, films, books, mythology..."></textarea>
+      <div class="form-label" data-i18n="s6_chars">Similar Characters / Inspirations</div>
+      <textarea class="form-textarea" id="ref_characters" placeholder="Characters that inspired this concept — from games, films, books, mythology..." data-i18n-placeholder="ph_ref_chars"></textarea>
     </div>
     <div class="detail-card">
-      <div class="form-label">Visual Aesthetic / Moodboard Notes</div>
-      <textarea class="form-textarea" id="ref_visual" placeholder="Visual style, mood, color palette references, artists, games with similar aesthetics..."></textarea>
+      <div class="form-label" data-i18n="s6_visual">Visual Aesthetic / Moodboard Notes</div>
+      <textarea class="form-textarea" id="ref_visual" placeholder="Visual style, mood, color palette references, artists, games with similar aesthetics..." data-i18n-placeholder="ph_ref_visual"></textarea>
     </div>
   </div>
 </div>
@@ -602,19 +621,19 @@ main{position:relative;z-index:5;max-width:1120px;margin:0 auto;padding:2.5rem 2
     </div>
     <div class="step-text-col">
       <div class="step-eyebrow">Step 07 · 09</div>
-      <h1 class="step-title">Character Details</h1>
-      <p class="step-desc">With a strong concept, fill the details that make your character complete and believable.</p>
+      <h1 class="step-title" data-i18n="s7_title">Character Details</h1>
+      <p class="step-desc" data-i18n="s7_desc">With a strong concept, fill the details that make your character complete and believable.</p>
     </div>
   </div>
   <div class="details-grid">
-    <div class="detail-card"><div class="form-label">Race / Species</div><input class="form-input" id="det_race" type="text" placeholder="Human, Elf, Android, Undead..."></div>
-    <div class="detail-card"><div class="form-label">Class / Role</div><input class="form-input" id="det_class" type="text" placeholder="Assassin, Paladin, Engineer, Shaman..."></div>
-    <div class="detail-card"><div class="form-label">Culture / Origin</div><input class="form-input" id="det_culture" type="text" placeholder="Nation, tribe, faction, region..."></div>
-    <div class="detail-card"><div class="form-label">Equipment / Weapons</div><input class="form-input" id="det_equipment" type="text" placeholder="Weapons, armor, tools, artifacts..."></div>
-    <div class="detail-card"><div class="form-label">Combat Style</div><input class="form-input" id="det_combat" type="text" placeholder="How do they fight? Tactics, approach..."></div>
-    <div class="detail-card" style="grid-column:1/-1"><div class="form-label">Background / Origin Story</div><textarea class="form-textarea" id="det_background" placeholder="Past events, origin, key moments..."></textarea></div>
-    <div class="detail-card" style="grid-column:1/-1"><div class="form-label">Personality Traits</div><textarea class="form-textarea" id="det_personality" placeholder="Distinctive traits, quirks, speech patterns, fears, motivations..."></textarea></div>
-    <div class="detail-card" style="grid-column:1/-1"><div class="form-label">Additional Notes</div><textarea class="form-textarea" id="det_notes" placeholder="Any other details..."></textarea></div>
+    <div class="detail-card"><div class="form-label" data-i18n="s7_race">Race / Species</div><input class="form-input" id="det_race" type="text" placeholder="Human, Elf, Android, Undead..." data-i18n-placeholder="ph_race"></div>
+    <div class="detail-card"><div class="form-label" data-i18n="s7_class">Class / Role</div><input class="form-input" id="det_class" type="text" placeholder="Assassin, Paladin, Engineer, Shaman..." data-i18n-placeholder="ph_class"></div>
+    <div class="detail-card"><div class="form-label" data-i18n="s7_culture">Culture / Origin</div><input class="form-input" id="det_culture" type="text" placeholder="Nation, tribe, faction, region..." data-i18n-placeholder="ph_culture"></div>
+    <div class="detail-card"><div class="form-label" data-i18n="s7_equip">Equipment / Weapons</div><input class="form-input" id="det_equipment" type="text" placeholder="Weapons, armor, tools, artifacts..." data-i18n-placeholder="ph_equip"></div>
+    <div class="detail-card"><div class="form-label" data-i18n="s7_combat">Combat Style</div><input class="form-input" id="det_combat" type="text" placeholder="How do they fight? Tactics, approach..." data-i18n-placeholder="ph_combat"></div>
+    <div class="detail-card" style="grid-column:1/-1"><div class="form-label" data-i18n="s7_bg">Background / Origin Story</div><textarea class="form-textarea" id="det_background" placeholder="Past events, origin, key moments..." data-i18n-placeholder="ph_bg"></textarea></div>
+    <div class="detail-card" style="grid-column:1/-1"><div class="form-label" data-i18n="s7_personality">Personality Traits</div><textarea class="form-textarea" id="det_personality" placeholder="Distinctive traits, quirks, speech patterns, fears, motivations..." data-i18n-placeholder="ph_personality"></textarea></div>
+    <div class="detail-card" style="grid-column:1/-1"><div class="form-label" data-i18n="s7_notes">Additional Notes</div><textarea class="form-textarea" id="det_notes" placeholder="Any other details..." data-i18n-placeholder="ph_notes"></textarea></div>
   </div>
 </div>
 
@@ -627,15 +646,15 @@ main{position:relative;z-index:5;max-width:1120px;margin:0 auto;padding:2.5rem 2
     </div>
     <div class="step-text-col">
       <div class="step-eyebrow">Step 08 · 09</div>
-      <h1 class="step-title">Visual Concept</h1>
-      <p class="step-desc">Everything is defined — the visual process becomes faster, more consistent, and more intentional.</p>
+      <h1 class="step-title" data-i18n="s8_title">Visual Concept</h1>
+      <p class="step-desc" data-i18n="s8_desc">Everything is defined — the visual process becomes faster, more consistent, and more intentional.</p>
     </div>
   </div>
   <div class="visual-grid">
-    <div class="detail-card" style="grid-column:1/-1"><div class="form-label">Visual Description</div><textarea class="form-textarea" id="vis_description" placeholder="Physical appearance, silhouette, proportions, distinctive visual features..."></textarea></div>
-    <div class="detail-card"><div class="form-label">Color Palette</div><input class="form-input" id="vis_palette" type="text" placeholder="Primary, secondary, accent colors..."></div>
-    <div class="detail-card"><div class="form-label">Art Style</div><input class="form-input" id="vis_style" type="text" placeholder="Concept art, anime, realistic, painterly, pixel..."></div>
-    <div class="detail-card" style="grid-column:1/-1"><div class="form-label">Visual Notes</div><textarea class="form-textarea" id="vis_notes" placeholder="Key details about outfit, accessories, expressions, mood..."></textarea></div>
+    <div class="detail-card" style="grid-column:1/-1"><div class="form-label" data-i18n="s8_visdesc">Visual Description</div><textarea class="form-textarea" id="vis_description" placeholder="Physical appearance, silhouette, proportions, distinctive visual features..." data-i18n-placeholder="ph_vis_desc"></textarea></div>
+    <div class="detail-card"><div class="form-label" data-i18n="s8_palette">Color Palette</div><input class="form-input" id="vis_palette" type="text" placeholder="Primary, secondary, accent colors..." data-i18n-placeholder="ph_palette"></div>
+    <div class="detail-card"><div class="form-label" data-i18n="s8_style">Art Style</div><input class="form-input" id="vis_style" type="text" placeholder="Concept art, anime, realistic, painterly, pixel..." data-i18n-placeholder="ph_vis_style"></div>
+    <div class="detail-card" style="grid-column:1/-1"><div class="form-label" data-i18n="s8_visnotes">Visual Notes</div><textarea class="form-textarea" id="vis_notes" placeholder="Key details about outfit, accessories, expressions, mood..." data-i18n-placeholder="ph_vis_notes"></textarea></div>
   </div>
 </div>
 
@@ -648,8 +667,8 @@ main{position:relative;z-index:5;max-width:1120px;margin:0 auto;padding:2.5rem 2
     </div>
     <div class="step-text-col">
       <div class="step-eyebrow">Step 09 · 09</div>
-      <h1 class="step-title">Final Concept</h1>
-      <p class="step-desc">The character stops being an idea and becomes a design asset. Review and export your complete character sheet.</p>
+      <h1 class="step-title" data-i18n="s9_title">Final Concept</h1>
+      <p class="step-desc" data-i18n="s9_desc">The character stops being an idea and becomes a design asset. Review and export your complete character sheet.</p>
     </div>
   </div>
   <div class="consolidate-sheet" id="consolidateSheet">
@@ -658,21 +677,21 @@ main{position:relative;z-index:5;max-width:1120px;margin:0 auto;padding:2.5rem 2
         <div id="cs_name" class="cs-char-name">—</div>
         <div id="cs_title" class="cs-char-title"></div>
       </div>
-      <div class="cs-header-meta">Double A Framework<br>Character Sheet</div>
+      <div class="cs-header-meta" data-i18n="sheet_meta">Double A Framework<br>Character Sheet</div>
     </div>
     <div class="cs-grid" id="csGrid"></div>
   </div>
   <div class="export-row">
-    <button class="btn-export btn-pdf" onclick="exportPDF()">⬇ Download PDF</button>
+    <button class="btn-export btn-pdf" onclick="exportPDF()" data-i18n="s9_pdf">⬇ Download PDF</button>
   </div>
   <div class="nav-buttons">
-    <button class="btn btn-back" onclick="prevStep()">← Back</button>
+    <button class="btn btn-back" onclick="prevStep()" data-i18n="nav_back">← Back</button>
   </div>
 </div>
 
 <div class="nav-buttons" id="navButtons">
-  <button class="btn btn-back" id="prevBtn" onclick="prevStep()">← Back</button>
-  <button class="btn btn-next" id="nextBtn" onclick="nextStep()">Next →</button>
+  <button class="btn btn-back" id="prevBtn" onclick="prevStep()" data-i18n="nav_back">← Back</button>
+  <button class="btn btn-next" id="nextBtn" onclick="nextStep()" data-i18n="nav_next">Next →</button>
 </div>
 </main>
 
@@ -683,13 +702,349 @@ main{position:relative;z-index:5;max-width:1120px;margin:0 auto;padding:2.5rem 2
     <div class="modal-group" id="mGroup"></div>
     <div class="modal-name" id="mName"></div>
     <div class="modal-desc" id="mDesc"></div>
-    <div class="modal-ex-label">Key Characters</div>
+    <div class="modal-ex-label" data-i18n="modal_ex">Key Characters</div>
     <div class="modal-examples" id="mEx"></div>
   </div>
 </div>
 
 <script>
+
+// ═══════════════════════════════════════════════════
+// i18n — EN / PT-BR
+// ═══════════════════════════════════════════════════
+let LANG = 'en';
+const T_DATA = {
+  en: {
+    header_sub: 'Character Design Framework',
+    header_badge: 'Attribute × Archetype',
+    nav_back: '← Back',
+    nav_next: 'Next →',
+    nav_finalize: 'Finalize →',
+
+    step_labels: ['Mechanic','Attributes','Archetypes','Concept','Name','References','Details','Visual','Final'],
+    s_of: '/ 09',
+
+    s1_title: 'Define the Mechanic',
+    s1_desc: 'Everything starts with gameplay. Before story or visuals, define what this character <em>does</em> in the game.',
+    s1_label: 'Gameplay Mechanic',
+    s1_suggestions: 'Quick suggestions',
+    sug: ['Burst assassin','Support healer','Area tank','Mobile flanker','Stealth','Sniper','Battle mage','Trickster','Summoner','Brawler'],
+
+    s2_title: 'Select Attributes',
+    s2_desc: 'Choose up to 3 attributes — they define <em>how</em> the character performs their role. Right-click any card to see full detail.',
+    s2_selected: 'Selected Attributes',
+    filter_all: 'All',
+    filter_social: 'Social',
+    filter_perform: 'Performance',
+    filter_explore: 'Exploration',
+    filter_intellect: 'Intellect',
+    filter_know: 'Knowledge',
+    filter_journey: 'Journey',
+    filter_exp: 'Experience',
+    filter_ideo: 'Ideology',
+
+    s3_title: 'Select Archetypes',
+    s3_desc: 'Choose up to 3 archetypes — they define <em>who</em> the character is and their narrative role.',
+    s3_selected: 'Selected Archetypes',
+
+    s4_title: 'Generate the Concept',
+    s4_desc: "Combine mechanics, attributes, and archetypes into the character's core identity. Generate with AI or write freely.",
+    s4_mechanic: '⚙ Mechanic',
+    s4_concept_label: 'Your Concept',
+    attr_section: 'Attributes',
+    arch_section: 'Archetypes',
+    key_refs: 'Key references:',
+
+    s5_title: 'Naming',
+    s5_desc: 'With identity, tone, and world context in hand — the name becomes meaningful and coherent.',
+    s5_name: 'Character Name',
+    s5_title_field: 'Title / Epithet',
+    s5_origin: 'Name Origin / Meaning',
+
+    s6_title: 'Reference Exploration',
+    s6_desc: 'Using your concept, search for similar characters and aesthetic references. Transform vague inspiration into targeted exploration.',
+    s6_chars: 'Similar Characters / Inspirations',
+    s6_visual: 'Visual Aesthetic / Moodboard Notes',
+
+    s7_title: 'Character Details',
+    s7_desc: 'With a strong concept, fill the details that make your character complete and believable.',
+    s7_race: 'Race / Species',
+    s7_class: 'Class / Role',
+    s7_culture: 'Culture / Origin',
+    s7_equip: 'Equipment / Weapons',
+    s7_combat: 'Combat Style',
+    s7_bg: 'Background / Origin Story',
+    s7_personality: 'Personality Traits',
+    s7_notes: 'Additional Notes',
+
+    s8_title: 'Visual Concept',
+    s8_desc: 'Everything is defined — the visual process becomes faster, more consistent, and more intentional.',
+    s8_visdesc: 'Visual Description',
+    s8_palette: 'Color Palette',
+    s8_style: 'Art Style',
+    s8_visnotes: 'Visual Notes',
+
+    s9_title: 'Final Concept',
+    s9_desc: 'The character stops being an idea and becomes a design asset. Review and export your complete character sheet.',
+    s9_pdf: '⬇ Download PDF',
+    sheet_meta: 'Double A Framework<br>Character Sheet',
+
+    modal_ex: 'Key Characters',
+    chips_empty_attr: 'None selected yet',
+    chips_empty_arch: 'None selected yet',
+
+    cs_mechanic: 'Mechanic',
+    cs_attributes: 'Attributes',
+    cs_archetypes: 'Archetypes',
+    cs_name_origin: 'Name Origin',
+    cs_race: 'Race / Species',
+    cs_class: 'Class / Role',
+    cs_culture: 'Culture / Origin',
+    cs_equip: 'Equipment',
+    cs_combat: 'Combat Style',
+    cs_style: 'Art Style',
+    cs_palette: 'Color Palette',
+    cs_vis_desc: 'Visual Description',
+    cs_inspirations: 'Inspirations',
+    cs_vis_refs: 'Visual References',
+    cs_personality: 'Personality',
+    cs_bg: 'Background',
+    cs_concept: 'Concept',
+    cs_notes: 'Notes',
+    cs_footer: 'Created with Double A Framework \u00b7 by Victor Hugo Costa \u2014 Game Designer',
+
+    ph_mechanic: 'e.g. Mobility-based assassin, Support healer, Area control tank...',
+    ph_char_name: "Enter the character's name...",
+    ph_title: 'e.g. The Relentless, Kin of the Void, Ironborne...',
+    ph_origin: 'Cultural root, symbolic meaning, or lore reference...',
+    ph_ref_chars: 'Characters that inspired this concept \u2014 from games, films, books, mythology...',
+    ph_ref_visual: 'Visual style, mood, color palette references, artists, games with similar aesthetics...',
+    ph_race: 'Human, Elf, Android, Undead...',
+    ph_class: 'Assassin, Paladin, Engineer, Shaman...',
+    ph_culture: 'Nation, tribe, faction, region...',
+    ph_equip: 'Weapons, armor, tools, artifacts...',
+    ph_combat: 'How do they fight? Tactics, approach...',
+    ph_bg: 'Past events, origin, key moments...',
+    ph_personality: 'Distinctive traits, quirks, speech patterns, fears, motivations...',
+    ph_notes: 'Any other details...',
+    ph_vis_desc: 'Physical appearance, silhouette, proportions, distinctive visual features...',
+    ph_palette: 'Primary, secondary, accent colors...',
+    ph_vis_style: 'Concept art, anime, realistic, painterly, pixel...',
+    ph_vis_notes: 'Key details about outfit, accessories, expressions, mood...',
+    ph_concept: "Write your character's concept here \u2014 combine the mechanic, attributes, and archetypes into a core identity...",
+
+    pa_core: 'Core Identity',
+    pa_details: 'Character Details',
+    pa_visual: 'Visual Concept',
+    pa_refs: 'References',
+    pa_similar: 'Similar Characters',
+    pa_vis_refs: 'Visual References',
+    pa_footer: 'Created with Double A Framework \u00b7 by Victor Hugo Costa \u2014 Game Designer',
+  },
+  pt: {
+    header_sub: 'Framework de Design de Personagens',
+    header_badge: 'Atributo \u00d7 Arqu\u00e9tipo',
+    nav_back: '\u2190 Voltar',
+    nav_next: 'Pr\u00f3ximo \u2192',
+    nav_finalize: 'Finalizar \u2192',
+
+    step_labels: ['Mec\u00e2nica','Atributos','Arqu\u00e9tipos','Conceito','Nome','Refer\u00eancias','Detalhes','Visual','Final'],
+    s_of: '/ 09',
+
+    s1_title: 'Definir a Mec\u00e2nica',
+    s1_desc: 'Tudo come\u00e7a pelo gameplay. Antes da hist\u00f3ria ou visual, defina o que esse personagem <em>faz</em> no jogo.',
+    s1_label: 'Mec\u00e2nica de Gameplay',
+    s1_suggestions: 'Sugest\u00f5es r\u00e1pidas',
+    sug: ['Assassino burst','Suporte / Curandeiro','Tank de controle','Flanqueador m\u00f3vel','Furtivo','Sniper','Battle mage','Trickster','Invocador','Lutador'],
+
+    s2_title: 'Selecionar Atributos',
+    s2_desc: 'Escolha at\u00e9 3 atributos \u2014 eles definem <em>como</em> o personagem executa seu papel. Clique com o bot\u00e3o direito em qualquer carta para ver os detalhes.',
+    s2_selected: 'Atributos Selecionados',
+    filter_all: 'Todos',
+    filter_social: 'Social',
+    filter_perform: 'Performance',
+    filter_explore: 'Explora\u00e7\u00e3o',
+    filter_intellect: 'Intelecto',
+    filter_know: 'Conhecimento',
+    filter_journey: 'Jornada',
+    filter_exp: 'Experi\u00eancia',
+    filter_ideo: 'Ideologia',
+
+    s3_title: 'Selecionar Arqu\u00e9tipos',
+    s3_desc: 'Escolha at\u00e9 3 arqu\u00e9tipos \u2014 eles definem <em>quem</em> o personagem \u00e9 e seu papel narrativo.',
+    s3_selected: 'Arqu\u00e9tipos Selecionados',
+
+    s4_title: 'Gerar o Conceito',
+    s4_desc: 'Combine mec\u00e2nica, atributos e arqu\u00e9tipos na identidade central do personagem. Escreva livremente.',
+    s4_mechanic: '\u2699 Mec\u00e2nica',
+    s4_concept_label: 'Seu Conceito',
+    attr_section: 'Atributos',
+    arch_section: 'Arqu\u00e9tipos',
+    key_refs: 'Personagens de refer\u00eancia:',
+
+    s5_title: 'Nomea\u00e7\u00e3o',
+    s5_desc: 'Com identidade, tom e contexto de mundo em m\u00e3os \u2014 o nome se torna significativo e coerente.',
+    s5_name: 'Nome do Personagem',
+    s5_title_field: 'T\u00edtulo / Ep\u00edteto',
+    s5_origin: 'Origem / Significado do Nome',
+
+    s6_title: 'Explora\u00e7\u00e3o de Refer\u00eancias',
+    s6_desc: 'Com seu conceito em m\u00e3os, busque personagens similares e refer\u00eancias est\u00e9ticas. Transforme inspira\u00e7\u00f5es vagas em explora\u00e7\u00f5es direcionadas.',
+    s6_chars: 'Personagens Similares / Inspira\u00e7\u00f5es',
+    s6_visual: 'Est\u00e9tica Visual / Notas de Moodboard',
+
+    s7_title: 'Detalhes do Personagem',
+    s7_desc: 'Com um conceito s\u00f3lido, preencha os detalhes que tornam seu personagem completo e cred\u00edvel.',
+    s7_race: 'Ra\u00e7a / Esp\u00e9cie',
+    s7_class: 'Classe / Fun\u00e7\u00e3o',
+    s7_culture: 'Cultura / Origem',
+    s7_equip: 'Equipamentos / Armas',
+    s7_combat: 'Estilo de Combate',
+    s7_bg: 'Backstory / Hist\u00f3ria de Origem',
+    s7_personality: 'Tra\u00e7os de Personalidade',
+    s7_notes: 'Notas Adicionais',
+
+    s8_title: 'Conceito Visual',
+    s8_desc: 'Tudo est\u00e1 definido \u2014 o processo visual fica mais r\u00e1pido, consistente e intencional.',
+    s8_visdesc: 'Descri\u00e7\u00e3o Visual',
+    s8_palette: 'Paleta de Cores',
+    s8_style: 'Estilo de Arte',
+    s8_visnotes: 'Notas Visuais',
+
+    s9_title: 'Conceito Final',
+    s9_desc: 'O personagem deixa de ser uma ideia e se torna um ativo de design. Revise e exporte sua ficha completa.',
+    s9_pdf: '\u2b07 Baixar PDF',
+    sheet_meta: 'Framework Double A<br>Ficha de Personagem',
+
+    modal_ex: 'Personagens de Refer\u00eancia',
+    chips_empty_attr: 'Nenhum selecionado ainda',
+    chips_empty_arch: 'Nenhum selecionado ainda',
+
+    cs_mechanic: 'Mec\u00e2nica',
+    cs_attributes: 'Atributos',
+    cs_archetypes: 'Arqu\u00e9tipos',
+    cs_name_origin: 'Origem do Nome',
+    cs_race: 'Ra\u00e7a / Esp\u00e9cie',
+    cs_class: 'Classe / Fun\u00e7\u00e3o',
+    cs_culture: 'Cultura / Origem',
+    cs_equip: 'Equipamentos',
+    cs_combat: 'Estilo de Combate',
+    cs_style: 'Estilo de Arte',
+    cs_palette: 'Paleta de Cores',
+    cs_vis_desc: 'Descri\u00e7\u00e3o Visual',
+    cs_inspirations: 'Inspira\u00e7\u00f5es',
+    cs_vis_refs: 'Refer\u00eancias Visuais',
+    cs_personality: 'Personalidade',
+    cs_bg: 'Backstory',
+    cs_concept: 'Conceito',
+    cs_notes: 'Notas',
+    cs_footer: 'Criado com o Framework Double A \u00b7 por Victor Hugo Costa \u2014 Game Designer',
+
+    ph_mechanic: 'ex: Assassino de burst, Suporte curandeiro, Tank de controle de \u00e1rea...',
+    ph_char_name: 'Digite o nome do personagem...',
+    ph_title: 'ex: O Implacavel, Filha do Vazio, Forjado em Ferro...',
+    ph_origin: 'Ra\u00edz cultural, significado simb\u00f3lico ou refer\u00eancia de lore...',
+    ph_ref_chars: 'Personagens que inspiraram este conceito \u2014 de jogos, filmes, livros, mitologia...',
+    ph_ref_visual: 'Estilo visual, humor, refer\u00eancias de paleta de cores, artistas, jogos com est\u00e9tica similar...',
+    ph_race: 'Humano, Elfo, Androide, Morto-vivo...',
+    ph_class: 'Assassino, Paladino, Engenheiro, Xam\u00e3...',
+    ph_culture: 'Na\u00e7\u00e3o, tribo, fac\u00e7\u00e3o, regi\u00e3o...',
+    ph_equip: 'Armas, armadura, ferramentas, artefatos...',
+    ph_combat: 'Como ele luta? T\u00e1ticas, abordagem...',
+    ph_bg: 'Eventos passados, origem, momentos-chave...',
+    ph_personality: 'Tra\u00e7os distintivos, manias, padr\u00f5es de fala, medos, motiva\u00e7\u00f5es...',
+    ph_notes: 'Quaisquer outros detalhes...',
+    ph_vis_desc: 'Apar\u00eancia f\u00edsica, silhueta, propor\u00e7\u00f5es, tra\u00e7os visuais marcantes...',
+    ph_palette: 'Cores prim\u00e1rias, secund\u00e1rias, de destaque...',
+    ph_vis_style: 'Arte conceitual, anime, realista, pictorialista, pixel...',
+    ph_vis_notes: 'Detalhes de roupa, acess\u00f3rios, express\u00f5es, clima...',
+    ph_concept: 'Escreva aqui o conceito do personagem \u2014 combine a mec\u00e2nica, atributos e arqu\u00e9tipos em uma identidade central...',
+
+    pa_core: 'Identidade Central',
+    pa_details: 'Detalhes do Personagem',
+    pa_visual: 'Conceito Visual',
+    pa_refs: 'Refer\u00eancias',
+    pa_similar: 'Personagens Similares',
+    pa_vis_refs: 'Refer\u00eancias Visuais',
+    pa_footer: 'Criado com o Framework Double A \u00b7 por Victor Hugo Costa \u2014 Game Designer',
+  }
+};
+
+function t(key){ return T_DATA[LANG][key] || T_DATA.en[key] || key; }
+
+function setLang(lang){
+  LANG = lang;
+  document.getElementById('btnEN').classList.toggle('active', lang==='en');
+  document.getElementById('btnPT').classList.toggle('active', lang==='pt');
+
+  // Update static data-i18n elements (innerHTML)
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    el.innerHTML = t(el.dataset.i18n);
+  });
+
+  // Update placeholders
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
+    el.placeholder = t(el.dataset.i18nPlaceholder);
+  });
+
+  // Update suggestion tags
+  const sug = t('sug');
+  document.querySelectorAll('.sug-tag').forEach((btn,i)=>{
+    if(sug[i]) btn.textContent = sug[i];
+  });
+
+  // Re-render progress bar (uses step_labels)
+  renderProgress();
+
+  // Re-render filter button labels
+  const s2 = document.getElementById('step-2');
+  const s3 = document.getElementById('step-3');
+  if(s2){
+    const btns = s2.querySelectorAll('.filter-btn');
+    const keys = ['filter_all','filter_social','filter_perform','filter_explore','filter_intellect'];
+    btns.forEach((b,i)=>{ if(keys[i]) b.textContent = t(keys[i]); });
+  }
+  if(s3){
+    const btns = s3.querySelectorAll('.filter-btn');
+    const keys = ['filter_all','filter_know','filter_journey','filter_exp','filter_ideo'];
+    btns.forEach((b,i)=>{ if(keys[i]) b.textContent = t(keys[i]); });
+  }
+
+  // Re-render chips (empty state text)
+  ['attr','arch'].forEach(type=>{
+    const arr = type==='attr'?ST.selectedAttrs:ST.selectedArchs;
+    if(!arr.length){
+      const el = document.getElementById(type==='attr'?'attrChips':'archChips');
+      if(el) el.innerHTML = '<span class="chips-empty">'+t('chips_empty_'+type)+'</span>';
+    }
+  });
+
+  // Update eyebrow step labels
+  document.querySelectorAll('.step-eyebrow').forEach((el,i)=>{
+    el.textContent = 'Step 0'+(i+1)+' \u00b7 09';
+  });
+
+  // Rebuild concept cards area if visible
+  if(ST.currentStep===4) buildConceptStep();
+
+  // Re-render card grids with new language
+  renderGrid('attr',CARDS.attributes,'attrGrid');
+  renderGrid('arch',CARDS.archetypes,'archGrid');
+
+  // Nav button text update
+  const isStep8 = ST.currentStep===8;
+  ['nextBtn','nextBtnTop'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.innerHTML = isStep8 ? t('nav_finalize') : t('nav_next');
+  });
+  ['prevBtn','prevBtnTop'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.innerHTML = t('nav_back');
+  });
+}
 const CARDS = {"attributes": [{"group": "Social Dynamics & Emotions", "name": "Friendly", "description": "Demonstrates ease in establishing positive relationships with different characters in the game world. Acts cordially and openly when interacting with allies, strangers, or even potential adversaries. Seeks to maintain respect and balance in conversations and social situations. Their demeanor tends to generate trust and cooperation among the characters around them.", "examples": "Mario (Super Mario Bros.), Aloy (Horizon Zero Dawn), Tails (Sonic the Hedgehog)"}, {"group": "Performance, Strategy & Achievement", "name": "Aspirant", "description": "Expresses a strong desire to achieve high goals and gain recognition in the world around them. Maintains a constant focus on progress, success, or personal fulfillment. Demonstrates a willingness to face challenges that bring them closer to their goals. Their choices often reflect a pursuit of growth, power, or achievement.", "examples": "Ezio Auditore (Assassin’s Creed II), Jin Sakai (Ghost of Tsushima), Noctis (Final Fantasy XV)"}, {"group": "Social Dynamics & Emotions", "name": "Vibrant", "description": "Expresses constant energy and enthusiasm in the face of situations. Reacts to events with emotional intensity and a striking presence. Their attitude often inspires others, stimulating movement, action, or change around them. Demonstrates vitality even in the face of difficulties or tense moments.", "examples": "Tracer (Overwatch), Claptrap (Borderlands), Tiny Tina (Borderlands)"}, {"group": "Exploration, Values & World", "name": "Engaged", "description": "Demonstrates a deep commitment to values, causes, or ideals that they consider important. Acts with conviction when defending what they believe in. Shows a willingness to face obstacles when they perceive injustice or a threat to their principles. Their actions reveal a strong sense of purpose within the world of the story.", "examples": "Ellie (The Last of Us), Kara (Detroit: Become Human), Edelgard (Fire Emblem: Three Houses)"}, {"group": "Exploration, Values & World", "name": "Fearless", "description": "Reveals a willingness to face unknown, dangerous, or risky situations. Demonstrates curiosity and courage in exploring new places, challenges, or possibilities. Is not easily intimidated by obstacles or threats. Their attitude encourages movement and discovery within their work environment.", "examples": "Lara Croft (Tomb Raider), Samus Aran (Metroid), Link (The Legend of Zelda)"}, {"group": "Exploration, Values & World", "name": "Notifaga", "description": "Demonstrates a preference for intense, creative, or alternative social environments. Often values ​​cultural experiences, informal gatherings, and interactions outside conventional patterns. Reveals a free spirit and a taste for experiences involving expression, art, or spontaneous interaction. Their presence is frequently associated with vibrant or unconventional settings.", "examples": "Majima (Yakuza), Johnny Silverhand (Cyberpunk 2077), Bayonetta (Bayonetta)"}, {"group": "Social Dynamics & Emotions", "name": "Magnetic", "description": "Naturally attracts the attention and interest of other characters. Demonstrates a strong social presence and an ease in influencing those around them. Manages to generate empathy or fascination even without apparent effort. Their personality tends to occupy a central space in the social interactions of the narrative.", "examples": "Handsome Jack (Borderlands 2), Sephiroth (Final Fantasy VII), Lady Dimitrescu (Resident Evil Village)"}, {"group": "Social Dynamics & Emotions", "name": "Prudent", "description": "Demonstrates care in assessing risks and consequences before acting. Analyzes situations attentively and avoids impulsive decisions. Prefers strategies that reduce danger or uncertainty. Their attitude favors planning and safety when facing complex challenges.", "examples": "Garrus Vakarian (Mass Effect), Captain Price (Call of Duty), Solid Snake (Metal Gear Solid)"}, {"group": "Social Dynamics & Emotions", "name": "Cooperative", "description": "Demonstrates a willingness to collaborate with other characters in pursuit of common goals. Values ​​teamwork and the exchange of skills or knowledge. Shows ease in listening to ideas and adapting their actions for the benefit of the group. Their presence strengthens alliances and collective initiatives.", "examples": "Luigi (Super Mario Bros.), Tifa Lockhart (Final Fantasy VII), Elizabeth (BioShock Infinite)"}, {"group": "Performance, Strategy & Achievement", "name": "Combative", "description": "Demonstrates a strong competitive drive when facing challenges or opponents. Constantly seeks to prove their ability by overcoming obstacles and opponents. Sees disputes as opportunities to demonstrate skill and determination. Their attitude transforms conflicts into arenas where they can measure their strength and ability.", "examples": "Kratos (God of War), Doom Slayer (DOOM), Ryu (Street Fighter)"}, {"group": "Social Dynamics & Emotions", "name": "Self-confident", "description": "Expresses confidence in their own abilities and decisions. Demonstrates firmness in action even under pressure or uncertainty. Their attitude conveys stability to allies and commands respect in confrontational situations. Trusts their judgment and rarely hesitates to take responsibility.", "examples": "Dante (Devil May Cry), Bayonetta (Bayonetta), Jill Valentine (Resident Evil)"}, {"group": "Exploration, Values & World", "name": "Mundane", "description": "Reveals familiarity with different cultures, customs, or ways of thinking. Demonstrates openness to diverse experiences and ease in moving between different environments. Interacts naturally with people from varied backgrounds. Their broad vision allows them to understand different perspectives of the world around them.", "examples": "Geralt (The Witcher 3), Dante (Devil May Cry), V (Cyberpunk 2077)"}, {"group": "Performance, Strategy & Achievement", "name": "Inventiveness", "description": "Shows an aptitude for imagining new solutions to complex problems. Demonstrates original thinking and a willingness to experiment with unusual approaches. Often sees possibilities where others see limitations. Their creativity frequently leads to unexpected solutions or alternative paths.", "examples": "Ratchet (Ratchet & Clank), Tony Stark (Marvel’s Avengers), Mei (Overwatch)"}, {"group": "Exploration, Values & World", "name": "Analytics", "description": "Demonstrates a tendency to observe situations with a critical and rational eye. Carefully examines information before drawing conclusions or making decisions. Seeks to understand patterns, causes, and consequences behind events. Their approach favors strategies based on logic and careful evaluation.", "examples": "Batman (Batman: Arkham Series), Cortana (Halo), 9S (NieR: Automata)"}, {"group": "Intellect, Knowledge & Sensitivity", "name": "Erudite", "description": "He expresses a deep appreciation for knowledge, culture, and learning. He demonstrates familiarity with complex ideas, stories, or knowledge accumulated over time. He values ​​intellectual understanding and tends to interpret the world based on reflection and study. His perspective is often influenced by cultural or historical references.", "examples": "Mordin Solus (Mass Effect), Leliana (Dragon Age)"}, {"group": "Intellect, Knowledge & Sensitivity", "name": "Investigative", "description": "She demonstrates persistent curiosity about events, places, or people. She observes details and seeks to understand what is not immediately evident. She questions superficial versions of facts and looks for evidence that reveals the truth behind situations. Her attitude often leads her to uncover mysteries or secrets.", "examples": "Leon Kennedy (Resident Evil 4), Saga Anderson (Alan Wake 2), Connor (Detroit: Become Human)"}, {"group": "Performance, Strategy & Achievement", "name": "Committed", "description": "Reveals consistent dedication to the tasks, goals, or responsibilities undertaken. Demonstrates perseverance in working towards something considered important. Maintains focus even in the face of difficulties or distractions. Their attitude conveys reliability and consistency in their actions.", "examples": "Arthur Morgan (Red Dead Redemption 2), Commander Shepard (Mass Effect), Aloy (Horizon Zero Dawn)"}, {"group": "Intellect, Knowledge & Sensitivity", "name": "Kind", "description": "Expresses gentleness and care when dealing with others. Demonstrates sensitivity in perceiving the emotions, vulnerabilities, or needs of others. Usually acts with consideration and respect, avoiding causing unnecessary discomfort or suffering. Their presence tends to make environments and relationships more welcoming.", "examples": "Yuna (Final Fantasy X), Toriel (Undertale), Aerith (Final Fantasy VII)"}, {"group": "Performance, Strategy & Achievement", "name": "Provocative", "description": "Demonstrates a propensity to challenge established ideas or provoke reactions in others. Questions norms, positions, or attitudes that he or she considers weak or inconsistent. Uses verbal confrontation or bold attitudes to stimulate change or reflection. His or her presence frequently generates tension, debate, or transformation.", "examples": "Vaas Montenegro (Far Cry 3), Trevor Philips (GTA V), Kefka (Final Fantasy VI)"}, {"group": "Performance, Strategy & Achievement", "name": "Intrepid", "description": "Reveals intense courage in the face of danger or threatening situations. Demonstrates a willingness to act even when the risk is evident. Does not allow fear to determine their choices or limits. Their attitude inspires respect and can encourage other characters to face difficult challenges.", "examples": "Sam Bridges (Death Stranding), Faith (Mirror’s Edge), Aloy (Horizon Zero Dawn)"}, {"group": "Performance, Strategy & Achievement", "name": "Meticulous", "description": "Demonstrates meticulous attention to detail when observing situations, environments, or the behavior of other characters. Analyzes subtle variations and signs that often go unnoticed. This sensitivity to detail allows for a better understanding of complex circumstances or the identification of relevant information. Their actions reveal precision and diligence in everything they do.", "examples": "Sherlock Holmes (Sherlock Holmes: Crimes and Punishments), Phoenix Wright (Ace Attorney), Aloy (Horizon Zero Dawn)"}, {"group": "Performance, Strategy & Achievement", "name": "Resolved", "description": "Demonstrates firmness in making decisions and standing by choices even in the face of pressure or adversity. Acts with conviction and rarely abandons goals that are considered important. Maintains focus on their objectives and resists external doubts or unexpected obstacles. Their demeanor conveys determination and stability to those around them.", "examples": "Ellie (The Last of Us Part II), Claire Redfield (Resident Evil 2), Jill Valentine (Resident Evil 3)"}, {"group": "Intellect, Knowledge & Sensitivity", "name": "Methodical", "description": "Demonstrates organization and discipline when handling tasks, challenges, or responsibilities. Prefers to follow clear and structured processes rather than acting impulsively. Plans actions carefully and values ​​order, consistency, and preparation. This approach tends to make their actions predictable and efficient.", "examples": "Agent 47 (Hitman), Isaac Clarke (Dead Space), Garrus Vakarian (Mass Effect)"}, {"group": "Intellect, Knowledge & Sensitivity", "name": "Reserved", "description": "They demonstrate discretion when revealing their thoughts, emotions, or intentions. They prefer to observe before speaking and rarely expose their inner life immediately. They maintain a certain emotional distance until they feel confident in the people around them. This posture creates an aura of mystery and caution in their interactions.", "examples": "The Knight (Hollow Knight), Corvo Attano (Dishonored), Sam Fisher (Splinter Cell)"}, {"group": "Exploration, Values & World", "name": "Innovative", "description": "Demonstrates an inclination to break patterns and propose ideas that differ from conventional ones. Seeks original solutions to problems and does not easily adhere to traditions or established methods. Values ​​experimentation and change as forms of evolution. Their attitude often leads to unexpected transformations in their surrounding environment.", "examples": "Chell (Portal), Atlas (BioShock), Ratchet (Ratchet & Clank)"}, {"group": "Exploration, Values & World", "name": "Transitory", "description": "Demonstrates a fleeting relationship with places, people, or experiences. Tends to live intensely in the moment, but without forming lasting attachments. Moves easily between different contexts and situations. Their presence can mark important events even if they stay only a short time in each place.", "examples": "The Stranger (Journey), The Hunter (Bloodborne), The Tarnished (Elden Ring)"}, {"group": "Intellect, Knowledge & Sensitivity", "name": "Sophisticated", "description": "Demonstrates refinement in behavior, taste, and manner of expression. Values ​​elegance in attitudes and appreciates high-level cultural or social environments or experiences. Acts with composure and a keen aesthetic sense. Their presence conveys distinction and care for image and posture.", "examples": "Bayonetta (Bayonetta), Ada Wong (Resident Evil), Morrigan (Dragon Age)"}, {"group": "Intellect, Knowledge & Sensitivity", "name": "Diplomatic", "description": "Demonstrates the ability to balance conflicting interests between different individuals or groups. Seeks solutions that avoid direct confrontation whenever possible. Knows how to choose words and actions that reduce tension and promote understanding. Their performance favors negotiations and alliances.", "examples": "Leliana (Dragon Age), Tali’Zorah (Mass Effect), Princess Zelda (The Legend of Zelda)"}, {"group": "Exploration, Values & World", "name": "Impulsive", "description": "Demonstrates a tendency to act quickly, guided by emotions or intuition. Reacts to situations without long periods of reflection. This spontaneity can lead to bold or unexpected decisions. Their attitude often introduces movement and unpredictability into events.", "examples": "Sonic (Sonic the Hedgehog), V (Cyberpunk 2077), Travis Touchdown (No More Heroes)"}, {"group": "Intellect, Knowledge & Sensitivity", "name": "Veteran", "description": "Demonstrates maturity gained through accumulated experience over time. Recognizes patterns from past situations and uses this knowledge to guide their choices. Acts with confidence based on previous experiences. Their presence conveys authority and practical wisdom.", "examples": "Master Chief (Halo), Geralt (The Witcher 3), Snake (Metal Gear Solid)"}, {"group": "Social Dynamics & Emotions", "name": "Adaptable", "description": "Demonstrates the ability to adjust behavior in the face of changes or unexpected circumstances. Handles new environments or challenges with flexibility. Finds ways to reorganize when original plans cease to work. This skill allows for maintaining effectiveness even in unstable contexts.", "examples": "Link (The Legend of Zelda: Breath of the Wild), Lara Croft (Tomb Raider), Aloy (Horizon)"}, {"group": "Social Dynamics & Emotions", "name": "Pleasurable", "description": "Demonstrates an active search for intense sensory or emotional experiences. Values ​​moments of satisfaction, celebration, and enjoyment of life. Sees opportunities for pleasure even in difficult situations. Their attitude tends to transform experiences into memorable moments.", "examples": "Majima (Yakuza), Trevor Philips (GTA V), Wario (Wario Land)"}, {"group": "Intellect, Knowledge & Sensitivity", "name": "Full text", "description": "Demonstrates consistent commitment to ethical principles and honesty. Acts in accordance with values ​​he/she considers correct, even when this brings difficulties. Maintains consistency between words and actions. His/her demeanor inspires confidence in allies and respect from adversaries.", "examples": "Captain America (Marvel’s Avengers), Commander Shepard (Mass Effect), Kiryu (Yakuza)"}, {"group": "Social Dynamics & Emotions", "name": "Empathetic", "description": "Demonstrates sensitivity in perceiving the emotions, needs, or suffering of others. Is able to easily understand the feelings of others. This ability fosters caring, supportive, and compassionate attitudes. Their presence creates deep emotional connections between characters.", "examples": "Clementine (The Walking Dead), Ellie (The Last of Us), Yuna (Final Fantasy X)"}, {"group": "Social Dynamics & Emotions", "name": "Modest", "description": "Demonstrates humility when dealing with personal achievements or skills. Avoids seeking excessive recognition or ostentatious displays of attention. Prefers to let actions speak for themselves. This attitude conveys simplicity and authenticity.", "examples": "Link (The Legend of Zelda), Isaac (Golden Sun), Amicia (A Plague Tale)"}, {"group": "Intellect, Knowledge & Sensitivity", "name": "Utopian", "description": "He demonstrates a belief in the possibility of positively transforming the world. He believes in high ideals and fights to make them a reality. He maintains hope even in the face of difficult circumstances. His vision inspires other characters to imagine better futures.", "examples": "Optimus Prime (Transformers Devastation), Edelgard (Fire Emblem), Terra (Final Fantasy VI)"}, {"group": "Exploration, Values & World", "name": "Eccentric", "description": "They demonstrate unconventional behaviors, tastes, or ways of thinking. They act unpredictably or outside of common social expectations. This uniqueness makes their presence striking and often intriguing. Their attitude can surprise both allies and adversaries.", "examples": "Dr. Eggman (Sonic), Junkrat (Overwatch), Mettaton (Undertale)"}, {"group": "Exploration, Values & World", "name": "Self-employed", "description": "Demonstrates a strong sense of independence in their decisions and actions. Prefers to rely on their own abilities rather than depend on others. Values ​​freedom of choice and personal responsibility. Their attitude reveals self-sufficiency and initiative.", "examples": "Samus Aran (Metroid), Aloy (Horizon), 2B (NieR: Automata)"}, {"group": "Performance, Strategy & Achievement", "name": "Stimulant", "description": "Demonstrates the ability to inspire enthusiasm and motivation in others. Their words or actions encourage movement, courage, or hope. They are able to energize groups facing difficulties. Their presence often drives significant changes or advancements.", "examples": "Kirby (Kirby), Mario (Super Mario Bros.), Ichiban Kasuga (Yakuza: Like a Dragon)"}, {"group": "Exploration, Values & World", "name": "Happy", "description": "He demonstrates a lighthearted and positive attitude towards life's situations. He reacts with good humor even when facing challenges. This attitude creates more relaxed and pleasant environments. His emotional energy tends to ease tensions around him.", "examples": "Mario (Super Mario Bros.), Kirby (Kirby), Sackboy (LittleBigPlanet)"}, {"group": "Social Dynamics & Emotions", "name": "Fallen", "description": "Demonstrates a strong commitment to people, causes, or alliances that he/she considers important. Maintains support even in times of adversity. Does not easily abandon those in whom he/she places trust. His/her attitude reveals consistency and devotion in relationships.", "examples": "Garrus Vakarian (Mass Effect), Tails (Sonic), Dogmeat (Fallout)"}, {"group": "Exploration, Values & World", "name": "Progressive", "description": "Demonstrates openness to social, cultural, or ideological change. Questions traditional structures when perceived as having limitations or injustices. Seeks paths that expand freedom or collective evolution. Their vision frequently challenges established patterns.", "examples": "Connor (Detroit: Become Human), Adam Jensen (Deus Ex), Edelgard (Fire Emblem)"}, {"group": "Social Dynamics & Emotions", "name": "Conciliator", "description": "Demonstrates the ability to bring people in conflict closer together and restore balance in relationships. Listens to different perspectives before seeking solutions. Values ​​harmony and understanding among those involved. Their actions promote reconciliation and cooperation.", "examples": "Aloy (Horizon), Princess Zelda (Zelda), Alistair (Dragon Age)"}, {"group": "Performance, Strategy & Achievement", "name": "Remarkable", "description": "They demonstrate a memorable presence that leaves a lasting impression on those they meet. Their personality or attitudes create a significant impact on the situations in which they participate. Even brief appearances can be clearly remembered. Their influence tends to extend beyond the immediate moment.", "examples": "Kratos (God of War), Sephiroth (Final Fantasy VII), Handsome Jack (Borderlands)"}, {"group": "Intellect, Knowledge & Sensitivity", "name": "Enigmatic", "description": "He displays behavior that is difficult to fully interpret. He keeps some of his intentions or thoughts hidden. This aura of mystery sparks curiosity and speculation in the other characters. His presence often generates doubt and fascination.", "examples": "G-Man (Half-Life), The Outsider (Dishonored), Ranni (Elden Ring)"}, {"group": "Performance, Strategy & Achievement", "name": "Encouraging", "description": "Demonstrates the ability to strengthen the confidence and courage of others. Offers emotional support and motivation during difficult times. Their words and actions help allies face challenges. Their presence promotes resilience and collective determination.", "examples": "Ellie (The Last of Us), Yuna (Final Fantasy X), Tifa (Final Fantasy VII)"}, {"group": "Intellect, Knowledge & Sensitivity", "name": "Nostalgic", "description": "Demonstrates a strong emotional connection to memories, stories, or experiences from the past. Recalls past events with fondness or nostalgia. Values ​​traditions, memories, and significant moments lived in the past. This backward look influences their decisions and feelings in the present.", "examples": "Max Payne (Max Payne), Joel (The Last of Us), Arthur Morgan (Red Dead Redemption 2)"}, {"group": "Exploration, Values & World", "name": "Bold", "description": "Demonstrates courage to challenge limits, norms, or dangers. Acts boldly in the face of opportunities or risks that others would avoid. Prefers to confront the unknown rather than remain safe. Their attitude often triggers unexpected changes or achievements.", "examples": "Lara Croft (Tomb Raider), Dante (Devil May Cry), Bayonetta (Bayonetta)"}, {"group": "Social Dynamics & Emotions", "name": "Guardian", "description": "Demonstrates a strong instinct to protect people, places, or important values. Acts with vigilance and responsibility when caring for what they consider precious. Does not hesitate to put themselves at risk to preserve what they defend. Their attitude reveals a deep sense of duty and protectiveness.", "examples": "Zelda (The Legend of Zelda), Samus Aran (Metroid), Aloy (Horizon)"}, {"group": "Exploration, Values & World", "name": "Skeptical", "description": "Demonstrates a tendency to question statements, promises, or versions of events. Avoids accepting information without reflection or evidence. Analyzes situations critically before forming an opinion. This attitude reduces naiveté and encourages deeper investigation.", "examples": "Geralt (The Witcher 3), Adam Jensen (Deus Ex), Joel (The Last of Us)"}, {"group": "Exploration, Values & World", "name": "Untamed", "description": "Demonstrates a rebellious spirit that resists control or submission. Refuses to accept limitations imposed by authority or convention when considered unjust. Acts with a strong sense of personal freedom. Their attitude frequently challenges established power structures.", "examples": "Kratos (God of War), Trevor (GTA V), V (Cyberpunk 2077)"}, {"group": "Intellect, Knowledge & Sensitivity", "name": "Trusting", "description": "She demonstrates emotional security and conviction in her own abilities. She acts calmly even under pressure or uncertainty. Her demeanor conveys stability and natural leadership. This confidence positively influences how others perceive her.", "examples": "Bayonetta (Bayonetta), Dante (Devil May Cry), Ryu (Street Fighter)"}, {"group": "Social Dynamics & Emotions", "name": "Seductive", "description": "Demonstrates an ability to evoke attraction, fascination, or emotional interest in others. Uses charm, presence, and language to influence relationships. Their demeanor can provoke desire, admiration, or curiosity. This characteristic strongly impacts social interactions and dynamics between characters.", "examples": "Ada Wong (Resident Evil), Morrigan (Dragon Age), Bayonetta (Bayonetta)"}, {"group": "Social Dynamics & Emotions", "name": "Extroverted", "description": "Demonstrates ease in socializing and interacting with different people. Feels comfortable in busy or interactive environments. Expresses thoughts and emotions openly. Their presence often energizes or enlivens groups.", "examples": "Sonic (Sonic), Ichiban Kasuga (Yakuza: Like a Dragon), Tracer (Overwatch)"}, {"group": "Intellect, Knowledge & Sensitivity", "name": "Creator", "description": "Demonstrates imagination focused on future possibilities and desired scenarios. Dreams of realities different from the present and envisions paths to achieve them. Maintains hope even when facing difficult obstacles. Their vision inspires others to believe in positive change.", "examples": "Zelda (Zelda), Terra (Final Fantasy VI), Sora (Kingdom Hearts)"}, {"group": "Performance, Strategy & Achievement", "name": "Diligent", "description": "Demonstrates consistent dedication to work and the responsibilities undertaken. Tackles tasks with commitment and persistence. Prefers continuous effort to easy solutions or shortcuts. Their attitude reveals a commitment to results and progress.", "examples": "Amicia (A Plague Tale), Aloy (Horizon), Isaac Clarke (Dead Space)"}, {"group": "Performance, Strategy & Achievement", "name": "Reformer", "description": "Demonstrates a willingness to transform structures, systems, or situations that they consider inadequate. Questions existing models and seeks to create better alternatives. Acts with the intention of promoting significant change. Their attitude often leads to processes of renewal or disruption.", "examples": "Connor (Detroit: Become Human), Edelgard (Fire Emblem), Adam Jensen (Deus Ex)"}, {"group": "Intellect, Knowledge & Sensitivity", "name": "Clara", "description": "Demonstrates frankness and transparency when communicating thoughts, intentions, or feelings. Prefers to express themselves directly rather than withhold information. This attitude fosters trust and understanding in relationships. Their communication tends to reduce misunderstandings.", "examples": "Lara Croft (Tomb Raider), Shepard (Mass Effect), Kiryu (Yakuza)"}, {"group": "Performance, Strategy & Achievement", "name": "Multifaceted", "description": "Demonstrates a variety of interests, skills, or ways of acting. Is able to adapt their posture according to the context or situation. Reveals different aspects of their personality depending on the circumstances. This diversity makes their behavior complex and difficult to predict.", "examples": "Geralt (The Witcher 3), V (Cyberpunk 2077), Shepard (Mass Effect)"}, {"group": "Performance, Strategy & Achievement", "name": "Strategic", "description": "Demonstrates the ability to view situations with a broad perspective and long-term planning. Analyzes future possibilities before acting. Connects events and decisions within a larger logic of objectives. Their approach favors calculated actions and lasting results.", "examples": "Solid Snake (Metal Gear Solid), Garrus Vakarian (Mass Effect), Thrawn (Star Wars: Empire at War)"}], "archetypes": [{"group": "Knowledge & Transformation", "name": "Transmuter", "description": "It seeks to transform the world around it through knowledge, experimentation, and discovery. It is always trying to combine different ideas, technologies, or forces to generate something new. Its presence in a story is usually linked to inventions, radical changes, or unexpected discoveries.", "examples": "Dr. Nefarious (Ratchet & Clank)"}, {"group": "Knowledge & Transformation", "name": "Researcher", "description": "This character is dedicated to understanding how the world works through observation, study, and analysis. They value knowledge and evidence above opinions or beliefs. In game stories, they are usually the character who investigates phenomena, develops theories, or finds explanations for complex events.", "examples": "Mordin Solus (Mass Effect)"}, {"group": "Knowledge & Transformation", "name": "Visionary", "description": "They envision future possibilities before others. They often imagine scenarios, technologies, or changes that don't yet exist but could transform the world. Their motivation is usually linked to building something new or preparing for what's to come.", "examples": "Elizabeth (BioShock Infinite)"}, {"group": "Knowledge & Transformation", "name": "Manipulator", "description": "Uses tricks, illusions, or psychological strategies to influence what others perceive as reality. Prefers to deceive or confuse opponents rather than confront them directly. In game narratives, often controls situations behind the scenes or creates clever traps.", "examples": "Loki (Smite)"}, {"group": "Knowledge & Transformation", "name": "Champion", "description": "It lives to test its physical limits and prove its superiority in challenges or competitions. It demonstrates discipline, endurance, and a constant desire for self-improvement. In stories, it often represents strength, perseverance, and dedication to training.", "examples": "Ryu (Street Fighter)"}, {"group": "Knowledge & Transformation", "name": "Warrior", "description": "He confronts conflicts directly and decisively. He possesses courage, combat skills, and a strong sense of duty when faced with threats. His presence is usually linked to battles, protecting allies, or confronting dangers.", "examples": "Kratos (God of War)"}, {"group": "Knowledge & Transformation", "name": "Sacrificial", "description": "You are willing to give up comfort, security, or even your own life for a greater cause. You act guided by deep convictions and a sense of responsibility. In narratives, it often symbolizes devotion, moral courage, and extreme altruism.", "examples": "Joel (The Last of Us)"}, {"group": "Knowledge & Transformation", "name": "Hero", "description": "They take center stage in the journey of overcoming challenges and threats. They often act to protect others, restore balance, or ward off destructive forces. Their path typically involves personal growth, courage, and responsibility.", "examples": "Link (The Legend of Zelda)"}, {"group": "Knowledge & Transformation", "name": "Expert", "description": "He has a deep understanding of a specific skill or area of ​​expertise. Other characters often turn to him when they need precision or technical expertise. His contribution is often essential in solving complex problems.", "examples": "Gordon Freeman (Half-Life)"}, {"group": "Knowledge & Transformation", "name": "Speaker", "description": "Communicates ideas clearly and persuasively, influencing the thoughts or decisions of others. Has an aptitude for representing groups or causes. Their strength lies in their words and ability to mobilize people.", "examples": "Johnny Silverhand (Cyberpunk 2077)"}, {"group": "Knowledge & Transformation", "name": "Spiritualist", "description": "Maintains a deep connection with spiritual, natural, or mystical forces. Acts as an intermediary between the material world and invisible dimensions. In game narratives, often guides other characters or interprets supernatural signs.", "examples": "Thrall (Warcraft)"}, {"group": "Knowledge & Transformation", "name": "Fearless", "description": "He faces dangers without hesitation. He demonstrates courage even in situations that would frighten most people. His attitude inspires allies and challenges adversaries.", "examples": "Lara Croft (Tomb Raider)"}, {"group": "Knowledge & Transformation", "name": "Pioneer", "description": "It ventures into uncharted territory in search of new possibilities. It is not afraid to break with traditions or explore paths never before attempted. In stories, it represents discovery, innovation, and an adventurous spirit.", "examples": "Samus Aran (Metroid)"}, {"group": "Knowledge & Transformation", "name": "Creator", "description": "Expresses ideas and emotions through artistic or creative forms. Seeks to produce something that inspires, moves, or represents their worldview. In games, they may appear as an artist, inventor, or builder of new realities.", "examples": "Ellie (The Last of Us Part II)"}, {"group": "Knowledge & Transformation", "name": "Conceptor", "description": "He dedicates himself to imagining and structuring new ideas, projects, or systems. He prefers to think about solutions and plan structures before they exist. His mind functions like a laboratory of possibilities.", "examples": "Tony Stark (Marvel’s Avengers)"}, {"group": "Journey & Conquest", "name": "Pilgrim", "description": "It lives in constant motion, seeking purpose or meaning along its journey. The path traveled is as important as the final destination. In narratives, it symbolizes personal growth and inner discovery.", "examples": "The Wanderer (Shadow of the Colossus)"}, {"group": "Journey & Conquest", "name": "Globalist", "description": "Feels part of a vast and diverse world. Moves easily between different cultures, environments, or groups. Tends to value diversity, connection, and the exchange of experiences.", "examples": "Geralt (The Witcher 3)"}, {"group": "Journey & Conquest", "name": "Answering machine", "description": "Questions established norms and challenges systems that are considered unfair or limiting. Does not accept rules simply because of tradition. Their attitude often provokes significant changes or conflicts.", "examples": "Connor (Detroit: Become Human)"}, {"group": "Journey & Conquest", "name": "Wandering", "description": "He lives without fixed roots, moving between places and situations. He sees the world as an open space of possibilities. His journey often involves unexpected encounters and constant discoveries.", "examples": "Mad Max (Mad Max)"}, {"group": "Journey & Conquest", "name": "Explorer", "description": "Driven by curiosity and a desire to discover the unknown. Seeks new places, secrets, or experiences. In games, it represents the spirit of adventure and discovery.", "examples": "Aloy (Horizon Zero Dawn)"}, {"group": "Journey & Conquest", "name": "Insurgent", "description": "Refuses to submit to authorities or systems that they consider oppressive. Prefers to fight for freedom rather than obey blindly. In narratives, they often lead revolts or resistance movements.", "examples": "V (Cyberpunk 2077)"}, {"group": "Journey & Conquest", "name": "Subversive", "description": "It challenges social or political structures through radical or provocative attitudes. It seeks to dismantle existing systems to create something different. Its presence often generates instability and transformation.", "examples": "Trevor Philips (GTA V)"}, {"group": "Journey & Conquest", "name": "Militant", "description": "They dedicate their energy to defending a cause or movement. They actively work to promote social or political change. Their motivation comes from strong convictions and a sense of mission.", "examples": "Abby (The Last of Us Part II)"}, {"group": "Journey & Conquest", "name": "Humorist", "description": "Uses humor to interpret the world and provoke reactions in people. Can relieve tension or reveal truths through comedy. Its presence brings lightness, critique, or irony to the narrative.", "examples": "Claptrap (Borderlands)"}, {"group": "Journey & Conquest", "name": "Naive", "description": "Observe the world with curiosity and simplicity. Often, perceive situations without malice or prejudice. This innocent perspective can reveal truths that others ignore.", "examples": "Chibi-Robo (Chibi-Robo!)"}, {"group": "Journey & Conquest", "name": "Festive", "description": "Seeks fun, celebration, and moments of shared joy. Values ​​social gatherings and intense experiences. Their energy tends to be contagious.", "examples": "Majima (Yakuza)"}, {"group": "Journey & Conquest", "name": "Metamorfo", "description": "It possesses a fluid identity or a capacity for constant adaptation. It assumes different roles depending on the situation. Its changeable nature creates unpredictability in the stories.", "examples": "V (Cyberpunk 2077)"}, {"group": "Journey & Conquest", "name": "From Satire", "description": "He uses critical humor to expose contradictions or flaws in society. He prefers to provoke reflection through irony or exaggeration. His vision reveals hidden aspects of reality.", "examples": "Deadpool (Marvel vs Capcom)"}, {"group": "Journey & Conquest", "name": "Profaner", "description": "It challenges symbols, beliefs, or traditions considered untouchable. It provocatively questions established values. Its attitude often generates shock or debate.", "examples": "Kefka (Final Fantasy VI)"}, {"group": "Journey & Conquest", "name": "Looter", "description": "They live outside the rules of convention, seeking wealth or freedom through adventure and risk. They tend to act boldly and opportunistically. In narratives, they represent a free and unpredictable spirit.", "examples": "Edward Kenway (Assassin’s Creed IV)"}, {"group": "Experience & Lifestyle", "name": "Excited", "description": "He demonstrates intense enthusiasm for ideas, experiences, or projects. His energy motivates others to get involved as well. He tends to see positive possibilities in situations.", "examples": "Kirby (Kirby)"}, {"group": "Experience & Lifestyle", "name": "Epicurean", "description": "They seek pleasure, comfort, and intense sensory experiences. They value living in the present and enjoying what life has to offer. Their philosophy revolves around personal satisfaction.", "examples": "Dante (Devil May Cry)"}, {"group": "Experience & Lifestyle", "name": "Primalist", "description": "It values ​​a direct connection with nature and simpler ways of life. It prefers natural balance over artificial or technological structures. It represents a return to origins.", "examples": "Amicia (A Plague Tale)"}, {"group": "Experience & Lifestyle", "name": "Nationalist", "description": "Demonstrates a strong emotional connection to their land, culture, or people. Defends values ​​and traditions that they consider fundamental to their community. Their motivation often involves collective identity.", "examples": "Jin Sakai (Ghost of Tsushima)"}, {"group": "Experience & Lifestyle", "name": "Seductive", "description": "Uses charm, presence, and language to attract or influence others. Has an ease in creating emotional bonds or arousing interest. In narratives, frequently manipulates social relationships.", "examples": "Bayonetta (Bayonetta)"}, {"group": "Experience & Lifestyle", "name": "Benefactor", "description": "They dedicate themselves to helping others without expecting anything in return. They demonstrate generosity and a deep sense of social responsibility. Their presence fosters solidarity and cooperation.", "examples": "Princess Zelda (Zelda)"}, {"group": "Experience & Lifestyle", "name": "Sensible", "description": "Perceives emotions and inner states of others with great intensity. Can understand feelings even without them being directly expressed. Their sensitivity influences relationships and decisions.", "examples": "Clementine (The Walking Dead)"}, {"group": "Experience & Lifestyle", "name": "Mediator", "description": "Acts as a bridge between different people or points of view. Seeks to resolve conflicts through dialogue and understanding. Their social skills promote balance in relationships.", "examples": "Garrus Vakarian (Mass Effect)"}, {"group": "Experience & Lifestyle", "name": "Citizen", "description": "It represents ordinary life within a society or community. Its concerns reflect everyday needs. It often symbolizes the point of view of ordinary people.", "examples": "Arthur Morgan (Red Dead Redemption 2)"}, {"group": "Experience & Lifestyle", "name": "Representative", "description": "Defends collective interests and seeks to give voice to groups or communities. Assumes political or social responsibilities on behalf of others. Their work involves leadership and negotiation.", "examples": "Commander Shepard (Mass Effect)"}, {"group": "Experience & Lifestyle", "name": "Pragmatist", "description": "Prefers practical solutions over theories or idealizations. Evaluates situations focusing on concrete results. Decisions are usually guided by efficiency.", "examples": "Adam Jensen (Deus Ex)"}, {"group": "Experience & Lifestyle", "name": "Devotee", "description": "They dedicate themselves with loyalty and discipline to serving a cause, person, or institution. They place duty and commitment above personal interests. Their motivation stems from loyalty.", "examples": "Templar Knight (Assassin’s Creed)"}, {"group": "Experience & Lifestyle", "name": "Connector", "description": "It values ​​social interaction and the building of relationship networks. It facilitates meetings, partnerships, and exchanges between different people. Its presence strengthens communities.", "examples": "Ichiban Kasuga (Yakuza Like a Dragon)"}, {"group": "Experience & Lifestyle", "name": "Healer", "description": "Dedicated to caring for the physical or emotional health of others. Seeks to restore balance and well-being. Represents support, care, and recovery.", "examples": "Mercy (Overwatch)"}, {"group": "Experience & Lifestyle", "name": "Sentinel", "description": "Maintains constant vigilance to protect something or someone. Observes dangers and acts quickly in the face of threats. Represents protection and responsibility.", "examples": "Batman (Arkham Series)"}, {"group": "Ideology & Purpose", "name": "Dreamer", "description": "Imagine a better future and believe in possibilities yet to be realized. Nurture hope even in difficult times. Your vision inspires change and progress.", "examples": "Sora (Kingdom Hearts)"}, {"group": "Ideology & Purpose", "name": "Devotee", "description": "He lives guided by faith or a deep belief in something greater. His decisions reflect spiritual or religious commitment. It represents conviction and surrender.", "examples": "Joshua Graham (Fallout New Vegas)"}, {"group": "Ideology & Purpose", "name": "Novato", "description": "You are beginning your journey in a particular world or field of knowledge. You learn from experiences and mistakes along the way. It represents discovery and growth.", "examples": "The Kid (Bastion)"}, {"group": "Ideology & Purpose", "name": "Hopeful", "description": "Maintains a positive attitude even in the face of difficulties. Believes that situations can improve and works to make that happen. Their demeanor conveys optimism to others.", "examples": "Mario (Super Mario Bros.)"}, {"group": "Ideology & Purpose", "name": "Meticulous", "description": "He strives for perfection and precision in everything he does. He analyzes details and constantly seeks excellence. His discipline ensures quality and rigor.", "examples": "Agent 47 (Hitman)"}, {"group": "Ideology & Purpose", "name": "Sovereign", "description": "Exercises authority and responsibility over a territory or group. Makes decisions that impact many people. Represents power, leadership, and responsibility.", "examples": "Emperor Emhyr (The Witcher 3)"}, {"group": "Ideology & Purpose", "name": "Noble", "description": "Belongs to a high social class or holds values ​​associated with honor and tradition. Demonstrates dignity and a sense of duty. Their posture reflects status and responsibility.", "examples": "Prince of Persia (Prince of Persia)"}, {"group": "Ideology & Purpose", "name": "Negotiator", "description": "Resolves conflicts and agreements through diplomacy and dialogue. Seeks balance between opposing interests. Their skill avoids direct confrontation.", "examples": "Leliana (Dragon Age)"}, {"group": "Ideology & Purpose", "name": "Prisoner", "description": "They prefer isolation and distance from social life. They find meaning in reflection, solitude, or contemplation. Their wisdom often arises from being away from the world.", "examples": "Yoda (Star Wars Series)"}, {"group": "Ideology & Purpose", "name": "Mentor", "description": "Shares knowledge and guides other characters on their journeys. Acts as a guide or advisor. Their presence helps others grow and evolve.", "examples": "Master Oogway (Kung Fu Panda game)"}, {"group": "Ideology & Purpose", "name": "Thinker", "description": "They are dedicated to deep reflection on complex ideas, concepts, or problems. They seek to understand the world through reasoning and analysis. Their mind functions as their primary tool.", "examples": "Socrates-like NPC (Assassin’s Creed Odyssey)"}, {"group": "Ideology & Purpose", "name": "Commander", "description": "Leads people in conflict situations or strategic organization. Takes responsibility for important decisions. Inspires order, discipline, and direction.", "examples": "Captain Price (Call of Duty)"}, {"group": "Ideology & Purpose", "name": "Wise", "description": "He possesses a great deal of knowledge accumulated over time. He offers advice based on experience and reflection. His presence brings guidance and understanding.", "examples": "Paarthurnax (Skyrim)"}, {"group": "Ideology & Purpose", "name": "Tactical", "description": "Plans actions considering positioning, resources, and opportunities. Analyzes scenarios before acting. A strategic mind anticipates movements and consequences.", "examples": "Solid Snake (Metal Gear Solid)"}, {"group": "Ideology & Purpose", "name": "Researcher", "description": "They are dedicated to uncovering hidden truths and solving mysteries. They observe clues, analyze information, and connect the dots. Their role is to reveal what is hidden.", "examples": "Leon Kennedy (Resident Evil 4)"}]};
+
+const CARDS_PT = {"attributes": [{"group": "Social Dynamics & Emotions", "group_pt": "Dinâmicas Sociais & Emoções", "name": "Amigável", "description": "Demonstra facilidade em estabelecer relações positivas com diferentes personagens do mundo do jogo. Age com cordialidade e abertura ao interagir com aliados, desconhecidos ou até possíveis adversários. Busca manter o respeito e o equilíbrio nas conversas e situações sociais. Sua postura tende a gerar confiança e cooperação entre os personagens ao seu redor.", "examples": "Mario (Super Mario Bros.), Aloy (Horizon Zero Dawn), Tails (Sonic the Hedgehog)"}, {"group": "Performance, Strategy & Achievement", "group_pt": "Performance, Estratégia & Conquista", "name": "Aspirante", "description": "Expressa forte desejo de alcançar objetivos elevados e conquistar reconhecimento dentro do mundo em que vive. Mantém foco constante em progresso, sucesso ou realização pessoal. Demonstra disposição para enfrentar desafios que aproximem seus objetivos. Suas escolhas frequentemente refletem a busca por crescimento, poder ou conquista.", "examples": "Ezio Auditore (Assassin’s Creed II), Jin Sakai (Ghost of Tsushima), Noctis (Final Fantasy XV)"}, {"group": "Social Dynamics & Emotions", "group_pt": "Dinâmicas Sociais & Emoções", "name": "Vibrante", "description": "Expressa energia constante e entusiasmo diante das situações que encontra. Reage aos acontecimentos com intensidade emocional e presença marcante. Sua atitude costuma contagiar outros personagens, estimulando movimento, ação ou mudança ao seu redor. Demonstra vitalidade mesmo diante de dificuldades ou momentos de tensão.", "examples": "Tracer (Overwatch), Claptrap (Borderlands), Tiny Tina (Borderlands)"}, {"group": "Exploration, Values & World", "group_pt": "Exploração, Valores & Mundo", "name": "Engajada", "description": "Demonstra comprometimento profundo com valores, causas ou ideais que considera importantes. Age com convicção ao defender aquilo em que acredita. Mostra disposição para enfrentar obstáculos quando percebe injustiça ou ameaça aos seus princípios. Suas atitudes revelam forte senso de propósito dentro do mundo da história.", "examples": "Ellie (The Last of Us), Kara (Detroit: Become Human), Edelgard (Fire Emblem: Three Houses)"}, {"group": "Exploration, Values & World", "group_pt": "Exploração, Valores & Mundo", "name": "Destemida", "description": "Revela disposição para enfrentar situações desconhecidas, perigosas ou arriscadas. Demonstra curiosidade e coragem ao explorar novos lugares, desafios ou possibilidades. Não se intimida facilmente diante de obstáculos ou ameaças. Sua postura incentiva movimento e descoberta dentro do ambiente em que atua.", "examples": "Lara Croft (Tomb Raider), Samus Aran (Metroid), Link (The Legend of Zelda)"}, {"group": "Exploration, Values & World", "group_pt": "Exploração, Valores & Mundo", "name": "Notívaga", "description": "Demonstra preferência por ambientes sociais intensos, criativos ou alternativos. Costuma valorizar experiências culturais, encontros informais e interações fora dos padrões convencionais. Revela espírito livre e gosto por vivências que envolvam expressão, arte ou convivência espontânea. Sua presença frequentemente se associa a ambientes vibrantes ou pouco tradicionais.", "examples": "Majima (Yakuza), Johnny Silverhand (Cyberpunk 2077), Bayonetta (Bayonetta)"}, {"group": "Social Dynamics & Emotions", "group_pt": "Dinâmicas Sociais & Emoções", "name": "Magnética", "description": "Atrai naturalmente a atenção e o interesse de outros personagens. Demonstra forte presença social e facilidade em influenciar pessoas ao seu redor. Consegue gerar empatia ou fascínio mesmo sem esforço aparente. Sua personalidade tende a ocupar espaço central nas interações sociais da narrativa.", "examples": "Handsome Jack (Borderlands 2), Sephiroth (Final Fantasy VII), Lady Dimitrescu (Resident Evil Village)"}, {"group": "Social Dynamics & Emotions", "group_pt": "Dinâmicas Sociais & Emoções", "name": "Prudente", "description": "Demonstra cuidado ao avaliar riscos e consequências antes de agir. Analisa situações com atenção e evita decisões impulsivas. Prefere estratégias que reduzam perigo ou incerteza. Sua postura favorece planejamento e segurança diante de desafios complexos.", "examples": "Garrus Vakarian (Mass Effect), Captain Price (Call of Duty), Solid Snake (Metal Gear Solid)"}, {"group": "Social Dynamics & Emotions", "group_pt": "Dinâmicas Sociais & Emoções", "name": "Cooperativa", "description": "Demonstra disposição para colaborar com outros personagens em busca de objetivos comuns. Valoriza trabalho conjunto e troca de habilidades ou conhecimentos. Mostra facilidade em ouvir ideias e adaptar suas ações em benefício do grupo. Sua presença fortalece alianças e iniciativas coletivas.", "examples": "Luigi (Super Mario Bros.), Tifa Lockhart (Final Fantasy VII), Elizabeth (BioShock Infinite)"}, {"group": "Performance, Strategy & Achievement", "group_pt": "Performance, Estratégia & Conquista", "name": "Combativa", "description": "Demonstra forte impulso competitivo ao enfrentar desafios ou adversários. Busca constantemente provar sua capacidade superando obstáculos e oponentes. Enxerga disputas como oportunidades para demonstrar habilidade e determinação. Sua postura transforma conflitos em arenas onde pode medir sua força e capacidade.", "examples": "Kratos (God of War), Doom Slayer (DOOM), Ryu (Street Fighter)"}, {"group": "Social Dynamics & Emotions", "group_pt": "Dinâmicas Sociais & Emoções", "name": "Autoconfiante", "description": "Expressa segurança nas próprias habilidades e decisões. Demonstra firmeza ao agir mesmo diante de pressão ou incerteza. Sua atitude transmite estabilidade para aliados e impõe respeito em situações de confronto. Confia em seu julgamento e raramente hesita ao assumir responsabilidades.", "examples": "Dante (Devil May Cry), Bayonetta (Bayonetta), Jill Valentine (Resident Evil)"}, {"group": "Exploration, Values & World", "group_pt": "Exploração, Valores & Mundo", "name": "Mundana", "description": "Revela familiaridade com diferentes culturas, costumes ou formas de pensar. Demonstra abertura para experiências diversas e facilidade em circular entre ambientes distintos. Interage com naturalidade com pessoas de origens variadas. Sua visão ampla permite compreender diferentes perspectivas do mundo ao seu redor.", "examples": "Geralt (The Witcher 3), Dante (Devil May Cry), V (Cyberpunk 2077)"}, {"group": "Performance, Strategy & Achievement", "group_pt": "Performance, Estratégia & Conquista", "name": "Inventiva", "description": "Revela facilidade em imaginar soluções novas para problemas complexos. Demonstra pensamento original e disposição para experimentar abordagens incomuns. Costuma enxergar possibilidades onde outros veem limitações. Sua criatividade frequentemente conduz a soluções inesperadas ou caminhos alternativos.", "examples": "Ratchet (Ratchet & Clank), Tony Stark (Marvel’s Avengers), Mei (Overwatch)"}, {"group": "Exploration, Values & World", "group_pt": "Exploração, Valores & Mundo", "name": "Analítica", "description": "Demonstra tendência a observar situações com olhar crítico e racional. Examina informações com atenção antes de formar conclusões ou tomar decisões. Busca compreender padrões, causas e consequências por trás dos acontecimentos. Sua postura favorece estratégias baseadas em lógica e avaliação cuidadosa.", "examples": "Batman (Batman: Arkham Series), Cortana (Halo), 9S (NieR: Automata)"}, {"group": "Intellect, Knowledge & Sensitivity", "group_pt": "Intelecto, Conhecimento & Sensibilidade", "name": "Erudita", "description": "Expressa profundo apreço por conhecimento, cultura e aprendizado. Demonstra familiaridade com ideias complexas, histórias ou saberes acumulados ao longo do tempo. Valoriza compreensão intelectual e tende a interpretar o mundo com base em reflexão e estudo. Sua visão costuma ser influenciada por referências culturais ou históricas.", "examples": "Mordin Solus (Mass Effect), Leliana (Dragon Age)"}, {"group": "Intellect, Knowledge & Sensitivity", "group_pt": "Intelecto, Conhecimento & Sensibilidade", "name": "Investigativa", "description": "Demonstra curiosidade persistente em relação a acontecimentos, lugares ou pessoas. Observa detalhes e busca compreender aquilo que não está imediatamente evidente. Questiona versões superficiais dos fatos e procura evidências que revelem a verdade por trás das situações. Sua postura a leva frequentemente a desvendar mistérios ou segredos.", "examples": "Leon Kennedy (Resident Evil 4), Saga Anderson (Alan Wake 2), Connor (Detroit: Become Human)"}, {"group": "Performance, Strategy & Achievement", "group_pt": "Performance, Estratégia & Conquista", "name": "Comprometida", "description": "Revela dedicação constante às tarefas, objetivos ou responsabilidades que assume. Demonstra perseverança ao trabalhar por algo que considera importante. Mantém foco mesmo diante de dificuldades ou distrações. Sua atitude transmite confiabilidade e consistência em suas ações.", "examples": "Arthur Morgan (Red Dead Redemption 2), Commander Shepard (Mass Effect), Aloy (Horizon Zero Dawn)"}, {"group": "Intellect, Knowledge & Sensitivity", "group_pt": "Intelecto, Conhecimento & Sensibilidade", "name": "Gentil", "description": "Expressa delicadeza e cuidado ao lidar com outras pessoas. Demonstra sensibilidade ao perceber emoções, fragilidades ou necessidades alheias. Costuma agir com consideração e respeito, evitando causar desconforto ou sofrimento desnecessário. Sua presença tende a tornar ambientes e relações mais acolhedores.", "examples": "Yuna (Final Fantasy X), Toriel (Undertale), Aerith (Final Fantasy VII)"}, {"group": "Performance, Strategy & Achievement", "group_pt": "Performance, Estratégia & Conquista", "name": "Provocadora", "description": "Demonstra inclinação para desafiar ideias estabelecidas ou provocar reações nos outros. Questiona normas, posições ou atitudes que considera frágeis ou incoerentes. Utiliza confronto verbal ou atitudes ousadas para estimular mudança ou reflexão. Sua presença frequentemente gera tensão, debate ou transformação.", "examples": "Vaas Montenegro (Far Cry 3), Trevor Philips (GTA V), Kefka (Final Fantasy VI)"}, {"group": "Performance, Strategy & Achievement", "group_pt": "Performance, Estratégia & Conquista", "name": "Intrépida", "description": "Revela coragem intensa diante de perigos ou situações ameaçadoras. Demonstra disposição para agir mesmo quando o risco é evidente. Não permite que o medo determine suas escolhas ou limites. Sua atitude inspira respeito e pode encorajar outros personagens a enfrentar desafios difíceis.", "examples": "Sam Bridges (Death Stranding), Faith (Mirror’s Edge), Aloy (Horizon Zero Dawn)"}, {"group": "Performance, Strategy & Achievement", "group_pt": "Performance, Estratégia & Conquista", "name": "Minuciosa", "description": "Demonstra atenção cuidadosa aos detalhes ao observar situações, ambientes ou comportamentos de outros personagens. Analisa pequenas variações e sinais que muitas vezes passam despercebidos. Essa sensibilidade aos pormenores permite compreender melhor circunstâncias complexas ou identificar informações relevantes. Sua forma de agir revela precisão e zelo em tudo o que realiza.", "examples": "Sherlock Holmes (Sherlock Holmes: Crimes and Punishments), Phoenix Wright (Ace Attorney), Aloy (Horizon Zero Dawn)"}, {"group": "Performance, Strategy & Achievement", "group_pt": "Performance, Estratégia & Conquista", "name": "Resoluta", "description": "Demonstra firmeza ao tomar decisões e sustentar escolhas mesmo diante de pressão ou adversidade. Age com convicção e raramente abandona objetivos que considera importantes. Mantém foco em suas metas e resiste a dúvidas externas ou obstáculos inesperados. Sua postura transmite determinação e estabilidade aos que estão ao seu redor.", "examples": "Ellie (The Last of Us Part II), Claire Redfield (Resident Evil 2), Jill Valentine (Resident Evil 3)"}, {"group": "Intellect, Knowledge & Sensitivity", "group_pt": "Intelecto, Conhecimento & Sensibilidade", "name": "Metódica", "description": "Demonstra organização e disciplina ao lidar com tarefas, desafios ou responsabilidades. Prefere seguir processos claros e estruturados em vez de agir por impulso. Planeja suas ações com cuidado e valoriza ordem, consistência e preparação. Essa abordagem tende a tornar suas atitudes previsíveis e eficientes.", "examples": "Agent 47 (Hitman), Isaac Clarke (Dead Space), Garrus Vakarian (Mass Effect)"}, {"group": "Intellect, Knowledge & Sensitivity", "group_pt": "Intelecto, Conhecimento & Sensibilidade", "name": "Reservada", "description": "Demonstra discrição ao revelar pensamentos, emoções ou intenções. Prefere observar antes de falar e raramente expõe sua vida interior de forma imediata. Mantém certa distância emocional até sentir confiança nas pessoas ao seu redor. Essa postura cria uma aura de mistério e cautela em suas interações.", "examples": "The Knight (Hollow Knight), Corvo Attano (Dishonored), Sam Fisher (Splinter Cell)"}, {"group": "Exploration, Values & World", "group_pt": "Exploração, Valores & Mundo", "name": "Inovadora", "description": "Demonstra inclinação para romper padrões e propor ideias diferentes das convencionais. Busca soluções originais para problemas e não se prende facilmente a tradições ou métodos estabelecidos. Valoriza experimentação e mudança como formas de evolução. Sua atitude frequentemente conduz a transformações inesperadas no ambiente ao seu redor.", "examples": "Chell (Portal), Atlas (BioShock), Ratchet (Ratchet & Clank)"}, {"group": "Exploration, Values & World", "group_pt": "Exploração, Valores & Mundo", "name": "Transitória", "description": "Demonstra relação passageira com lugares, pessoas ou experiências. Costuma viver momentos intensamente, mas sem se apegar de forma duradoura. Move-se com facilidade entre diferentes contextos e situações. Sua presença pode marcar eventos importantes mesmo que permaneça pouco tempo em cada lugar.", "examples": "The Stranger (Journey), The Hunter (Bloodborne), The Tarnished (Elden Ring)"}, {"group": "Intellect, Knowledge & Sensitivity", "group_pt": "Intelecto, Conhecimento & Sensibilidade", "name": "Sofisticada", "description": "Demonstra refinamento em comportamento, gosto e forma de se expressar. Valoriza elegância nas atitudes e aprecia ambientes ou experiências de alto nível cultural ou social. Age com compostura e senso estético apurado. Sua presença transmite distinção e cuidado com imagem e postura.", "examples": "Bayonetta (Bayonetta), Ada Wong (Resident Evil), Morrigan (Dragon Age)"}, {"group": "Intellect, Knowledge & Sensitivity", "group_pt": "Intelecto, Conhecimento & Sensibilidade", "name": "Diplomática", "description": "Demonstra habilidade para equilibrar interesses conflitantes entre diferentes personagens ou grupos. Busca soluções que evitem confrontos diretos sempre que possível. Sabe escolher palavras e atitudes que reduzam tensões e promovam entendimento. Sua atuação favorece negociações e alianças.", "examples": "Leliana (Dragon Age), Tali’Zorah (Mass Effect), Princess Zelda (The Legend of Zelda)"}, {"group": "Exploration, Values & World", "group_pt": "Exploração, Valores & Mundo", "name": "Impulsiva", "description": "Demonstra tendência a agir rapidamente, guiada por emoções ou intuição. Reage às situações sem longos períodos de reflexão. Essa espontaneidade pode gerar decisões ousadas ou inesperadas. Sua atitude frequentemente introduz movimento e imprevisibilidade nos acontecimentos.", "examples": "Sonic (Sonic the Hedgehog), V (Cyberpunk 2077), Travis Touchdown (No More Heroes)"}, {"group": "Intellect, Knowledge & Sensitivity", "group_pt": "Intelecto, Conhecimento & Sensibilidade", "name": "Veterana", "description": "Demonstra maturidade adquirida por experiência acumulada ao longo do tempo. Reconhece padrões de situações já vividas e utiliza esse conhecimento para orientar suas escolhas. Age com segurança baseada em vivências anteriores. Sua presença transmite autoridade e sabedoria prática.", "examples": "Master Chief (Halo), Geralt (The Witcher 3), Snake (Metal Gear Solid)"}, {"group": "Social Dynamics & Emotions", "group_pt": "Dinâmicas Sociais & Emoções", "name": "Adaptável", "description": "Demonstra capacidade de ajustar comportamento diante de mudanças ou circunstâncias inesperadas. Lida com novos ambientes ou desafios com flexibilidade. Encontra maneiras de se reorganizar quando planos originais deixam de funcionar. Essa habilidade permite manter eficácia mesmo em contextos instáveis.", "examples": "Link (The Legend of Zelda: Breath of the Wild), Lara Croft (Tomb Raider), Aloy (Horizon)"}, {"group": "Social Dynamics & Emotions", "group_pt": "Dinâmicas Sociais & Emoções", "name": "Prazerosa", "description": "Demonstra busca ativa por experiências sensoriais ou emocionais intensas. Valoriza momentos de satisfação, celebração e aproveitamento da vida. Enxerga oportunidades de prazer mesmo em situações difíceis. Sua atitude tende a transformar experiências em vivências marcantes.", "examples": "Majima (Yakuza), Trevor Philips (GTA V), Wario (Wario Land)"}, {"group": "Intellect, Knowledge & Sensitivity", "group_pt": "Intelecto, Conhecimento & Sensibilidade", "name": "Íntegra", "description": "Demonstra compromisso consistente com princípios éticos e honestidade. Age de acordo com valores que considera corretos, mesmo quando isso traz dificuldades. Mantém coerência entre discurso e comportamento. Sua postura inspira confiança em aliados e respeito de adversários.", "examples": "Captain America (Marvel’s Avengers), Commander Shepard (Mass Effect), Kiryu (Yakuza)"}, {"group": "Social Dynamics & Emotions", "group_pt": "Dinâmicas Sociais & Emoções", "name": "Empática", "description": "Demonstra sensibilidade para perceber emoções, necessidades ou sofrimentos de outras pessoas. Consegue compreender sentimentos alheios com facilidade. Essa capacidade favorece atitudes de cuidado, apoio e solidariedade. Sua presença cria conexões emocionais profundas entre personagens.", "examples": "Clementine (The Walking Dead), Ellie (The Last of Us), Yuna (Final Fantasy X)"}, {"group": "Social Dynamics & Emotions", "group_pt": "Dinâmicas Sociais & Emoções", "name": "Modesta", "description": "Demonstra humildade ao lidar com conquistas ou habilidades próprias. Evita buscar reconhecimento excessivo ou destacar-se de maneira ostentatória. Prefere que suas ações falem por si mesmas. Essa postura transmite simplicidade e autenticidade.", "examples": "Link (The Legend of Zelda), Isaac (Golden Sun), Amicia (A Plague Tale)"}, {"group": "Intellect, Knowledge & Sensitivity", "group_pt": "Intelecto, Conhecimento & Sensibilidade", "name": "Utopista", "description": "Demonstra crença em possibilidades de transformação positiva do mundo. Acredita em ideais elevados e luta para que se tornem realidade. Mantém esperança mesmo diante de contextos difíceis. Sua visão inspira outros personagens a imaginar futuros melhores.", "examples": "Optimus Prime (Transformers Devastation), Edelgard (Fire Emblem), Terra (Final Fantasy VI)"}, {"group": "Exploration, Values & World", "group_pt": "Exploração, Valores & Mundo", "name": "Excêntrica", "description": "Demonstra comportamentos, gostos ou formas de pensar pouco convencionais. Age de maneira imprevisível ou fora das expectativas sociais comuns. Essa singularidade torna sua presença marcante e muitas vezes intrigante. Sua atitude pode surpreender tanto aliados quanto adversários.", "examples": "Dr. Eggman (Sonic), Junkrat (Overwatch), Mettaton (Undertale)"}, {"group": "Exploration, Values & World", "group_pt": "Exploração, Valores & Mundo", "name": "Autônoma", "description": "Demonstra forte senso de independência em suas decisões e ações. Prefere confiar em sua própria capacidade em vez de depender de outros. Valoriza liberdade de escolha e responsabilidade pessoal. Sua postura revela autossuficiência e iniciativa.", "examples": "Samus Aran (Metroid), Aloy (Horizon), 2B (NieR: Automata)"}, {"group": "Performance, Strategy & Achievement", "group_pt": "Performance, Estratégia & Conquista", "name": "Estimulante", "description": "Demonstra capacidade de inspirar entusiasmo e motivação em outras pessoas. Suas palavras ou atitudes incentivam movimento, coragem ou esperança. Consegue despertar energia em grupos que enfrentam dificuldades. Sua presença frequentemente impulsiona mudanças ou avanços importantes.", "examples": "Kirby (Kirby), Mario (Super Mario Bros.), Ichiban Kasuga (Yakuza: Like a Dragon)"}, {"group": "Exploration, Values & World", "group_pt": "Exploração, Valores & Mundo", "name": "Alegre", "description": "Demonstra disposição leve e positiva diante das situações da vida. Reage com bom humor mesmo quando enfrenta desafios. Essa atitude cria ambientes mais descontraídos e agradáveis. Sua energia emocional tende a aliviar tensões ao redor.", "examples": "Mario (Super Mario Bros.), Kirby (Kirby), Sackboy (LittleBigPlanet)"}, {"group": "Social Dynamics & Emotions", "group_pt": "Dinâmicas Sociais & Emoções", "name": "Fiel", "description": "Demonstra compromisso sólido com pessoas, causas ou alianças que considera importantes. Mantém apoio mesmo em momentos de adversidade. Não abandona facilmente aqueles a quem dedica confiança. Sua postura revela constância e devoção nas relações.", "examples": "Garrus Vakarian (Mass Effect), Tails (Sonic), Dogmeat (Fallout)"}, {"group": "Exploration, Values & World", "group_pt": "Exploração, Valores & Mundo", "name": "Progressista", "description": "Demonstra abertura para mudanças sociais, culturais ou ideológicas. Questiona estruturas tradicionais quando percebe limitações ou injustiças. Busca caminhos que ampliem liberdade ou evolução coletiva. Sua visão frequentemente desafia padrões estabelecidos.", "examples": "Connor (Detroit: Become Human), Adam Jensen (Deus Ex), Edelgard (Fire Emblem)"}, {"group": "Social Dynamics & Emotions", "group_pt": "Dinâmicas Sociais & Emoções", "name": "Conciliadora", "description": "Demonstra habilidade para aproximar pessoas em conflito e restaurar equilíbrio nas relações. Escuta diferentes perspectivas antes de buscar soluções. Valoriza harmonia e entendimento entre os envolvidos. Sua atuação favorece reconciliações e cooperação.", "examples": "Aloy (Horizon), Princess Zelda (Zelda), Alistair (Dragon Age)"}, {"group": "Performance, Strategy & Achievement", "group_pt": "Performance, Estratégia & Conquista", "name": "Marcante", "description": "Demonstra presença memorável que deixa impressão duradoura nas pessoas que encontra. Sua personalidade ou atitudes criam impacto significativo nas situações em que participa. Mesmo aparições breves podem ser lembradas com clareza. Sua influência tende a ultrapassar o momento imediato.", "examples": "Kratos (God of War), Sephiroth (Final Fantasy VII), Handsome Jack (Borderlands)"}, {"group": "Intellect, Knowledge & Sensitivity", "group_pt": "Intelecto, Conhecimento & Sensibilidade", "name": "Enigmática", "description": "Demonstra comportamento difícil de interpretar completamente. Mantém parte de suas intenções ou pensamentos ocultos. Essa aura de mistério desperta curiosidade e especulação nos outros personagens. Sua presença frequentemente gera dúvidas e fascínio.", "examples": "G-Man (Half-Life), The Outsider (Dishonored), Ranni (Elden Ring)"}, {"group": "Performance, Strategy & Achievement", "group_pt": "Performance, Estratégia & Conquista", "name": "Encorajadora", "description": "Demonstra capacidade de fortalecer a confiança e a coragem de outras pessoas. Oferece apoio emocional e motivação em momentos difíceis. Suas palavras e atitudes ajudam aliados a enfrentar desafios. Sua presença promove resiliência e determinação coletiva.", "examples": "Ellie (The Last of Us), Yuna (Final Fantasy X), Tifa (Final Fantasy VII)"}, {"group": "Intellect, Knowledge & Sensitivity", "group_pt": "Intelecto, Conhecimento & Sensibilidade", "name": "Saudosista", "description": "Demonstra forte ligação emocional com memórias, histórias ou experiências do passado. Recorda acontecimentos anteriores com carinho ou nostalgia. Valoriza tradições, lembranças e momentos significativos vividos anteriormente. Esse olhar para trás influencia suas decisões e sentimentos no presente.", "examples": "Max Payne (Max Payne), Joel (The Last of Us), Arthur Morgan (Red Dead Redemption 2)"}, {"group": "Exploration, Values & World", "group_pt": "Exploração, Valores & Mundo", "name": "Audaciosa", "description": "Demonstra coragem para desafiar limites, normas ou perigos. Age com ousadia diante de oportunidades ou riscos que outros evitariam. Prefere enfrentar o desconhecido em vez de permanecer em segurança. Sua atitude frequentemente desencadeia mudanças ou conquistas inesperadas.", "examples": "Lara Croft (Tomb Raider), Dante (Devil May Cry), Bayonetta (Bayonetta)"}, {"group": "Social Dynamics & Emotions", "group_pt": "Dinâmicas Sociais & Emoções", "name": "Guardião", "description": "Demonstra forte instinto de proteger pessoas, lugares ou valores importantes. Age com vigilância e responsabilidade ao cuidar do que considera precioso. Não hesita em se colocar em risco para preservar aquilo que defende. Sua postura revela senso profundo de dever e proteção.", "examples": "Zelda (The Legend of Zelda), Samus Aran (Metroid), Aloy (Horizon)"}, {"group": "Exploration, Values & World", "group_pt": "Exploração, Valores & Mundo", "name": "Cética", "description": "Demonstra tendência a questionar afirmações, promessas ou versões dos fatos. Evita aceitar informações sem reflexão ou evidências. Analisa situações com olhar crítico antes de formar opinião. Essa postura reduz ingenuidade e incentiva investigação mais profunda.", "examples": "Geralt (The Witcher 3), Adam Jensen (Deus Ex), Joel (The Last of Us)"}, {"group": "Exploration, Values & World", "group_pt": "Exploração, Valores & Mundo", "name": "Indomável", "description": "Demonstra espírito rebelde que resiste a controle ou submissão. Recusa aceitar limitações impostas por autoridade ou convenção quando as considera injustas. Age com forte senso de liberdade pessoal. Sua atitude frequentemente desafia estruturas de poder estabelecidas.", "examples": "Kratos (God of War), Trevor (GTA V), V (Cyberpunk 2077)"}, {"group": "Intellect, Knowledge & Sensitivity", "group_pt": "Intelecto, Conhecimento & Sensibilidade", "name": "Confiante", "description": "Demonstra segurança emocional e convicção em suas próprias capacidades. Age com tranquilidade mesmo diante de pressão ou incerteza. Sua postura transmite estabilidade e liderança natural. Essa confiança influencia positivamente a percepção que outros personagens têm dela.", "examples": "Bayonetta (Bayonetta), Dante (Devil May Cry), Ryu (Street Fighter)"}, {"group": "Social Dynamics & Emotions", "group_pt": "Dinâmicas Sociais & Emoções", "name": "Sedutora", "description": "Demonstra habilidade para despertar atração, fascínio ou interesse emocional em outras pessoas. Utiliza charme, presença e linguagem para influenciar relações. Sua postura pode provocar desejo, admiração ou curiosidade. Essa característica impacta fortemente interações sociais e dinâmicas entre personagens.", "examples": "Ada Wong (Resident Evil), Morrigan (Dragon Age), Bayonetta (Bayonetta)"}, {"group": "Social Dynamics & Emotions", "group_pt": "Dinâmicas Sociais & Emoções", "name": "Extrovertida", "description": "Demonstra facilidade em socializar e interagir com diferentes pessoas. Sente-se confortável em ambientes movimentados ou cheios de interação. Expressa pensamentos e emoções de forma aberta. Sua presença frequentemente anima ou dinamiza grupos.", "examples": "Sonic (Sonic), Ichiban Kasuga (Yakuza: Like a Dragon), Tracer (Overwatch)"}, {"group": "Intellect, Knowledge & Sensitivity", "group_pt": "Intelecto, Conhecimento & Sensibilidade", "name": "Idealizadora", "description": "Demonstra imaginação voltada para possibilidades futuras e cenários desejados. Sonha com realidades diferentes da atual e projeta caminhos para alcançá-las. Mantém esperança mesmo quando enfrenta obstáculos difíceis. Sua visão inspira outros a acreditar em mudanças positivas.", "examples": "Zelda (Zelda), Terra (Final Fantasy VI), Sora (Kingdom Hearts)"}, {"group": "Performance, Strategy & Achievement", "group_pt": "Performance, Estratégia & Conquista", "name": "Diligente", "description": "Demonstra dedicação constante ao trabalho e às responsabilidades que assume. Enfrenta tarefas com empenho e persistência. Prefere esforço contínuo a soluções fáceis ou atalhos. Sua postura revela comprometimento com resultados e progresso.", "examples": "Amicia (A Plague Tale), Aloy (Horizon), Isaac Clarke (Dead Space)"}, {"group": "Performance, Strategy & Achievement", "group_pt": "Performance, Estratégia & Conquista", "name": "Reformadora", "description": "Demonstra vontade de transformar estruturas, sistemas ou situações que considera inadequadas. Questiona modelos existentes e busca criar alternativas melhores. Age com intenção de promover mudanças significativas. Sua atitude frequentemente conduz processos de renovação ou ruptura.", "examples": "Connor (Detroit: Become Human), Edelgard (Fire Emblem), Adam Jensen (Deus Ex)"}, {"group": "Intellect, Knowledge & Sensitivity", "group_pt": "Intelecto, Conhecimento & Sensibilidade", "name": "Clara", "description": "Demonstra franqueza e transparência ao comunicar pensamentos, intenções ou sentimentos. Prefere expressar-se de maneira direta em vez de esconder informações. Essa postura favorece confiança e entendimento nas relações. Sua comunicação tende a reduzir mal-entendidos.", "examples": "Lara Croft (Tomb Raider), Shepard (Mass Effect), Kiryu (Yakuza)"}, {"group": "Performance, Strategy & Achievement", "group_pt": "Performance, Estratégia & Conquista", "name": "Multifacetada", "description": "Demonstra variedade de interesses, habilidades ou formas de agir. Consegue adaptar sua postura conforme o contexto ou situação. Revela diferentes aspectos de personalidade dependendo das circunstâncias. Essa diversidade torna seu comportamento complexo e difícil de prever.", "examples": "Geralt (The Witcher 3), V (Cyberpunk 2077), Shepard (Mass Effect)"}, {"group": "Performance, Strategy & Achievement", "group_pt": "Performance, Estratégia & Conquista", "name": "Estratégica", "description": "Demonstra capacidade de enxergar situações com visão ampla e planejamento de longo prazo. Analisa possibilidades futuras antes de agir. Conecta eventos e decisões dentro de uma lógica maior de objetivos. Sua postura favorece movimentos calculados e resultados duradouros.", "examples": "Solid Snake (Metal Gear Solid), Garrus Vakarian (Mass Effect), Thrawn (Star Wars: Empire at War)"}], "archetypes": [{"group": "Knowledge & Transformation", "group_pt": "Conhecimento & Transformação", "name": "Transmutador", "description": "Busca transformar o mundo ao seu redor através de conhecimento, experimentação e descoberta. Está sempre tentando combinar ideias, tecnologias ou forças diferentes para gerar algo novo. Sua presença em uma história costuma estar ligada a invenções, mudanças radicais ou descobertas inesperadas.", "examples": "Dr. Nefarious (Ratchet & Clank)"}, {"group": "Knowledge & Transformation", "group_pt": "Conhecimento & Transformação", "name": "Pesquisador", "description": "Dedica-se a compreender como o mundo funciona por meio de observação, estudo e análise. Valoriza conhecimento e evidências acima de opiniões ou crenças. Em histórias de jogo, costuma ser o personagem que investiga fenômenos, desenvolve teorias ou encontra explicações para eventos complexos.", "examples": "Mordin Solus (Mass Effect)"}, {"group": "Knowledge & Transformation", "group_pt": "Conhecimento & Transformação", "name": "Visionário", "description": "Enxerga possibilidades futuras antes dos outros. Costuma imaginar cenários, tecnologias ou mudanças que ainda não existem, mas que podem transformar o mundo. Sua motivação geralmente está ligada à construção de algo novo ou à preparação para o que está por vir.", "examples": "Elizabeth (BioShock Infinite)"}, {"group": "Knowledge & Transformation", "group_pt": "Conhecimento & Transformação", "name": "Manipulador", "description": "Usa truques, ilusões ou estratégias psicológicas para influenciar o que os outros percebem como realidade. Prefere enganar ou confundir adversários em vez de enfrentá-los diretamente. Em narrativas de jogo, muitas vezes controla situações nos bastidores ou cria armadilhas inteligentes.", "examples": "Loki (Smite)"}, {"group": "Knowledge & Transformation", "group_pt": "Conhecimento & Transformação", "name": "Campeão", "description": "Vive para testar seus limites físicos e provar sua superioridade em desafios ou competições. Demonstra disciplina, resistência e desejo constante de superação. Em histórias, frequentemente representa força, perseverança e dedicação ao treino.", "examples": "Ryu (Street Fighter)"}, {"group": "Knowledge & Transformation", "group_pt": "Conhecimento & Transformação", "name": "Guerreiro", "description": "Enfrenta conflitos de forma direta e determinada. Possui coragem, habilidade de combate e forte senso de dever diante de ameaças. Sua presença costuma estar ligada a batalhas, proteção de aliados ou enfrentamento de perigos.", "examples": "Kratos (God of War)"}, {"group": "Knowledge & Transformation", "group_pt": "Conhecimento & Transformação", "name": "Sacrificial", "description": "Está disposto a abrir mão de conforto, segurança ou até da própria vida por uma causa maior. Age guiado por convicções profundas e senso de responsabilidade. Em narrativas, muitas vezes simboliza devoção, coragem moral e altruísmo extremo.", "examples": "Joel (The Last of Us)"}, {"group": "Knowledge & Transformation", "group_pt": "Conhecimento & Transformação", "name": "Herói", "description": "Assume o papel central na jornada de superação de desafios e ameaças. Costuma agir para proteger outros, restaurar equilíbrio ou impedir forças destrutivas. Sua trajetória normalmente envolve crescimento pessoal, coragem e responsabilidade.", "examples": "Link (The Legend of Zelda)"}, {"group": "Knowledge & Transformation", "group_pt": "Conhecimento & Transformação", "name": "Perito", "description": "Domina profundamente uma habilidade específica ou área de conhecimento. Outros personagens frequentemente recorrem a ele quando precisam de precisão ou competência técnica. Sua contribuição costuma ser essencial para resolver problemas complexos.", "examples": "Gordon Freeman (Half-Life)"}, {"group": "Knowledge & Transformation", "group_pt": "Conhecimento & Transformação", "name": "Orador", "description": "Comunica ideias com clareza e persuasão, influenciando pensamentos ou decisões de outras pessoas. Tem facilidade para representar grupos ou causas. Sua força está nas palavras e na capacidade de mobilizar pessoas.", "examples": "Johnny Silverhand (Cyberpunk 2077)"}, {"group": "Knowledge & Transformation", "group_pt": "Conhecimento & Transformação", "name": "Espiritualista", "description": "Mantém conexão profunda com forças espirituais, naturais ou místicas. Atua como intermediário entre o mundo material e dimensões invisíveis. Em narrativas de jogo, muitas vezes guia outros personagens ou interpreta sinais sobrenaturais.", "examples": "Thrall (Warcraft)"}, {"group": "Knowledge & Transformation", "group_pt": "Conhecimento & Transformação", "name": "Destemido", "description": "Enfrenta perigos sem hesitação. Demonstra coragem mesmo diante de situações que assustariam a maioria das pessoas. Sua postura inspira aliados e desafia adversários.", "examples": "Lara Croft (Tomb Raider)"}, {"group": "Knowledge & Transformation", "group_pt": "Conhecimento & Transformação", "name": "Pioneiro", "description": "Avança para territórios desconhecidos em busca de novas possibilidades. Não teme romper com tradições ou explorar caminhos nunca antes tentados. Em histórias, representa descoberta, inovação e espírito aventureiro.", "examples": "Samus Aran (Metroid)"}, {"group": "Knowledge & Transformation", "group_pt": "Conhecimento & Transformação", "name": "Criador", "description": "Expressa ideias e emoções através de formas artísticas ou criativas. Busca produzir algo que inspire, emocione ou represente sua visão de mundo. Em jogos, pode aparecer como artista, inventor ou construtor de novas realidades.", "examples": "Ellie (The Last of Us Part II)"}, {"group": "Knowledge & Transformation", "group_pt": "Conhecimento & Transformação", "name": "Conceptor", "description": "Dedica-se a imaginar e estruturar novas ideias, projetos ou sistemas. Prefere pensar em soluções e planejar estruturas antes que elas existam. Sua mente funciona como um laboratório de possibilidades.", "examples": "Tony Stark (Marvel’s Avengers)"}, {"group": "Journey & Conquest", "group_pt": "Jornada & Conquista", "name": "Peregrino", "description": "Vive em constante deslocamento, buscando propósito ou significado ao longo de sua jornada. O caminho percorrido é tão importante quanto o destino final. Em narrativas, simboliza crescimento pessoal e descoberta interior.", "examples": "The Wanderer (Shadow of the Colossus)"}, {"group": "Journey & Conquest", "group_pt": "Jornada & Conquista", "name": "Globalista", "description": "Sente-se parte de um mundo amplo e diverso. Move-se com facilidade entre diferentes culturas, ambientes ou grupos. Costuma valorizar diversidade, conexão e troca de experiências.", "examples": "Geralt (The Witcher 3)"}, {"group": "Journey & Conquest", "group_pt": "Jornada & Conquista", "name": "Contestador", "description": "Questiona normas estabelecidas e desafia sistemas que considera injustos ou limitantes. Não aceita regras apenas por tradição. Sua atitude frequentemente provoca mudanças ou conflitos importantes.", "examples": "Connor (Detroit: Become Human)"}, {"group": "Journey & Conquest", "group_pt": "Jornada & Conquista", "name": "Errante", "description": "Vive sem raízes fixas, deslocando-se entre lugares e situações. Enxerga o mundo como um espaço aberto de possibilidades. Sua trajetória costuma envolver encontros inesperados e descobertas constantes.", "examples": "Mad Max (Mad Max)"}, {"group": "Journey & Conquest", "group_pt": "Jornada & Conquista", "name": "Explorador", "description": "Movido pela curiosidade e pelo desejo de descobrir o desconhecido. Procura novos lugares, segredos ou experiências. Em jogos, representa o espírito de aventura e descoberta.", "examples": "Aloy (Horizon Zero Dawn)"}, {"group": "Journey & Conquest", "group_pt": "Jornada & Conquista", "name": "Insurgente", "description": "Recusa submeter-se a autoridades ou sistemas que considera opressivos. Prefere lutar por liberdade do que obedecer cegamente. Em narrativas, frequentemente lidera revoltas ou movimentos de resistência.", "examples": "V (Cyberpunk 2077)"}, {"group": "Journey & Conquest", "group_pt": "Jornada & Conquista", "name": "Subversivo", "description": "Desafia estruturas sociais ou políticas através de atitudes radicais ou provocativas. Busca desmontar sistemas existentes para criar algo diferente. Sua presença costuma gerar instabilidade e transformação.", "examples": "Trevor Philips (GTA V)"}, {"group": "Journey & Conquest", "group_pt": "Jornada & Conquista", "name": "Militante", "description": "Dedica sua energia a defender uma causa ou movimento. Trabalha ativamente para promover mudanças sociais ou políticas. Sua motivação vem de convicções fortes e senso de missão.", "examples": "Abby (The Last of Us Part II)"}, {"group": "Journey & Conquest", "group_pt": "Jornada & Conquista", "name": "Humorista", "description": "Usa humor para interpretar o mundo e provocar reações nas pessoas. Pode aliviar tensões ou revelar verdades através da comédia. Sua presença traz leveza, crítica ou ironia à narrativa.", "examples": "Claptrap (Borderlands)"}, {"group": "Journey & Conquest", "group_pt": "Jornada & Conquista", "name": "Ingênuo", "description": "Observa o mundo com curiosidade e simplicidade. Muitas vezes enxerga situações sem malícia ou preconceito. Essa visão inocente pode revelar verdades que outros ignoram.", "examples": "Chibi-Robo (Chibi-Robo!)"}, {"group": "Journey & Conquest", "group_pt": "Jornada & Conquista", "name": "Festivo", "description": "Busca diversão, celebração e momentos de alegria coletiva. Valoriza encontros sociais e experiências intensas. Sua energia costuma contagiar o ambiente ao redor.", "examples": "Majima (Yakuza)"}, {"group": "Journey & Conquest", "group_pt": "Jornada & Conquista", "name": "Metamorfo", "description": "Possui identidade fluida ou capacidade de adaptação constante. Assume diferentes papéis dependendo da situação. Sua natureza mutável cria imprevisibilidade nas histórias.", "examples": "V (Cyberpunk 2077)"}, {"group": "Journey & Conquest", "group_pt": "Jornada & Conquista", "name": "Satirista", "description": "Usa humor crítico para expor contradições ou falhas na sociedade. Prefere provocar reflexão através da ironia ou exagero. Sua visão revela aspectos ocultos da realidade.", "examples": "Deadpool (Marvel vs Capcom)"}, {"group": "Journey & Conquest", "group_pt": "Jornada & Conquista", "name": "Profanador", "description": "Desafia símbolos, crenças ou tradições consideradas intocáveis. Questiona valores estabelecidos de forma provocativa. Sua atitude frequentemente gera choque ou debate.", "examples": "Kefka (Final Fantasy VI)"}, {"group": "Journey & Conquest", "group_pt": "Jornada & Conquista", "name": "Saqueador", "description": "Vive à margem das regras convencionais, buscando riqueza ou liberdade através de aventura e risco. Costuma agir com ousadia e oportunismo. Em narrativas, representa espírito livre e imprevisível.", "examples": "Edward Kenway (Assassin’s Creed IV)"}, {"group": "Experience & Lifestyle", "group_pt": "Experiência & Estilo de Vida", "name": "Empolgado", "description": "Demonstra entusiasmo intenso por ideias, experiências ou projetos. Sua energia motiva outras pessoas a se envolverem também. Tende a enxergar possibilidades positivas nas situações.", "examples": "Kirby (Kirby)"}, {"group": "Experience & Lifestyle", "group_pt": "Experiência & Estilo de Vida", "name": "Epicurista", "description": "Busca prazer, conforto e experiências sensoriais intensas. Valoriza viver o presente e aproveitar aquilo que a vida oferece. Sua filosofia gira em torno da satisfação pessoal.", "examples": "Dante (Devil May Cry)"}, {"group": "Experience & Lifestyle", "group_pt": "Experiência & Estilo de Vida", "name": "Primalista", "description": "Valoriza conexão direta com a natureza e formas de vida mais simples. Prefere equilíbrio natural em vez de estruturas artificiais ou tecnológicas. Representa retorno às origens.", "examples": "Amicia (A Plague Tale)"}, {"group": "Experience & Lifestyle", "group_pt": "Experiência & Estilo de Vida", "name": "Nacionalista", "description": "Demonstra forte ligação emocional com sua terra, cultura ou povo. Defende valores e tradições que considera fundamentais para sua comunidade. Sua motivação costuma envolver identidade coletiva.", "examples": "Jin Sakai (Ghost of Tsushima)"}, {"group": "Experience & Lifestyle", "group_pt": "Experiência & Estilo de Vida", "name": "Sedutor", "description": "Usa charme, presença e linguagem para atrair ou influenciar outras pessoas. Tem facilidade em criar vínculos emocionais ou despertar interesse. Em narrativas, frequentemente manipula relações sociais.", "examples": "Bayonetta (Bayonetta)"}, {"group": "Experience & Lifestyle", "group_pt": "Experiência & Estilo de Vida", "name": "Benfeitor", "description": "Dedica-se a ajudar outras pessoas sem esperar recompensa. Demonstra generosidade e senso profundo de responsabilidade social. Sua presença promove solidariedade e cooperação.", "examples": "Princess Zelda (Zelda)"}, {"group": "Experience & Lifestyle", "group_pt": "Experiência & Estilo de Vida", "name": "Sensitivo", "description": "Percebe emoções e estados internos de outras pessoas com grande intensidade. Consegue compreender sentimentos sem que sejam expressos diretamente. Sua sensibilidade influencia relações e decisões.", "examples": "Clementine (The Walking Dead)"}, {"group": "Experience & Lifestyle", "group_pt": "Experiência & Estilo de Vida", "name": "Mediador", "description": "Atua como ponte entre diferentes pessoas ou pontos de vista. Busca resolver conflitos através do diálogo e entendimento. Sua habilidade social promove equilíbrio nas relações.", "examples": "Garrus Vakarian (Mass Effect)"}, {"group": "Experience & Lifestyle", "group_pt": "Experiência & Estilo de Vida", "name": "Cidadão", "description": "Representa a vida comum dentro de uma sociedade ou comunidade. Suas preocupações refletem necessidades do cotidiano. Frequentemente simboliza o ponto de vista das pessoas comuns.", "examples": "Arthur Morgan (Red Dead Redemption 2)"}, {"group": "Experience & Lifestyle", "group_pt": "Experiência & Estilo de Vida", "name": "Representante", "description": "Defende interesses coletivos e busca dar voz a grupos ou comunidades. Assume responsabilidades políticas ou sociais em nome de outros. Sua atuação envolve liderança e negociação.", "examples": "Commander Shepard (Mass Effect)"}, {"group": "Experience & Lifestyle", "group_pt": "Experiência & Estilo de Vida", "name": "Pragmatista", "description": "Prefere soluções práticas em vez de teorias ou idealizações. Avalia situações com foco em resultados concretos. Suas decisões costumam ser guiadas pela eficiência.", "examples": "Adam Jensen (Deus Ex)"}, {"group": "Experience & Lifestyle", "group_pt": "Experiência & Estilo de Vida", "name": "Devoto", "description": "Dedica-se com lealdade e disciplina a servir uma causa, pessoa ou instituição. Coloca dever e compromisso acima de interesses pessoais. Sua motivação nasce da fidelidade.", "examples": "Templar Knight (Assassin’s Creed)"}, {"group": "Experience & Lifestyle", "group_pt": "Experiência & Estilo de Vida", "name": "Conector", "description": "Valoriza interação social e construção de redes de relacionamento. Facilita encontros, parcerias e trocas entre diferentes pessoas. Sua presença fortalece comunidades.", "examples": "Ichiban Kasuga (Yakuza Like a Dragon)"}, {"group": "Experience & Lifestyle", "group_pt": "Experiência & Estilo de Vida", "name": "Curandeiro", "description": "Dedica-se a cuidar da saúde física ou emocional de outras pessoas. Busca restaurar equilíbrio e bem-estar. Representa apoio, cuidado e recuperação.", "examples": "Mercy (Overwatch)"}, {"group": "Experience & Lifestyle", "group_pt": "Experiência & Estilo de Vida", "name": "Sentinela", "description": "Mantém vigilância constante para proteger algo ou alguém. Observa perigos e age rapidamente diante de ameaças. Representa proteção e responsabilidade.", "examples": "Batman (Arkham Series)"}, {"group": "Ideology & Purpose", "group_pt": "Ideologia & Propósito", "name": "Sonhador", "description": "Imagina futuros melhores e acredita em possibilidades ainda não realizadas. Alimenta esperança mesmo em tempos difíceis. Sua visão inspira mudança e progresso.", "examples": "Sora (Kingdom Hearts)"}, {"group": "Ideology & Purpose", "group_pt": "Ideologia & Propósito", "name": "Devoto", "description": "Vive guiado por fé ou crença profunda em algo maior. Suas decisões refletem compromisso espiritual ou religioso. Representa convicção e entrega.", "examples": "Joshua Graham (Fallout New Vegas)"}, {"group": "Ideology & Purpose", "group_pt": "Ideologia & Propósito", "name": "Novato", "description": "Está iniciando sua jornada em determinado mundo ou área de conhecimento. Aprende com experiências e erros ao longo do caminho. Representa descoberta e crescimento.", "examples": "The Kid (Bastion)"}, {"group": "Ideology & Purpose", "group_pt": "Ideologia & Propósito", "name": "Esperançoso", "description": "Mantém atitude positiva mesmo diante de dificuldades. Acredita que situações podem melhorar e trabalha para que isso aconteça. Sua postura transmite otimismo aos outros.", "examples": "Mario (Super Mario Bros.)"}, {"group": "Ideology & Purpose", "group_pt": "Ideologia & Propósito", "name": "Meticuloso", "description": "Preocupa-se com perfeição e precisão em tudo que faz. Analisa detalhes e busca excelência constante. Sua disciplina garante qualidade e rigor.", "examples": "Agent 47 (Hitman)"}, {"group": "Ideology & Purpose", "group_pt": "Ideologia & Propósito", "name": "Soberano", "description": "Exerce autoridade e responsabilidade sobre um território ou grupo. Toma decisões que impactam muitas pessoas. Representa poder, liderança e responsabilidade.", "examples": "Emperor Emhyr (The Witcher 3)"}, {"group": "Ideology & Purpose", "group_pt": "Ideologia & Propósito", "name": "Nobre", "description": "Pertence a uma classe social elevada ou carrega valores associados à honra e tradição. Demonstra dignidade e senso de dever. Sua postura reflete status e responsabilidade.", "examples": "Prince of Persia (Prince of Persia)"}, {"group": "Ideology & Purpose", "group_pt": "Ideologia & Propósito", "name": "Negociador", "description": "Resolve conflitos e acordos através de diplomacia e diálogo. Busca equilíbrio entre interesses opostos. Sua habilidade evita confrontos diretos.", "examples": "Leliana (Dragon Age)"}, {"group": "Ideology & Purpose", "group_pt": "Ideologia & Propósito", "name": "Recluso", "description": "Prefere isolamento e distância da vida social. Encontra significado em reflexão, solitude ou contemplação. Sua sabedoria muitas vezes surge do afastamento do mundo.", "examples": "Yoda (Star Wars Series)"}, {"group": "Ideology & Purpose", "group_pt": "Ideologia & Propósito", "name": "Mentor", "description": "Compartilha conhecimento e orienta outros personagens em suas jornadas. Atua como guia ou conselheiro. Sua presença ajuda outros a crescer e evoluir.", "examples": "Master Oogway (Kung Fu Panda game)"}, {"group": "Ideology & Purpose", "group_pt": "Ideologia & Propósito", "name": "Pensador", "description": "Dedica-se à reflexão profunda sobre ideias, conceitos ou problemas complexos. Busca compreender o mundo através do raciocínio e análise. Sua mente funciona como ferramenta principal.", "examples": "Socrates-like NPC (Assassin’s Creed Odyssey)"}, {"group": "Ideology & Purpose", "group_pt": "Ideologia & Propósito", "name": "Comandante", "description": "Lidera pessoas em situações de conflito ou organização estratégica. Assume responsabilidade por decisões importantes. Inspira ordem, disciplina e direção.", "examples": "Captain Price (Call of Duty)"}, {"group": "Ideology & Purpose", "group_pt": "Ideologia & Propósito", "name": "Sábio", "description": "Possui grande conhecimento acumulado ao longo do tempo. Oferece conselhos baseados em experiência e reflexão. Sua presença traz orientação e entendimento.", "examples": "Paarthurnax (Skyrim)"}, {"group": "Ideology & Purpose", "group_pt": "Ideologia & Propósito", "name": "Tático", "description": "Planeja ações considerando posicionamento, recursos e oportunidades. Analisa cenários antes de agir. Sua mente estratégica antecipa movimentos e consequências.", "examples": "Solid Snake (Metal Gear Solid)"}, {"group": "Ideology & Purpose", "group_pt": "Ideologia & Propósito", "name": "Investigador", "description": "Dedica-se a descobrir verdades ocultas e resolver mistérios. Observa pistas, analisa informações e conecta fatos. Sua função é revelar aquilo que está escondido.", "examples": "Leon Kennedy (Resident Evil 4)"}]};
 
 const GC = {
   'Social Dynamics & Emotions':         {ink:'#a83232',bg:'#fdf2f2'},
@@ -714,7 +1069,7 @@ let ST={
   details:{race:'',class:'',culture:'',equipment:'',combat:'',background:'',personality:'',notes:''},
   visual:{description:'',palette:'',style:'',notes:''},
 };
-const STEPS=['Mechanic','Attributes','Archetypes','Concept','Name','References','Details','Visual','Final'];
+const STEPS=['Mechanic','Attributes','Archetypes','Concept','Name','References','Details','Visual','Final']; // legacy fallback
 
 function init(){renderProgress();renderGrid('attr',CARDS.attributes,'attrGrid');renderGrid('arch',CARDS.archetypes,'archGrid');updateNav();}
 
@@ -725,7 +1080,8 @@ function renderProgress(){
     const node=document.createElement('div');
     node.className='prog-node'+(isA?' active':'')+(isDone?' done':'');
     if(isDone)node.onclick=()=>goToStep(n);
-    node.innerHTML=`<div class="prog-circle">${isDone?'':n}</div><div class="prog-label">${label}</div>`;
+    const lbl = (typeof t==='function') ? t('step_labels')[i] : label;
+    node.innerHTML=`<div class="prog-circle">${isDone?'':n}</div><div class="prog-label">${lbl}</div>`;
     bar.appendChild(node);
     if(i<STEPS.length-1){const l=document.createElement('div');l.className='prog-line'+(isDone?' done':'');bar.appendChild(l);}
   });
@@ -734,7 +1090,8 @@ function renderProgress(){
 function renderGrid(type,data,cid){
   const c=document.getElementById(cid);c.innerHTML='';
   const sel=type==='attr'?ST.selectedAttrs:ST.selectedArchs;
-  data.forEach(card=>{
+  const ptData=type==='attr'?CARDS_PT.attributes:CARDS_PT.archetypes;
+  data.forEach((card,idx)=>{
     const isS=sel.some(s=>s.name===card.name);
     const isD=!isS&&sel.length>=3;
     const col=gc(card.group);
@@ -742,14 +1099,17 @@ function renderGrid(type,data,cid){
     el.className='card'+(isS?' selected':'')+(isD?' disabled':'');
     el.style.cssText=`--gi:${col.ink};background:${col.bg}`;
     el.dataset.group=card.group;
+    // display label uses PT if active, but interaction always uses EN card
+    const disp=LANG==='pt'&&ptData[idx]?ptData[idx]:card;
+    const groupLabel=LANG==='pt'&&disp.group_pt?disp.group_pt:card.group;
     el.innerHTML=`<div class="card-check">✓</div>
-      <div class="card-group-tag">${card.group}</div>
-      <div class="card-name">${card.name}</div>
-      <div class="card-description">${card.description}</div>
-      <div class="card-examples">${card.examples}</div>`;
+      <div class="card-group-tag">${groupLabel}</div>
+      <div class="card-name">${disp.name}</div>
+      <div class="card-description">${disp.description}</div>
+      <div class="card-examples">${disp.examples}</div>`;
     el.addEventListener('click',()=>{if(!isD)toggleCard(type,card);});
-    el.addEventListener('contextmenu',e=>{e.preventDefault();openModal(card);});
-    let pt;el.addEventListener('touchstart',()=>{pt=setTimeout(()=>openModal(card),500);});
+    el.addEventListener('contextmenu',e=>{e.preventDefault();openModal(card,idx);});
+    let pt;el.addEventListener('touchstart',()=>{pt=setTimeout(()=>openModal(card,idx),500);});
     el.addEventListener('touchend',()=>clearTimeout(pt));
     c.appendChild(el);
   });
@@ -779,7 +1139,7 @@ function toggleCard(type,card){
 function updateChips(type){
   const arr=type==='attr'?ST.selectedAttrs:ST.selectedArchs;
   const c=document.getElementById(type==='attr'?'attrChips':'archChips');
-  if(!arr.length){c.innerHTML='<span class="chips-empty">None selected yet</span>';return;}
+  if(!arr.length){c.innerHTML='<span class="chips-empty">'+t('chips_empty_'+(type==='attr'?'attr':'arch'))+'</span>';return;}
   c.innerHTML=arr.map(a=>{const col=gc(a.group);return `<div class="chip" style="border-color:${col.ink};background:${col.bg}"><span style="color:${col.ink}">${a.name}</span><span class="rm" style="color:${col.ink}" data-type="${type}" data-name="${a.name.replace(/"/g,'&quot;')}">✕</span></div>`;}).join('');
   c.querySelectorAll('.rm').forEach(el=>el.addEventListener('click',()=>removeCard(el.dataset.type,el.dataset.name)));
 }
@@ -792,13 +1152,25 @@ function removeCard(type,name){
   document.getElementById(type==='attr'?'attrCount':'archCount').textContent=arr.length;
 }
 
-function openModal(card){
+function openModal(card,idx){
   const c=gc(card.group);
-  document.getElementById('mGroup').textContent=card.group;
-  document.getElementById('mName').textContent=card.name;
+  // determine if this is attr or arch by checking which grid called us
+  // We pass idx so we can look up PT data
+  let dispCard = card;
+  let groupLabel = card.group;
+  if(LANG==='pt' && idx!==undefined){
+    const isAttr = CARDS.attributes.some(a=>a.name===card.name);
+    const ptArr = isAttr ? CARDS_PT.attributes : CARDS_PT.archetypes;
+    if(ptArr[idx]){
+      dispCard = ptArr[idx];
+      groupLabel = ptArr[idx].group_pt || card.group;
+    }
+  }
+  document.getElementById('mGroup').textContent=groupLabel;
+  document.getElementById('mName').textContent=dispCard.name;
   document.getElementById('mName').style.color=c.ink;
-  document.getElementById('mDesc').textContent=card.description;
-  document.getElementById('mEx').textContent=card.examples;
+  document.getElementById('mDesc').textContent=dispCard.description;
+  document.getElementById('mEx').textContent=dispCard.examples;
   document.getElementById('cardModal').classList.add('open');
 }
 function closeModal(){document.getElementById('cardModal').classList.remove('open');}
@@ -812,15 +1184,22 @@ function buildConceptStep(){
    {label:'Archetypes',items:ST.selectedArchs,type:'ARCHETYPE'}].forEach(sec=>{
     if(!sec.items.length)return;
     const wrap=document.createElement('div');wrap.className='concept-cards-section';
-    wrap.innerHTML=`<div class="concept-section-label">◆ ${sec.label}</div>`;
+    const secLabel = sec.type==='ATTRIBUTE' ? t('attr_section') : t('arch_section');
+    wrap.innerHTML=`<div class="concept-section-label">◆ ${secLabel}</div>`;
     const grid=document.createElement('div');grid.className='concept-mini-grid';
-    sec.items.forEach(item=>{
+    sec.items.forEach((item)=>{
       const c=gc(item.group);const card=document.createElement('div');
       card.className='concept-info-card';card.style.cssText=`--gi:${c.ink};background:${c.bg}`;
-      card.innerHTML=`<div class="ci-type">${sec.type} · ${item.group}</div>
-        <div class="ci-name">${item.name}</div>
-        <div class="ci-desc">${item.description}</div>
-        <div class="ci-examples">Key references: ${item.examples}</div>`;
+      const isAttr=sec.type==='ATTRIBUTE';
+      const ptArr=isAttr?CARDS_PT.attributes:CARDS_PT.archetypes;
+      const enArr=isAttr?CARDS.attributes:CARDS.archetypes;
+      const enIdx=enArr.findIndex(e=>e.name===item.name&&e.group===item.group);
+      const disp=LANG==='pt'&&enIdx>=0&&ptArr[enIdx]?ptArr[enIdx]:item;
+      const grpLbl=LANG==='pt'&&disp.group_pt?disp.group_pt:item.group;
+      card.innerHTML=`<div class="ci-type">${secLabel} · ${grpLbl}</div>
+        <div class="ci-name">${disp.name}</div>
+        <div class="ci-desc">${disp.description}</div>
+        <div class="ci-examples">${t('key_refs')} ${disp.examples}</div>`;
       grid.appendChild(card);
     });
     wrap.appendChild(grid);area.appendChild(wrap);
@@ -862,11 +1241,11 @@ function updateNav(){
   nav.style.display=isLast?'none':'flex';
   navTop.style.display=isLast?'none':'flex';
   ['prevBtn','prevBtnTop'].forEach(id=>{
-    const el=document.getElementById(id);if(el)el.style.display=isFirst?'none':'';
+    const el=document.getElementById(id);if(el){el.style.display=isFirst?'none':'';el.innerHTML=t('nav_back');}
   });
-  const nextLabel=ST.currentStep===8?'Finalize →':'Next →';
+  const nextLabel=ST.currentStep===8?t('nav_finalize'):t('nav_next');
   ['nextBtn','nextBtnTop'].forEach(id=>{
-    const el=document.getElementById(id);if(el)el.textContent=nextLabel;
+    const el=document.getElementById(id);if(el)el.innerHTML=nextLabel;
   });
 }
 function setSug(val){document.getElementById('mechanicInput').value=val;}
@@ -876,24 +1255,32 @@ function buildConsolidate(){
   document.getElementById('cs_name').textContent=s.naming.name||'—';
   document.getElementById('cs_title').textContent=s.naming.title||'';
   const fields=[];
-  if(s.mechanic)fields.push({l:'Mechanic',v:s.mechanic});
-  if(s.selectedAttrs.length)fields.push({l:'Attributes',tags:s.selectedAttrs.map(a=>a.name)});
-  if(s.selectedArchs.length)fields.push({l:'Archetypes',tags:s.selectedArchs.map(a=>a.name)});
-  if(s.naming.origin)fields.push({l:'Name Origin',v:s.naming.origin});
-  if(s.details.race)fields.push({l:'Race / Species',v:s.details.race});
-  if(s.details.class)fields.push({l:'Class / Role',v:s.details.class});
-  if(s.details.culture)fields.push({l:'Culture / Origin',v:s.details.culture});
-  if(s.details.equipment)fields.push({l:'Equipment',v:s.details.equipment});
-  if(s.details.combat)fields.push({l:'Combat Style',v:s.details.combat});
-  if(s.visual.style)fields.push({l:'Art Style',v:s.visual.style});
-  if(s.visual.palette)fields.push({l:'Color Palette',v:s.visual.palette});
-  if(s.references.characters)fields.push({l:'Inspirations',v:s.references.characters,wide:true});
-  if(s.references.visual)fields.push({l:'Visual References',v:s.references.visual,wide:true});
-  if(s.details.personality)fields.push({l:'Personality',v:s.details.personality,wide:true});
-  if(s.visual.description)fields.push({l:'Visual Description',v:s.visual.description,wide:true});
-  if(s.details.background)fields.push({l:'Background',v:s.details.background,wide:true});
-  if(s.chosenConcept)fields.push({l:'Concept',v:s.chosenConcept,wide:true,italic:true});
-  if(s.details.notes)fields.push({l:'Notes',v:s.details.notes,wide:true});
+  if(s.mechanic)fields.push({l:t('cs_mechanic'),v:s.mechanic});
+  if(s.selectedAttrs.length)fields.push({l:t('cs_attributes'),tags:s.selectedAttrs.map(a=>{
+    if(LANG!=='pt') return a.name;
+    const idx=CARDS.attributes.findIndex(e=>e.name===a.name&&e.group===a.group);
+    return (idx>=0&&CARDS_PT.attributes[idx])?CARDS_PT.attributes[idx].name:a.name;
+  })});
+  if(s.selectedArchs.length)fields.push({l:t('cs_archetypes'),tags:s.selectedArchs.map(a=>{
+    if(LANG!=='pt') return a.name;
+    const idx=CARDS.archetypes.findIndex(e=>e.name===a.name&&e.group===a.group);
+    return (idx>=0&&CARDS_PT.archetypes[idx])?CARDS_PT.archetypes[idx].name:a.name;
+  })});
+  if(s.naming.origin)fields.push({l:t('cs_name_origin'),v:s.naming.origin});
+  if(s.details.race)fields.push({l:t('cs_race'),v:s.details.race});
+  if(s.details.class)fields.push({l:t('cs_class'),v:s.details.class});
+  if(s.details.culture)fields.push({l:t('cs_culture'),v:s.details.culture});
+  if(s.details.equipment)fields.push({l:t('cs_equip'),v:s.details.equipment});
+  if(s.details.combat)fields.push({l:t('cs_combat'),v:s.details.combat});
+  if(s.visual.style)fields.push({l:t('cs_style'),v:s.visual.style});
+  if(s.visual.palette)fields.push({l:t('cs_palette'),v:s.visual.palette});
+  if(s.references.characters)fields.push({l:t('cs_inspirations'),v:s.references.characters,wide:true});
+  if(s.references.visual)fields.push({l:t('cs_vis_refs'),v:s.references.visual,wide:true});
+  if(s.details.personality)fields.push({l:t('cs_personality'),v:s.details.personality,wide:true});
+  if(s.visual.description)fields.push({l:t('cs_vis_desc'),v:s.visual.description,wide:true});
+  if(s.details.background)fields.push({l:t('cs_bg'),v:s.details.background,wide:true});
+  if(s.chosenConcept)fields.push({l:t('cs_concept'),v:s.chosenConcept,wide:true,italic:true});
+  if(s.details.notes)fields.push({l:t('cs_notes'),v:s.details.notes,wide:true});
   document.getElementById('csGrid').innerHTML=fields.map(f=>`
     <div class="cs-field${f.wide?' cs-field-wide':''}">
       <div class="cs-field-label">${f.l}</div>
